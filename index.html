@@ -4,102 +4,10 @@
   <title>Open House</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* Style the modal */
-    .modal {
-      display: none; 
-      position: fixed; 
-      z-index: 1; 
-      left: 0;
-      top: 0;
+    /* Your existing styles here */
+    #map {
+      height: 400px;
       width: 100%;
-      height: 100%; 
-      overflow: auto; 
-      background-color: rgb(0,0,0); 
-      background-color: rgba(0,0,0,0.4); 
-      padding-top: 60px;
-    }
-
-    .modal-content {
-      background-color: #fefefe;
-      margin: 5% auto; 
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%; 
-    }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .show {
-      display: block;
-    }
-
-    .hide {
-      display: none;
-    }
-
-    .w3-padding-64 {
-      padding: 64px;
-    }
-    .w3-content {
-      max-width: 980px;
-      margin: auto;
-    }
-    .w3-text-grey {
-      color: #757575;
-    }
-    .w3-text-light-grey {
-      color: #f1f1f1;
-    }
-    .w3-opacity {
-      opacity: 0.75;
-    }
-    .w3-section {
-      margin-top: 16px;
-      margin-bottom: 16px;
-    }
-    .w3-xxlarge {
-      font-size: 24px;
-    }
-    .w3-margin-right {
-      margin-right: 16px;
-    }
-    .w3-input {
-      padding: 8px;
-      display: block;
-      border: none;
-      border-bottom: 1px solid #ccc;
-      width: 100%;
-    }
-    .w3-button {
-      padding: 16px;
-      display: inline-block;
-      color: #000;
-      background-color: #ccc;
-      text-align: center;
-      cursor: pointer;
-      border: none;
-    }
-    .w3-light-grey {
-      color: #000 !important;
-      background-color: #f1f1f1 !important;
-    }
-    .w3-padding-large {
-      padding: 12px 24px;
-    }
-    .fa-paper-plane {
-      font-size: 16px;
     }
   </style>
 </head>
@@ -107,121 +15,49 @@
   <h1>Open House</h1>
   <p>Home Selling Simplified</p>
   <p>Welcome to my website!</p>
-  <script async src="https://cse.google.com/cse.js?cx=b14767694f9174676"></script>
-  <div class="gcse-search"></div>
 
-  <!-- Filter Controls -->
-  <div id="filterControls">
-    <button class="btn active" onclick="filter('all')">Show All</button>
-    <button class="btn" onclick="filter('Movers')">Movers</button>
-    <button class="btn" onclick="filter('Staging Companies')">Staging Companies</button>
-    <!-- Add more buttons for each category -->
-  </div>
+  <!-- Add a search box -->
+  <input type="text" id="address" placeholder="Enter your address">
+  <button onclick="searchAddress()">Search</button>
 
-  <!-- Filterable Elements -->
-  <div id="filterableElements">
-    <div class="filterDiv category1 show">Item 1</div>
-    <div class="filterDiv category2 show">Item 2</div>
-    <!-- Add more divs for each item -->
-  </div>
+  <!-- Display the map -->
+  <div id="map"></div>
 
-  <!-- JavaScript -->
+  <!-- Your existing HTML here -->
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs"></script>
   <script>
-    function filter(c) {
-      var x, i;
-      x = document.getElementsByClassName("filterDiv");
-      if (c == "all") c = "";
-      for (i = 0; i < x.length; i++) {
-        w3RemoveClass(x[i], "show");
-        if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
-      }
+    var map;
+    var userLocation;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 8
+      });
     }
 
-    function w3AddClass(element, name) {
-      var arr1, arr2;
-      arr1 = element.className.split(" ");
-      arr2 = name.split(" ");
-      for (var i = 0; i < arr2.length; i++) {
-        if (arr1.indexOf(arr2[i]) == -1) {
-          element.className += " " + arr2[i];
+    function searchAddress() {
+      var address = document.getElementById('address').value;
+      var geocoder = new google.maps.Geocoder();
+
+      geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+          userLocation = results[0].geometry.location;
+          map.setCenter(userLocation);
+          new google.maps.Marker({
+            map: map,
+            position: userLocation
+          });
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
         }
-      }
+      });
     }
 
-    function w3RemoveClass(element, name) {
-      var arr1, arr2;
-      arr1 = element.className.split(" ");
-      arr2 = name.split(" ");
-      for (var i = 0; i < arr2.length; i++) {
-        while (arr1.indexOf(arr2[i]) > -1) {
-          arr1.splice(arr1.indexOf(arr2[i]), 1);     
-        }
-      }
-      element.className = arr1.join(" ");
-    }
-
-    // Modal script
-    function openModal() {
-      document.getElementById('contactModal').style.display = "block";
-    }
-
-    function closeModal() {
-      document.getElementById('contactModal').style.display = "none";
-    }
+    window.onload = initMap;
   </script>
 
-  <!-- Button to open the modal -->
-  <button class="w3-button w3-light-grey w3-padding-large" onclick="openModal()">Contact Me</button>
-
-  <!-- The Modal -->
-  <div id="contactModal" class="modal">
-    <div class="modal-content w3-padding-64 w3-content w3-text-grey">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2 class="w3-text-light-grey">Contact Me</h2>
-      <hr style="width:200px" class="w3-opacity">
-      <div class="w3-section">
-        <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Chicago, US</p>
-        <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: +00 151515</p>
-        <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Email: mail@mail.com</p>
-      </div>
-      <br>
-      <p>Let's get in touch. Send me a message:</p>
-      <form action="/action_page.php" target="_blank">
-        <p><input class="w3-input w3-padding-16" type="text" placeholder="Name" required name="Name"></p>
-        <p><input class="w3-input w3-padding-16" type="text" placeholder="Email" required name="Email"></p>
-        <p><input class="w3-input w3-padding-16" type="text" placeholder="Subject" required name="Subject"></p>
-        <p><input class="w3-input w3-padding-16" type="text" placeholder="Message" required name="Message"></p>
-        <p>
-          <button class="w3-button w3-light-grey w3-padding-large" type="submit">
-            <i class="fa fa-paper-plane"></i> SEND MESSAGE
-          </button>
-        </p>
-      </form>
-    </div>
-  </div>
-  <head>
-  <title>Local Service Providers</title>
-  <style>
-    /* Add your custom styles here */
-    #map {
-      height: 400px;
-      width: 100%;
-    }
-  </style>
-</head>
-  <head>
-  <title>Local Service Providers</title>
-  <head>
-    <title>Simple Marker</title>
-    <!-- The callback parameter is required, so we use console.debug as a noop -->
-    <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&callback=console.debug&libraries=maps,marker&v=beta">
-    </script>
-    <link rel="stylesheet" href="./style.css"/>
-  </head>
-  <body>
-    <gmp-map center="40.12150192260742,-100.45039367675781" zoom="4" map-id="DEMO_MAP_ID">
-      <gmp-advanced-marker position="40.12150192260742,-100.45039367675781" title="My location"></gmp-advanced-marker>
-    </gmp-map>
-  </body>
+  <!-- Your existing JavaScript here -->
 </body>
 </html>
