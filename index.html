@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Open House</title>
+  <title>Home Services Finder</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* Your existing styles here */
     #map {
       height: 400px;
       width: 100%;
@@ -20,27 +19,26 @@
   </style>
 </head>
 <body>
-  <!-- Removed the plain text -->
-
-  <!-- Add a search box -->
+  <h1>Home Services Finder</h1>
+  
   <input type="text" id="address" placeholder="Enter your address">
   <button onclick="searchAddress()">Search</button>
-
-  <!-- Display the map -->
+  
   <div id="map"></div>
-
-  <!-- Centered, padded, and bordered section -->
+  
   <div class="container">
-    <p style="margin-bottom: 10px;">Open House</p>
-    <p style="margin-bottom: 10px;">Home Selling Simplified</p>
-    <p>Welcome to my website!</p>
+    <button onclick="filterPlaces('cleaning')">Cleaning Companies</button>
+    <button onclick="filterPlaces('moving')">Moving Companies</button>
+    <button onclick="filterPlaces('photographers')">Photographers</button>
   </div>
-
-  <!-- Your existing JavaScript here -->
-
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs"></script>
+  
+  <div id="results" class="container"></div>
+  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places"></script>
   <script>
     var map;
+    var service;
+    var infowindow;
     var userLocation;
 
     function initMap() {
@@ -48,6 +46,7 @@
         center: {lat: -34.397, lng: 150.644},
         zoom: 8
       });
+      infowindow = new google.maps.InfoWindow();
     }
 
     function searchAddress() {
@@ -65,6 +64,47 @@
         } else {
           alert('Geocode was not successful for the following reason: ' + status);
         }
+      });
+    }
+
+    function filterPlaces(type) {
+      if (!userLocation) {
+        alert('Please search for an address first.');
+        return;
+      }
+
+      var request = {
+        location: userLocation,
+        radius: '5000', // Search within 5km radius
+        keyword: type
+      };
+
+      service = new google.maps.places.PlacesService(map);
+      service.nearbySearch(request, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          var resultsContainer = document.getElementById('results');
+          resultsContainer.innerHTML = '';
+
+          for (var i = 0; i < results.length; i++) {
+            var place = results[i];
+            resultsContainer.innerHTML += `<p>${place.name} - ${place.vicinity}</p>`;
+            createMarker(place);
+          }
+        } else {
+          alert('Search was not successful for the following reason: ' + status);
+        }
+      });
+    }
+
+    function createMarker(place) {
+      var marker = new google.maps.Marker({
+        map: map,
+        position: place.geometry.location
+      });
+
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.setContent(place.name);
+        infowindow.open(map, this);
       });
     }
 
