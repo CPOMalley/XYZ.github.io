@@ -47,7 +47,28 @@
       border: 2px solid #3e8e41;
     }
     .search-bar {
-      margin: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+    }
+    .search-bar input[type="text"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+      width: 300px;
+    }
+    .search-bar button {
+      padding: 10px;
+      border: 1px solid #4CAF50;
+      border-left: 0;
+      border-radius: 0 5px 5px 0;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    .search-bar button:hover {
+      background-color: #45a049;
     }
     .results {
       background-color: #fff;
@@ -70,9 +91,11 @@
     <h2>Home Services Finder</h2>
   </div>
 
-  <div class="container search-bar">
-    <input type="text" id="address" placeholder="Enter your address">
-    <button onclick="searchAddress()">Search</button>
+  <div class="container">
+    <div class="search-bar">
+      <input type="text" id="address" placeholder="Enter your address">
+      <button onclick="searchAddress()">Search</button>
+    </div>
   </div>
   
   <div id="map"></div>
