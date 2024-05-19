@@ -5,5 +5,55 @@
   <p>Welcome to my website!</p>
   <script async src="https://cse.google.com/cse.js?cx=b14767694f9174676"></script>
   <div class="gcse-search"></div>
+  <!-- Filter Controls -->
+<div id="filterControls">
+  <button class="btn active" onclick="filter('all')">Show All</button>
+  <button class="btn" onclick="filter('category1')">Category 1</button>
+  <button class="btn" onclick="filter('category2')">Category 2</button>
+  <!-- Add more buttons for each category -->
+</div>
+
+<!-- Filterable Elements -->
+<div id="filterableElements">
+  <div class="filterDiv category1">Item 1</div>
+  <div class="filterDiv category2">Item 2</div>
+  <!-- Add more divs for each item -->
+</div>
+
+<!-- JavaScript -->
+<script>
+function filter(c) {
+  var x, i;
+  x = document.getElementsByClassName("filterDiv");
+  if (c == "all") c = "";
+  for (i = 0; i < x.length; i++) {
+    w3RemoveClass(x[i], "show");
+    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+  }
+}
+
+function w3AddClass(element, name) {
+  var arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (var i = 0; i < arr2.length; i++) {
+    if (arr1.indexOf(arr2[i]) == -1) {
+      element.className += " " + arr2[i];
+    }
+  }
+}
+
+function w3RemoveClass(element, name) {
+  var arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (var i = 0; i < arr2.length; i++) {
+    while (arr1.indexOf(arr2[i]) > -1) {
+      arr1.splice(arr1.indexOf(arr2[i]), 1);     
+    }
+  }
+  element.className = arr1.join(" ");
+}
+</script>
 </body>
 </html>
