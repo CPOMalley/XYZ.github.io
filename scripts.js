@@ -52,6 +52,7 @@ function searchAddress() {
     if (status === 'OK') {
       map.setCenter(results[0].geometry.location);
       userLocation = results[0].geometry.location;
+      document.getElementById('service-sidebar').classList.add('visible'); // Show sidebar on successful search
       document.getElementById('new-search').style.display = 'block';
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
