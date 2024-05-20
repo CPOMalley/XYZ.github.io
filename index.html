@@ -356,9 +356,9 @@
     function saveAsPDF() {
       var { jsPDF } = window.jspdf;
       var doc = new jsPDF();
-      var content = document.getElementById('selected-companies-list').innerHTML;
+      var content = document.getElementById('selected-companies-list').innerText;
 
-      doc.fromHTML(content, 10, 10);
+      doc.text(content, 10, 10);
       doc.save('selected-companies.pdf');
     }
 
