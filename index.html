@@ -122,6 +122,19 @@
       text-decoration: none;
       margin: 0 5px;
     }
+    .selected-companies {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      width: 60%;
+      margin: 20px auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: none;
+    }
+    .selected-companies.visible {
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -154,7 +167,14 @@
   </div>
   
   <div id="results" class="results"></div>
+  <button onclick="generateSelectedCompanies()">Select Companies</button>
+  <div id="selected-companies" class="selected-companies">
+    <h3>Selected Companies</h3>
+    <div id="selected-companies-list"></div>
+    <button onclick="saveAsPDF()">Save as PDF</button>
+  </div>
   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places"></script>
   <script>
     var map;
@@ -278,11 +298,12 @@
             getPlaceDetails(place, function(details) {
               calculateDistance(userLocation, details.geometry.location).then(function(distance) {
                 var placeDetails = `
-                  <p>
+                  <div>
+                    <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
                     <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a> - ${details.vicinity}<br>
                     Distance: ${distance}<br>
                     Phone: ${details.formatted_phone_number || 'N/A'}
-                  </p>`;
+                  </div>`;
                 resultsContainer.innerHTML += placeDetails;
               }).catch(function(error) {
                 console.error(error);
@@ -291,6 +312,40 @@
           });
         });
       });
+    }
+
+    function generateSelectedCompanies() {
+      var selectedCompanies = document.querySelectorAll('.company-checkbox:checked');
+      if (selectedCompanies.length === 0) {
+        alert('Please select at least one company.');
+        return;
+      }
+
+      var selectedCompaniesContainer = document.getElementById('selected-companies');
+      var selectedCompaniesList = document.getElementById('selected-companies-list');
+      selectedCompaniesList.innerHTML = '';
+
+      selectedCompanies.forEach(function(checkbox) {
+        var companyDetails = `
+          <p>
+            ${checkbox.dataset.name}<br>
+            Address: ${checkbox.dataset.address}<br>
+            Distance: ${checkbox.dataset.distance}<br>
+            Phone: ${checkbox.dataset.phone}
+          </p>`;
+        selectedCompaniesList.innerHTML += companyDetails;
+      });
+
+      selectedCompaniesContainer.classList.add('visible');
+    }
+
+    function saveAsPDF() {
+      var { jsPDF } = window.jspdf;
+      var doc = new jsPDF();
+      var content = document.getElementById('selected-companies-list').innerHTML;
+
+      doc.fromHTML(content, 10, 10);
+      doc.save('selected-companies.pdf');
     }
 
     window.onload = initMap;
