@@ -295,7 +295,7 @@
 
   <div id="userInfoModal" class="modal">
     <div class="modal-content">
-      <h2>To see your search results, please enter the following information:</h2>
+      <h2>To generate a list of the selected companies, please enter the following information:</h2>
       <input type="text" id="firstName" placeholder="First Name">
       <input type="text" id="lastName" placeholder="Last Name">
       <input type="email" id="email" placeholder="Email Address">
@@ -396,7 +396,15 @@
           travelMode: 'DRIVING',
         }, function(response, status) {
           if (status === 'OK') {
-            resolve(response.rows[0].elements[0].distance.text);
+            var distanceText = response.rows[0].elements[0].distance.text;
+            // Convert distance to miles if it is in km
+            if (distanceText.includes('km')) {
+              var distanceKm = parseFloat(distanceText.replace(' km', ''));
+              var distanceMiles = (distanceKm * 0.621371).toFixed(2);
+              resolve(distanceMiles + ' miles');
+            } else {
+              resolve(distanceText);
+            }
           } else {
             reject('Distance calculation failed due to ' + status);
           }
