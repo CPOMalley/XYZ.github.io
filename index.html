@@ -69,6 +69,12 @@
       width: 300px;
       margin-bottom: 10px;
     }
+    .search-bar select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 0 5px 5px 0;
+      margin-bottom: 10px;
+    }
     .search-bar button {
       padding: 10px;
       border: 1px solid #4CAF50;
@@ -100,6 +106,10 @@
       justify-content: space-between;
       padding: 20px;
       width: 60%;
+      display: none; /* Hide sidebar initially */
+    }
+    .sidebar.visible {
+      display: flex; /* Show sidebar when visible */
     }
     .service-banner {
       display: flex;
@@ -107,7 +117,7 @@
       padding: 10px;
       margin: 5px 0;
       border-radius: 5px;
-      background-color: #f4f4f4;
+      background-color: #e0f7fa; /* Light background color for the banner */
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       width: 30%;
       box-sizing: border-box;
@@ -124,20 +134,6 @@
     }
     .service-banner input[type="checkbox"] {
       margin-right: 10px;
-    }
-    .sidebar button {
-      width: 100%;
-      padding: 10px;
-      margin: 5px 0;
-      border: none;
-      border-radius: 5px;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .sidebar button:hover {
-      background-color: #45a049;
     }
     .selected-companies {
       background-color: #fff;
@@ -171,14 +167,23 @@
   <div class="container">
     <div class="search-bar">
       <div class="instructions">To begin looking for local professionals, please enter the address for the home you are listing below:</div>
-      <input id="address" type="text" placeholder="Enter your address">
+      <div style="display: flex;">
+        <input id="address" type="text" placeholder="Enter your address">
+        <select id="radius">
+          <option value="5000">&lt;5 miles</option>
+          <option value="25000">5-25 miles</option>
+          <option value="50000">25-50 miles</option>
+          <option value="100000">50-100 miles</option>
+          <option value="1000000">100+ miles</option>
+        </select>
+      </div>
       <button onclick="searchAddress()">Search</button>
     </div>
   </div>
   
   <div id="map"></div>
   
-  <div class="sidebar">
+  <div class="sidebar" id="service-sidebar">
     <div class="service-banner">
       <img src="/mnt/data/cleaning logo.jpg" alt="Cleaning Logo">
       <label><input type="checkbox" id="cleaning" value="cleaning">Cleaning</label>
@@ -212,6 +217,7 @@
     <h3>Selected Companies</h3>
     <div id="selected-companies-list"></div>
     <button onclick="saveAsPDF()">Save as PDF</button>
+    <button onclick="startNewSearch()">Start a New Search</button>
   </div>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
@@ -250,6 +256,7 @@
 
     function searchAddress() {
       var address = document.getElementById('address').value;
+      var radius = document.getElementById('radius').value;
       var geocoder = new google.maps.Geocoder();
 
       geocoder.geocode({'address': address}, function(results, status) {
@@ -260,6 +267,9 @@
             map: map,
             position: userLocation
           });
+          document.getElementById('service-sidebar').classList.add('visible'); // Show sidebar on successful search
+          // Store the radius for later use
+          userLocation.radius = radius;
         } else {
           alert('Geocode was not successful for the following reason: ' + status);
         }
@@ -269,7 +279,7 @@
     function filterPlaces(type, callback) {
       var request = {
         location: userLocation,
-        radius: '5000', // Search within 5km radius
+        radius: userLocation.radius || '5000', // Use the stored radius or default to 5km
         keyword: type
       };
 
@@ -390,6 +400,10 @@
       var lines = doc.splitTextToSize(content, 180);
       doc.text(lines, 10, 10);
       doc.save('selected-companies.pdf');
+    }
+
+    function startNewSearch() {
+      location.reload(); // Refresh the page
     }
 
     window.onload = initMap;
