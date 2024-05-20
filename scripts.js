@@ -61,34 +61,34 @@ function searchAddress() {
 }
 
 function filterPlaces(type, callback) {
-  var keyword;
+  var placeType;
   switch (type) {
     case 'cleaning':
-      keyword = 'cleaning services';
+      placeType = 'laundry';
       break;
     case 'moving':
-      keyword = 'moving company';
+      placeType = 'moving_company';
       break;
     case 'photography':
-      keyword = 'photography studio';
+      placeType = 'photographer';
       break;
     case 'staging':
-      keyword = 'home staging';
+      placeType = 'furniture_store';
       break;
     case 'landscaping':
-      keyword = 'landscaping';
+      placeType = 'general_contractor';
       break;
     case 'storage':
-      keyword = 'self storage';
+      placeType = 'storage';
       break;
     default:
-      keyword = '';
+      placeType = '';
   }
 
   var request = {
     location: userLocation,
     radius: document.getElementById('radius').value,
-    keyword: keyword
+    type: [placeType]
   };
 
   service = new google.maps.places.PlacesService(map);
