@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open House Service Finder</title>
+  <title>Open House</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="Images/open house logo.png" type="image/x-icon">
   <meta name="description" content="Find local home services for your open house. Cleaning, moving, photography, staging, landscaping, and storage services all in one place.">
@@ -11,6 +11,7 @@
 </head>
 <body>
   <header class="header">
+    <img src="Images/open house logo.png" alt="Open House Logo" class="logo">
     <h1>Welcome to Open House</h1>
     <p>Find the best home services for your open house.</p>
   </header>
@@ -33,14 +34,32 @@
     <div class="map-container">
       <div id="map"></div>
     </div>
-    <div class="sidebar">
+    <div class="sidebar" id="service-sidebar">
       <h3>Select Services</h3>
-      <label><input type="checkbox" value="cleaning" aria-label="Select Cleaning"> <img src="Images/cleaning logo.jpg" alt="Cleaning Logo" class="service-logo"> Cleaning</label>
-      <label><input type="checkbox" value="moving" aria-label="Select Moving"> <img src="Images/moving logo.jpg" alt="Moving Logo" class="service-logo"> Moving</label>
-      <label><input type="checkbox" value="photography" aria-label="Select Photography"> <img src="Images/photography logo.jpg" alt="Photography Logo" class="service-logo"> Photography</label>
-      <label><input type="checkbox" value="staging" aria-label="Select Staging"> <img src="Images/Staging Company Logo.png" alt="Staging Logo" class="service-logo"> Staging</label>
-      <label><input type="checkbox" value="landscaping" aria-label="Select Landscaping"> <img src="Images/Landscaper Logo.png" alt="Landscaping Logo" class="service-logo"> Landscaping</label>
-      <label><input type="checkbox" value="storage" aria-label="Select Storage"> <img src="Images/Storage.png" alt="Storage Logo" class="service-logo"> Storage</label>
+      <div class="service-banner">
+        <img src="Images/cleaning logo.jpg" alt="Cleaning Logo" class="service-logo">
+        <label><input type="checkbox" value="cleaning" aria-label="Select Cleaning"> Cleaning</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/moving logo.jpg" alt="Moving Logo" class="service-logo">
+        <label><input type="checkbox" value="moving" aria-label="Select Moving"> Moving</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/photography logo.jpg" alt="Photography Logo" class="service-logo">
+        <label><input type="checkbox" value="photography" aria-label="Select Photography"> Photography</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/Staging Company Logo.png" alt="Staging Logo" class="service-logo">
+        <label><input type="checkbox" value="staging" aria-label="Select Staging"> Staging</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/Landscaper Logo.png" alt="Landscaping Logo" class="service-logo">
+        <label><input type="checkbox" value="landscaping" aria-label="Select Landscaping"> Landscaping</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/Storage.png" alt="Storage Logo" class="service-logo">
+        <label><input type="checkbox" value="storage" aria-label="Select Storage"> Storage</label>
+      </div>
       <button onclick="selectServices()">Select Services</button>
     </div>
     <div id="results" class="results-container"></div>
@@ -67,4 +86,3 @@
     async defer></script>
 </body>
 </html>
-
