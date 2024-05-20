@@ -1,355 +1,340 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
+  <title>Open House</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Find local home services for your open house. Cleaning, moving, photography, staging, landscaping, and storage services all in one place.">
+  <meta name="keywords" content="open house, home services, cleaning, moving, photography, staging, landscaping, storage">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open House Service Finder</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f4;
       margin: 0;
       padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #333;
     }
-    .header {
-      text-align: center;
-      padding: 20px;
-      background-color: #fff;
-      border-bottom: 1px solid #ccc;
-    }
-    .header h1 {
-      margin: 0;
+    header {
+      background-color: #4CAF50;
       color: black;
+      padding: 10px 0;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    .header p {
-      margin: 5px 0 0;
-      color: black;
-    }
-    .container {
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       max-width: 1200px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: auto;
+      padding: 0 20px;
     }
-    .banner {
+    header img {
+      max-width: 50px;
+    }
+    header nav a {
+      color: black;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 500;
+    }
+    .hero {
+      background-color: #3e8e41;
+      padding: 50px 20px;
       text-align: center;
-      background: url('your-skyline-image.jpg') no-repeat center center;
-      background-size: cover;
-      color: #fff;
-      padding: 20px;
-      border-radius: 8px;
+      width: 100%;
     }
-    .banner h2 {
-      margin: 0;
-      font-size: 24px;
-    }
-    .search-container {
-      margin-top: 20px;
-      text-align: center;
-    }
-    .search-container input[type="text"] {
-      padding: 10px;
-      width: 80%;
-      max-width: 400px;
-      margin-right: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .search-container select {
-      padding: 10px;
-      margin-right: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .search-container button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      background-color: #28a745;
-      color: #fff;
-      cursor: pointer;
-    }
-    .map-container {
-      margin-top: 20px;
+    .hero h1, .hero p {
+      color: black;
     }
     #map {
-      width: 100%;
-      height: 400px;
+      height: 300px;
+      width: 80%;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .container {
+      text-align: center;
+      padding: 20px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      margin: 20px auto;
+      width: 80%;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      color: black;
+    }
+    .sub-header {
+      background-color: #3e8e41;
+      border: 2px solid #3e8e41;
+      color: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      width: 80%;
+      text-align: center;
+    }
+    .search-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px 0;
+    }
+    .search-bar input, .search-bar select {
+      padding: 10px;
+      margin: 5px 0;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 5px;
+      width: 300px;
     }
-    .sidebar {
-      margin-top: 20px;
+    .search-bar button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
     }
-    .sidebar h3 {
-      margin-top: 0;
+    .search-bar button:hover {
+      background-color: #45a049;
     }
-    .selected-companies {
+    .results, .selected-companies {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      width: 80%;
+      margin: 20px auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       display: none;
-      margin-top: 20px;
     }
-    .selected-companies.visible {
+    .results.visible, .selected-companies.visible {
       display: block;
     }
-    .results-container {
-      margin-top: 20px;
+    .sidebar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 20px;
+      width: 80%;
+      display: none; /* Hide sidebar initially */
     }
-    .modal {
+    .sidebar.visible {
+      display: flex; /* Show sidebar when visible */
+    }
+    .service-banner {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      background-color: #e0f7fa; /* Light background color for the banner */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 30%;
+      box-sizing: border-box;
+    }
+    .service-banner img {
+      max-width: 30px;
+      margin-right: 10px;
+    }
+    .service-banner label {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      cursor: pointer;
+      color: #333;
+    }
+    .service-banner input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    .centered-button, .new-search {
+      text-align: center;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .centered-button button, .new-search {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+    }
+    .centered-button button:hover, .new-search:hover {
+      background-color: #45a049;
+    }
+    .footer {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px 0;
+      width: 100%;
+      text-align: center;
+    }
+    .footer p {
+      margin: 5px 0;
+    }
+    .footer a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    .loading-overlay {
       display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.5);
+      background: rgba(255, 255, 255, 0.8);
+      z-index: 9999;
       justify-content: center;
       align-items: center;
     }
-    .modal-content {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      width: 300px;
-      text-align: center;
+    .loading-overlay.visible {
+      display: flex;
     }
-    .modal-content input[type="text"],
-    .modal-content input[type="email"] {
-      padding: 10px;
+    .loading-spinner {
+      border: 16px solid #f3f3f3;
+      border-top: 16px solid #4CAF50;
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
       width: 100%;
-      margin-bottom: 10px;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .modal-content input[type="text"], .modal-content input[type="email"] {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 5px;
     }
     .modal-content button {
       padding: 10px 20px;
       border: none;
-      border-radius: 4px;
-      background-color: #28a745;
-      color: #fff;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-    @media (max-width: 600px) {
-      .search-container input[type="text"],
-      .search-container select {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-      .search-container button {
-        width: 100%;
-      }
+    .modal-content button:hover {
+      background-color: #45a049;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover, .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="header">
+  <header>
+    <div class="container">
+      <img src="logo.png" alt="Open House Logo">
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <div class="hero">
     <h1>Welcome to Open House</h1>
-    <p>Find the best home services for your open house.</p>
+    <p>Find local home services for your open house.</p>
   </div>
+  <div id="map"></div>
   <div class="container">
-    <div class="banner">
-      <h2>Home Services Finder</h2>
-    </div>
-    <div class="search-container">
-      <p>To begin looking for local professionals, please enter the address for the home you are listing below:</p>
-      <input type="text" id="address" placeholder="Enter your address">
-      <select id="radius">
-        <option value="<5 miles"><5 miles</option>
-        <option value="5-25 miles">5-25 miles</option>
-        <option value="25-50 miles">25-50 miles</option>
-        <option value="50-100 miles">50-100 miles</option>
-        <option value="100+ miles">100+ miles</option>
+    <h2>Find Local Services</h2>
+    <div class="search-bar">
+      <input type="text" id="addressInput" placeholder="Enter address">
+      <select id="serviceSelect">
+        <option value="cleaning">Cleaning</option>
+        <option value="moving">Moving</option>
+        <option value="photography">Photography</option>
+        <option value="staging">Staging</option>
+        <option value="landscaping">Landscaping</option>
+        <option value="storage">Storage</option>
       </select>
-      <button onclick="searchAddress()">Search</button>
-    </div>
-    <div class="map-container">
-      <div id="map"></div>
-    </div>
-    <div class="sidebar">
-      <h3>Select Services</h3>
-      <label><input type="checkbox" value="cleaning"> Cleaning</label>
-      <label><input type="checkbox" value="moving"> Moving</label>
-      <label><input type="checkbox" value="photography"> Photography</label>
-      <label><input type="checkbox" value="staging"> Staging</label>
-      <label><input type="checkbox" value="landscaping"> Landscaping</label>
-      <label><input type="checkbox" value="storage"> Storage</label>
-      <button onclick="selectServices()">Select Services</button>
-    </div>
-    <div id="results" class="results-container"></div>
-    <div id="selected-companies" class="selected-companies">
-      <h3>Selected Companies</h3>
-      <div id="selected-companies-list"></div>
-      <button onclick="saveAsPDF()">Save as PDF</button>
-      <div id="new-search" onclick="startNewSearch()" style="cursor:pointer; color:blue; text-decoration:underline; margin-top: 10px;">Start a New Search</div>
+      <div class="center-container">
+        <button onclick="searchAddress()">Search</button>
+      </div>
     </div>
   </div>
-
-  <div id="userInfoModal" class="modal">
+  <div class="sub-header">
+    <h2>Select Companies</h2>
+    <div class="sidebar"></div>
+  </div>
+  <div class="results"></div>
+  <div class="selected-companies"></div>
+  <div class="footer">
+    <p>&copy; 2024 Open House. All rights reserved.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+  </div>
+  <div class="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+  <div id="myModal" class="modal">
     <div class="modal-content">
-      <p>To generate a list of the selected companies, please enter the following information:</p>
-      <input type="text" id="firstName" placeholder="First Name">
-      <input type="text" id="lastName" placeholder="Last Name">
-      <input type="email" id="email" placeholder="Email Address">
-      <button onclick="submitUserInfo()">Submit</button>
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Contact Us</h2>
+      <input type="text" placeholder="Your Name">
+      <input type="email" placeholder="Your Email">
+      <button type="button" onclick="submitContactForm()">Submit</button>
     </div>
   </div>
-
   <script>
-    var map;
-    var service;
-    var infowindow;
-    var userLocation = null;
-
-    function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -33.867, lng: 151.195},
-        zoom: 15
-      });
-
-      var input = document.getElementById('address');
-      var autocomplete = new google.maps.places.Autocomplete(input);
-      autocomplete.bindTo('bounds', map);
-
-      var marker = new google.maps.Marker({
-        map: map,
-        anchorPoint: new google.maps.Point(0, -29)
-      });
-
-      autocomplete.addListener('place_changed', function() {
-        infowindow.close();
-        marker.setVisible(false);
-        var place = autocomplete.getPlace();
-        if (!place.geometry) {
-          window.alert("Autocomplete's returned place contains no geometry");
-          return;
-        }
-
-        if (place.geometry.viewport) {
-          map.fitBounds(place.geometry.viewport);
-        } else {
-          map.setCenter(place.geometry.location);
-          map.setZoom(17);
-        }
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
-
-        userLocation = place.geometry.location;
-      });
-    }
-
     function searchAddress() {
-      var address = document.getElementById('address').value;
-      if (!address) {
-        alert('Please enter an address.');
-        return;
-      }
-
-      var geocoder = new google.maps.Geocoder();
-      geocoder.geocode({'address': address}, function(results, status) {
-        if (status === 'OK') {
-          map.setCenter(results[0].geometry.location);
-          userLocation = results[0].geometry.location;
-          document.getElementById('new-search').style.display = 'block';
-        } else {
-          alert('Geocode was not successful for the following reason: ' + status);
-        }
-      });
+      // Your search logic here
     }
-
-    function filterPlaces(type, callback) {
-      var request = {
-        location: userLocation,
-        radius: document.getElementById('radius').value,
-        type: [type]
-      };
-
-      service = new google.maps.places.PlacesService(map);
-      service.nearbySearch(request, function(results, status) {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          callback(results, type);
-        } else {
-          alert('Places search was not successful for the following reason: ' + status);
-        }
-      });
+    function closeModal() {
+      document.getElementById('myModal').style.display = 'none';
     }
-
-    function selectServices() {
-      var selectedServices = [];
-      document.querySelectorAll('.sidebar input[type="checkbox"]:checked').forEach(function(checkbox) {
-        selectedServices.push(checkbox.value);
-      });
-
-      if (selectedServices.length === 0) {
-        alert('Please select at least one service.');
-        return;
-      }
-
-      var resultsContainer = document.getElementById('results');
-      resultsContainer.innerHTML = '<h3>Selected Services</h3>';
-
-      selectedServices.forEach(function(service) {
-        filterPlaces(service, function(results, type) {
-          var serviceContainer = document.createElement('div');
-          serviceContainer.innerHTML = `<h4>${type.charAt(0).toUpperCase() + type.slice(1)} Companies</h4>`;
-          results.forEach(function(place) {
-            var div = document.createElement('div');
-            div.innerHTML = `<strong>${place.name}</strong><br>${place.vicinity}<br><a href="${place.url}" target="_blank">View on Google Maps</a>`;
-            serviceContainer.appendChild(div);
-          });
-          resultsContainer.appendChild(serviceContainer);
-        });
-      });
-
-      document.getElementById('selected-companies').classList.add('visible');
+    function submitContactForm() {
+      // Your form submission logic here
+      closeModal();
     }
-
-    function saveAsPDF() {
-      var pdfContent = document.getElementById('selected-companies-list').innerHTML;
-      var opt = {
-        margin:       1,
-        filename:     'selected-companies.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
-      html2pdf().from(pdfContent).set(opt).save();
-    }
-
-    function startNewSearch() {
-      location.reload();
-    }
-
-    function submitUserInfo() {
-      var firstName = document.getElementById('firstName').value;
-      var lastName = document.getElementById('lastName').value;
-      var email = document.getElementById('email').value;
-
-      if (!firstName || !lastName || !email) {
-        alert('Please fill out all fields.');
-        return;
-      }
-
-      var selectedCompanies = document.querySelectorAll('.sidebar input[type="checkbox"]:checked');
-      var selectedCompaniesList = document.getElementById('selected-companies-list');
-      selectedCompaniesList.innerHTML = '';
-
-      selectedCompanies.forEach(function(company) {
-        var div = document.createElement('div');
-        div.innerHTML = `<strong>${company.value}</strong><br>`;
-        selectedCompaniesList.appendChild(div);
-      });
-
-      document.getElementById('userInfoModal').style.display = 'none';
-      document.getElementById('selected-companies').classList.add('visible');
-    }
-
-    window.onload = function() {
-      initMap();
-      document.getElementById('new-search').style.display = 'none';
-    };
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
-    async defer></script>
 </body>
 </html>
