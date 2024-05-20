@@ -37,6 +37,8 @@
       margin: 20px auto;
       width: 60%;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .header {
       background-color: #4CAF50;
       color: white;
     }
@@ -51,27 +53,30 @@
     .sub-header {
       background-color: #3e8e41;
       border: 2px solid #3e8e41;
+      color: white;
     }
     .search-bar {
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 20px 0;
+      flex-direction: column;
     }
     .search-bar input[type="text"] {
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px 0 0 5px;
       width: 300px;
+      margin-bottom: 10px;
     }
     .search-bar button {
       padding: 10px;
       border: 1px solid #4CAF50;
-      border-left: 0;
-      border-radius: 0 5px 5px 0;
+      border-radius: 5px;
       background-color: #4CAF50;
       color: white;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
     .search-bar button:hover {
       background-color: #45a049;
@@ -105,6 +110,7 @@
       background-color: #4CAF50;
       color: white;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
     .sidebar button:hover {
       background-color: #45a049;
@@ -135,6 +141,10 @@
     .selected-companies.visible {
       display: block;
     }
+    .instructions {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -149,6 +159,7 @@
 
   <div class="container">
     <div class="search-bar">
+      <div class="instructions">To begin looking for local professionals, please enter the address for the home you are listing below:</div>
       <input id="address" type="text" placeholder="Enter your address">
       <button onclick="searchAddress()">Search</button>
     </div>
