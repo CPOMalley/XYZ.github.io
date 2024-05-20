@@ -21,7 +21,7 @@
     }
     header {
       background-color: #4CAF50;
-      color: white;
+      color: black;
       padding: 10px 0;
       width: 100%;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -38,7 +38,7 @@
       max-width: 50px;
     }
     header nav a {
-      color: white;
+      color: black;
       text-decoration: none;
       margin: 0 10px;
       font-weight: 500;
@@ -69,6 +69,7 @@
       width: 80%;
       background-color: #fff;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      color: black;
     }
     .sub-header {
       background-color: #3e8e41;
@@ -78,6 +79,7 @@
       margin: 20px 0;
       border-radius: 10px;
       width: 80%;
+      text-align: center;
     }
     .search-bar {
       display: flex;
@@ -262,7 +264,7 @@
     <div class="container">
       <div class="logo">
         <img src="https://github.com/CPOMalley/XYZ.github.io/blob/main/open%20house%20logo.png?raw=true" alt="Company Logo">
-        <h1>Open House</h1>
+        <h1 style="color: black;">Open House</h1>
       </div>
       <nav>
         <a href="#">Home</a>
@@ -287,7 +289,7 @@
     </div>
     <div class="search-bar">
       <div class="instructions">To begin looking for local professionals, please enter the address for the home you are listing below:</div>
-      <div style="display: flex;">
+      <div style="display: flex; justify-content: center;">
         <input id="address" type="text" placeholder="Enter your address">
         <select id="radius">
           <option value="5000">&lt;5 miles</option>
