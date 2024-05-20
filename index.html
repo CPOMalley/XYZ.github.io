@@ -44,7 +44,7 @@
       font-weight: 500;
     }
     .hero {
-      background-color: #3e8e41;
+      background: url('https://www.example.com/skyline.jpg') no-repeat center center/cover;
       padding: 50px 20px;
       text-align: center;
       width: 100%;
@@ -71,13 +71,14 @@
       color: black;
     }
     .sub-header {
-      background-color: #3e8e41;
+      background: url('https://www.example.com/skyline.jpg') no-repeat center center/cover;
       border: 2px solid #3e8e41;
-      color: white;
+      color: black;
       padding: 20px;
-      margin: 20px 0;
+      margin: 20px auto;
       border-radius: 10px;
-      width: 80%;
+      width: calc(100% - 40px);
+      max-width: 800px;
       text-align: center;
     }
     .search-bar {
@@ -256,6 +257,23 @@
     .modal-content button:hover {
       background-color: #45a049;
     }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header .container {
+        flex-direction: column;
+        text-align: center;
+      }
+      .search-bar input, .search-bar select {
+        width: 100%;
+      }
+      #map, .container, .results, .selected-companies, .sidebar {
+        width: 95%;
+      }
+      .service-banner {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -286,7 +304,7 @@
     </div>
     <div class="search-bar">
       <div class="instructions">To begin looking for local professionals, please enter the address for the home you are listing below:</div>
-      <div style="display: flex; justify-content: center;">
+      <div style="display: flex; justify-content: center; flex-wrap: wrap;">
         <input id="address" type="text" placeholder="Enter your address">
         <select id="radius">
           <option value="5000">&lt;5 miles</option>
@@ -456,135 +474,4 @@
         }, function(response, status) {
           if (status === 'OK') {
             var distanceText = response.rows[0].elements[0].distance.text;
-            // Convert distance to miles if it is in km
-            if (distanceText.includes('km')) {
-              var distanceKm = parseFloat(distanceText.replace(' km', ''));
-              var distanceMiles = (distanceKm * 0.621371).toFixed(2);
-              resolve(distanceMiles + ' miles');
-            } else {
-              resolve(distanceText);
-            }
-          } else {
-            reject('Distance calculation failed due to ' + status);
-          }
-        });
-      });
-    }
-
-    function selectServices() {
-      if (!userLocation) {
-        alert('Please search for an address first.');
-        return;
-      }
-
-      var selectedServices = [];
-      var checkboxes = document.querySelectorAll('.sidebar input[type="checkbox"]:checked');
-      checkboxes.forEach(function(checkbox) {
-        selectedServices.push(checkbox.value);
-      });
-
-      if (selectedServices.length === 0) {
-        alert('Please select at least one service.');
-        return;
-      }
-
-      var resultsContainer = document.getElementById('results');
-      resultsContainer.innerHTML = '<h3>Selected Services</h3>';
-      resultsContainer.classList.add('visible');
-
-      selectedServices.forEach(function(service) {
-        var serviceContainer = document.createElement('div');
-        serviceContainer.innerHTML = `<h4>${service.charAt(0).toUpperCase() + service.slice(1)} Companies</h4>`;
-        resultsContainer.appendChild(serviceContainer);
-
-        filterPlaces(service, function(results, type) {
-          results.forEach(function(place) {
-            getPlaceDetails(place, function(details) {
-              calculateDistance(userLocation, details.geometry.location).then(function(distance) {
-                var placeDetails = `
-                  <div>
-                    <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
-                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a> - ${details.vicinity}<br>
-                    Distance: ${distance}<br>
-                    Phone: ${details.formatted_phone_number || 'N/A'}
-                  </div>`;
-                serviceContainer.innerHTML += placeDetails;
-              }).catch(function(error) {
-                console.error(error);
-              });
-            });
-          });
-        });
-      });
-
-      // Show the "Select Companies" button after services are selected
-      var selectCompaniesButton = document.getElementById('select-companies-button');
-      selectCompaniesButton.style.display = 'block';
-    }
-
-    function generateSelectedCompanies() {
-      var selectedCompanies = document.querySelectorAll('.company-checkbox:checked');
-      if (selectedCompanies.length === 0) {
-        alert('Please select at least one company.');
-        return;
-      }
-
-      // Show user info modal before displaying results
-      var userInfoModal = document.getElementById('userInfoModal');
-      userInfoModal.style.display = 'block';
-    }
-
-    function submitUserInfo() {
-      var firstName = document.getElementById('firstName').value;
-      var lastName = document.getElementById('lastName').value;
-      var email = document.getElementById('email').value;
-
-      if (firstName && lastName && email) {
-        var selectedCompaniesContainer = document.getElementById('selected-companies');
-        var selectedCompaniesList = document.getElementById('selected-companies-list');
-        selectedCompaniesList.innerHTML = '';
-
-        var selectedCompanies = document.querySelectorAll('.company-checkbox:checked');
-        selectedCompanies.forEach(function(checkbox) {
-          var companyDetails = `
-            <p>
-              ${checkbox.dataset.name}<br>
-              Address: ${checkbox.dataset.address}<br>
-              Distance: ${checkbox.dataset.distance}<br>
-              Phone: ${checkbox.dataset.phone}
-            </p>`;
-          selectedCompaniesList.innerHTML += companyDetails;
-        });
-
-        selectedCompaniesContainer.classList.add('visible');
-        document.getElementById('userInfoModal').style.display = 'none'; // Hide the modal
-      } else {
-        alert('Please fill out all fields.');
-      }
-    }
-
-    function saveAsPDF() {
-      var { jsPDF } = window.jspdf;
-      var doc = new jsPDF();
-      var selectedCompaniesList = document.getElementById('selected-companies-list');
-      var content = selectedCompaniesList.innerHTML.replace(/<br>/g, '\n').replace(/<\/?[^>]+(>|$)/g, "");
-      var lines = doc.splitTextToSize(content, 180);
-      doc.text(lines, 10, 10);
-      doc.save('selected-companies.pdf');
-    }
-
-    function startNewSearch() {
-      location.reload(); // Refresh the page
-    }
-
-    window.onload = function() {
-      initMap();
-      // Hide the "Select Companies" button and "Start a New Search" text initially
-      var selectCompaniesButton = document.getElementById('select-companies-button');
-      selectCompaniesButton.style.display = 'none';
-      var newSearchText = document.getElementById('new-search');
-      newSearchText.style.display = 'none';
-    };
-  </script>
-</body>
-</html>
+            // Convert distance to miles if it
