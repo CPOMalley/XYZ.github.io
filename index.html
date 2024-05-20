@@ -301,10 +301,13 @@
       var resultsContainer = document.getElementById('results');
       resultsContainer.innerHTML = '<h3>Selected Services</h3>';
       resultsContainer.classList.add('visible');
-      
+
       selectedServices.forEach(function(service) {
+        var serviceContainer = document.createElement('div');
+        serviceContainer.innerHTML = `<h4>${service.charAt(0).toUpperCase() + service.slice(1)} Companies</h4>`;
+        resultsContainer.appendChild(serviceContainer);
+
         filterPlaces(service, function(results, type) {
-          resultsContainer.innerHTML += `<h4>${type.charAt(0).toUpperCase() + type.slice(1)} Companies</h4>`;
           results.forEach(function(place) {
             getPlaceDetails(place, function(details) {
               calculateDistance(userLocation, details.geometry.location).then(function(distance) {
@@ -315,7 +318,7 @@
                     Distance: ${distance}<br>
                     Phone: ${details.formatted_phone_number || 'N/A'}
                   </div>`;
-                resultsContainer.innerHTML += placeDetails;
+                serviceContainer.innerHTML += placeDetails;
               }).catch(function(error) {
                 console.error(error);
               });
