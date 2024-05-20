@@ -97,7 +97,7 @@ function selectServices() {
       serviceContainer.innerHTML = `<h4>${type.charAt(0).toUpperCase() + type.slice(1)} Companies</h4>`;
       results.forEach(function(place) {
         var div = document.createElement('div');
-        div.innerHTML = `<strong>${place.name}</strong><br>${place.vicinity}<br><a href="${place.url}" target="_blank">View on Google Maps</a>`;
+        div.innerHTML = `<label><input type="checkbox" value="${place.name}"><strong>${place.name}</strong></label><br>${place.vicinity}<br>Distance: ${place.distance} miles<br>Phone: ${place.phone_number}<br><a href="${place.url}" target="_blank">View on Google Maps</a>`;
         serviceContainer.appendChild(div);
       });
       resultsContainer.appendChild(serviceContainer);
@@ -133,7 +133,7 @@ function submitUserInfo() {
     return;
   }
 
-  var selectedCompanies = document.querySelectorAll('.sidebar input[type="checkbox"]:checked');
+  var selectedCompanies = document.querySelectorAll('.results-container input[type="checkbox"]:checked');
   var selectedCompaniesList = document.getElementById('selected-companies-list');
   selectedCompaniesList.innerHTML = '';
 
