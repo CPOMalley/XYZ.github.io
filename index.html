@@ -203,6 +203,23 @@
     .new-search:hover {
       color: #45a049;
     }
+    .centered-button {
+      text-align: center;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .centered-button button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .centered-button button:hover {
+      background-color: #45a049;
+    }
   </style>
 </head>
 <body>
@@ -259,12 +276,15 @@
       <img src="/mnt/data/Storage.png" alt="Storage Logo">
       <label><input type="checkbox" id="storage" value="storage">Storage</label>
     </div>
-    <div style="width: 100%; text-align: center; margin-top: 10px;">
+    <div class="centered-button">
       <button onclick="selectServices()">Select Services</button>
     </div>
   </div>
   
   <div id="results" class="results"></div>
+  <div class="centered-button" id="select-companies-button" style="display: none;">
+    <button onclick="generateSelectedCompanies()">Select Companies</button>
+  </div>
   <div id="selected-companies" class="selected-companies">
     <h3>Selected Companies</h3>
     <div id="selected-companies-list"></div>
@@ -428,8 +448,8 @@
         });
       });
 
-      // Show the "Select Companies" button only after services are selected
-      var selectCompaniesButton = document.querySelector('button[onclick="generateSelectedCompanies()"]');
+      // Show the "Select Companies" button after services are selected
+      var selectCompaniesButton = document.getElementById('select-companies-button');
       selectCompaniesButton.style.display = 'block';
     }
 
@@ -491,7 +511,7 @@
     window.onload = function() {
       initMap();
       // Hide the "Select Companies" button initially
-      var selectCompaniesButton = document.querySelector('button[onclick="generateSelectedCompanies()"]');
+      var selectCompaniesButton = document.getElementById('select-companies-button');
       selectCompaniesButton.style.display = 'none';
     };
   </script>
