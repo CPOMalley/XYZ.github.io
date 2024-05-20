@@ -44,6 +44,9 @@ body {
   padding: 20px;
   border-radius: 8px;
 }
+.blue-banner {
+  background-color: #2a9df4; /* Exact shade of blue */
+}
 .banner h2 {
   margin: 0;
   font-size: 24px;
