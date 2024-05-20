@@ -266,7 +266,7 @@
       selectedServicesContainer.classList.add('visible');
       
       var selectedServicesLinks = document.getElementById('selected-services-links');
-      selectedServicesLinks.innerHTML = '';
+      selectedServicesLinks.innerHTML = '<h3>Selected Services</h3>';
       
       selectedServices.forEach(function(service) {
         filterPlaces(service, function(results) {
