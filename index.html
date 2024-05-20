@@ -199,9 +199,10 @@
       color: #4CAF50;
       text-decoration: underline;
       transition: color 0.3s ease;
+      display: none; /* Hide initially */
     }
-    .new-search:hover {
-      color: #45a049;
+    .new-search.visible {
+      display: block; /* Show when visible */
     }
     .centered-button {
       text-align: center;
@@ -290,7 +291,7 @@
     <div id="selected-companies-list"></div>
     <button onclick="saveAsPDF()">Save as PDF</button>
   </div>
-  <div class="new-search" onclick="startNewSearch()">Start a New Search</div>
+  <div class="new-search" id="new-search" onclick="startNewSearch()">Start a New Search</div>
 
   <div id="userInfoModal" class="modal">
     <div class="modal-content">
@@ -350,6 +351,7 @@
             position: userLocation
           });
           document.getElementById('service-sidebar').classList.add('visible'); // Show sidebar on successful search
+          document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
           // Store the radius for later use
           userLocation.radius = radius;
         } else {
@@ -510,9 +512,11 @@
 
     window.onload = function() {
       initMap();
-      // Hide the "Select Companies" button initially
+      // Hide the "Select Companies" button and "Start a New Search" text initially
       var selectCompaniesButton = document.getElementById('select-companies-button');
       selectCompaniesButton.style.display = 'none';
+      var newSearchText = document.getElementById('new-search');
+      newSearchText.style.display = 'none';
     };
   </script>
 </body>
