@@ -140,7 +140,7 @@
 
   <div class="container">
     <div class="search-bar">
-      <input type="text" id="address" placeholder="Enter your address">
+      <input id="address" type="text" placeholder="Enter your address">
       <button onclick="searchAddress()">Search</button>
     </div>
   </div>
@@ -170,6 +170,7 @@
     var service;
     var infowindow;
     var userLocation;
+    var autocomplete;
 
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
@@ -177,6 +178,23 @@
         zoom: 8
       });
       infowindow = new google.maps.InfoWindow();
+      autocomplete = new google.maps.places.Autocomplete(document.getElementById('address'));
+      autocomplete.addListener('place_changed', onPlaceChanged);
+    }
+
+    function onPlaceChanged() {
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+      userLocation = place.geometry.location;
+      map.setCenter(userLocation);
+      map.setZoom(15);
+      new google.maps.Marker({
+        map: map,
+        position: userLocation
+      });
     }
 
     function searchAddress() {
