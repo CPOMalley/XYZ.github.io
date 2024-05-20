@@ -150,4 +150,3 @@ window.onload = function() {
   initMap();
   document.getElementById('new-search').style.display = 'none';
 };
-
