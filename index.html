@@ -247,7 +247,7 @@
       service = new google.maps.places.PlacesService(map);
       service.nearbySearch(request, function(results, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          callback(results);
+          callback(results, type);
         } else {
           alert('Search was not successful for the following reason: ' + status);
         }
@@ -303,8 +303,8 @@
       resultsContainer.classList.add('visible');
       
       selectedServices.forEach(function(service) {
-        filterPlaces(service, function(results) {
-          resultsContainer.innerHTML += `<h4>${service.charAt(0).toUpperCase() + service.slice(1)} Companies</h4>`;
+        filterPlaces(service, function(results, type) {
+          resultsContainer.innerHTML += `<h4>${type.charAt(0).toUpperCase() + type.slice(1)} Companies</h4>`;
           results.forEach(function(place) {
             getPlaceDetails(place, function(details) {
               calculateDistance(userLocation, details.geometry.location).then(function(distance) {
