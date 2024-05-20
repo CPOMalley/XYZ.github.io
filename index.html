@@ -118,8 +118,17 @@
       margin-right: 10px;
     }
     .selected-services {
-      margin: 20px 0;
-      text-align: center;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      width: 60%;
+      margin: 20px auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: none;
+    }
+    .selected-services.visible {
+      display: block;
     }
     .selected-services a {
       color: #4CAF50;
@@ -159,7 +168,7 @@
   
   <div id="results" class="results"></div>
 
-  <div class="selected-services">
+  <div id="selected-services" class="selected-services">
     <h3>Selected Services</h3>
     <div id="selected-services-links"></div>
   </div>
@@ -252,6 +261,12 @@
       var resultsContainer = document.getElementById('results');
       resultsContainer.innerHTML = '';
       resultsContainer.classList.add('visible');
+
+      var selectedServicesContainer = document.getElementById('selected-services');
+      selectedServicesContainer.classList.add('visible');
+      
+      var selectedServicesLinks = document.getElementById('selected-services-links');
+      selectedServicesLinks.innerHTML = '';
       
       selectedServices.forEach(function(service) {
         filterPlaces(service, function(results) {
@@ -259,6 +274,7 @@
           results.forEach(function(place) {
             var placeDetails = `<p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name)}&query_place_id=${place.place_id}" target="_blank">${place.name}</a> - ${place.vicinity}</p>`;
             resultsContainer.innerHTML += placeDetails;
+            selectedServicesLinks.innerHTML += `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name)}&query_place_id=${place.place_id}" target="_blank">${place.name}</a> `;
           });
         });
       });
