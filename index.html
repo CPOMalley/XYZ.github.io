@@ -223,6 +223,33 @@
       });
     }
 
+    function getPlaceDetails(place, callback) {
+      service.getDetails({placeId: place.place_id}, function(details, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          callback(details);
+        } else {
+          console.error('Place details request failed due to ' + status);
+        }
+      });
+    }
+
+    function calculateDistance(origin, destination) {
+      var distanceService = new google.maps.DistanceMatrixService();
+      return new Promise(function(resolve, reject) {
+        distanceService.getDistanceMatrix({
+          origins: [origin],
+          destinations: [destination],
+          travelMode: 'DRIVING',
+        }, function(response, status) {
+          if (status === 'OK') {
+            resolve(response.rows[0].elements[0].distance.text);
+          } else {
+            reject('Distance calculation failed due to ' + status);
+          }
+        });
+      });
+    }
+
     function selectServices() {
       if (!userLocation) {
         alert('Please search for an address first.');
@@ -248,8 +275,19 @@
         filterPlaces(service, function(results) {
           resultsContainer.innerHTML += `<h4>${service.charAt(0).toUpperCase() + service.slice(1)} Companies</h4>`;
           results.forEach(function(place) {
-            var placeDetails = `<p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name)}&query_place_id=${place.place_id}" target="_blank">${place.name}</a> - ${place.vicinity}</p>`;
-            resultsContainer.innerHTML += placeDetails;
+            getPlaceDetails(place, function(details) {
+              calculateDistance(userLocation, details.geometry.location).then(function(distance) {
+                var placeDetails = `
+                  <p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a> - ${details.vicinity}<br>
+                    Distance: ${distance}<br>
+                    Phone: ${details.formatted_phone_number || 'N/A'}
+                  </p>`;
+                resultsContainer.innerHTML += placeDetails;
+              }).catch(function(error) {
+                console.error(error);
+              });
+            });
           });
         });
       });
