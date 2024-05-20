@@ -45,13 +45,12 @@
     }
     .hero {
       background-color: #3e8e41;
-      color: white;
       padding: 50px 20px;
       text-align: center;
       width: 100%;
     }
     .hero h1, .hero p {
-      color: white;
+      color: black;
     }
     #map {
       height: 300px;
@@ -276,12 +275,10 @@
 
   <section class="hero">
     <div class="container">
-      <h1>Welcome to Open House</h1>
-      <p>Find the best home services for your open house.</p>
+      <h1 style="color: black;">Welcome to Open House</h1>
+      <p style="color: black;">Find the best home services for your open house.</p>
     </div>
   </section>
-
-  <div id="map"></div>
 
   <div class="container">
     <div class="sub-header">
@@ -302,6 +299,8 @@
       <button onclick="searchAddress()">Search</button>
     </div>
   </div>
+
+  <div id="map"></div>
 
   <div class="sidebar" id="service-sidebar">
     <div class="service-banner">
