@@ -83,21 +83,47 @@ body {
   margin-top: 0;
 }
 .service-banner {
+  width: 100%;
   display: flex;
   align-items: center;
+  background-color: #f0f0f0;
   padding: 10px;
-  margin: 5px 0;
-  border-radius: 5px;
-  background-color: #e0f7fa; /* Light background color for the banner */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  width: 100%;
-  box-sizing: border-box;
+  margin-bottom: 10px;
+  border-radius: 4px;
 }
 .service-logo {
-  max-width: 50px;
-  height: auto;
+  max-width: 40px;
   margin-right: 10px;
-  vertical-align: middle;
+}
+.results-container {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.service-container {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.service-tile {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.service-tile label {
+  display: block;
+  margin-bottom: 5px;
+}
+.service-tile a {
+  color: #007bff;
+  text-decoration: none;
+}
+.service-tile a:hover {
+  text-decoration: underline;
 }
 .selected-companies {
   display: none;
@@ -105,9 +131,6 @@ body {
 }
 .selected-companies.visible {
   display: block;
-}
-.results-container {
-  margin-top: 20px;
 }
 .modal {
   display: none;
