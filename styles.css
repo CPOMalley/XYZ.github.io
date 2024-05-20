@@ -37,21 +37,6 @@ body {
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-.banner {
-  text-align: center;
-  background-color: #2a9df4; /* Shade of blue */
-  color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-}
-.blue-banner {
-  background-color: #2a9df4; /* Exact shade of blue */
-}
-.banner h2 {
-  margin: 0;
-  font-size: 24px;
-  color: white;
-}
 .search-container {
   margin-top: 20px;
   text-align: center;
