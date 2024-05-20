@@ -101,6 +101,29 @@
       padding: 20px;
       width: 60%;
     }
+    .sidebar .service-banner {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      background-color: #f4f4f4;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 100%;
+    }
+    .sidebar .service-banner img {
+      max-width: 40px;
+      margin-right: 10px;
+    }
+    .sidebar .service-banner label {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      cursor: pointer;
+    }
+    .sidebar .service-banner input[type="checkbox"] {
+      margin-right: 10px;
+    }
     .sidebar button {
       width: 100%;
       padding: 10px;
@@ -114,19 +137,6 @@
     }
     .sidebar button:hover {
       background-color: #45a049;
-    }
-    .sidebar label {
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
-    .sidebar input[type="checkbox"] {
-      margin-right: 10px;
-    }
-    .selected-services a {
-      color: #4CAF50;
-      text-decoration: none;
-      margin: 0 5px;
     }
     .selected-companies {
       background-color: #fff;
@@ -168,12 +178,30 @@
   <div id="map"></div>
   
   <div class="sidebar">
-    <label><input type="checkbox" id="cleaning" value="cleaning">Cleaning Companies</label>
-    <label><input type="checkbox" id="moving" value="moving">Moving Companies</label>
-    <label><input type="checkbox" id="photographers" value="photographers">Photographers</label>
-    <label><input type="checkbox" id="staging" value="staging">Staging Companies</label>
-    <label><input type="checkbox" id="landscaping" value="landscaping">Landscaping</label>
-    <label><input type="checkbox" id="storage" value="storage">Storage</label>
+    <div class="service-banner">
+      <img src="images/cleaning logo.jpg" alt="Cleaning Logo">
+      <label><input type="checkbox" id="cleaning" value="cleaning">Cleaning</label>
+    </div>
+    <div class="service-banner">
+      <img src="images/moving logo.jpg" alt="Moving Logo">
+      <label><input type="checkbox" id="moving" value="moving">Moving</label>
+    </div>
+    <div class="service-banner">
+      <img src="images/photography logo.jpg" alt="Photography Logo">
+      <label><input type="checkbox" id="photographers" value="photographers">Photography</label>
+    </div>
+    <div class="service-banner">
+      <img src="images/Staging Company Logo.png" alt="Staging Logo">
+      <label><input type="checkbox" id="staging" value="staging">Staging</label>
+    </div>
+    <div class="service-banner">
+      <img src="images/Landscaper Logo.png" alt="Landscaping Logo">
+      <label><input type="checkbox" id="landscaping" value="landscaping">Landscaping</label>
+    </div>
+    <div class="service-banner">
+      <img src="images/storage.png" alt="Storage Logo">
+      <label><input type="checkbox" id="storage" value="storage">Storage</label>
+    </div>
     <button onclick="selectServices()">Select Services</button>
   </div>
   
