@@ -9,10 +9,13 @@
       background-color: #f4f4f4;
       margin: 0;
       padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     #map {
       height: 300px;
-      width: 40%;
+      width: 60%;
       margin: 20px auto;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -23,7 +26,7 @@
       border: 2px solid #ccc;
       border-radius: 10px;
       margin: 20px auto;
-      width: 80%;
+      width: 60%;
       background-color: #fff;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
@@ -32,7 +35,7 @@
       padding: 20px;
       border-radius: 10px;
       margin: 20px auto;
-      width: 80%;
+      width: 60%;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       background-color: #4CAF50;
       color: white;
@@ -78,13 +81,50 @@
       padding: 20px;
       border-radius: 10px;
       border: 2px solid #ccc;
-      width: 80%;
+      width: 60%;
       margin: 20px auto;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       display: none;
     }
     .results.visible {
       display: block;
+    }
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px;
+      width: 60%;
+    }
+    .sidebar button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    .sidebar button:hover {
+      background-color: #45a049;
+    }
+    .sidebar label {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .sidebar input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    .selected-services {
+      margin: 20px 0;
+      text-align: center;
+    }
+    .selected-services a {
+      color: #4CAF50;
+      text-decoration: none;
+      margin: 0 5px;
     }
   </style>
 </head>
@@ -107,13 +147,27 @@
   
   <div id="map"></div>
   
-  <div class="container">
-    <button onclick="filterPlaces('cleaning')">Cleaning Companies</button>
-    <button onclick="filterPlaces('moving')">Moving Companies</button>
-    <button onclick="filterPlaces('photographers')">Photographers</button>
+  <div class="sidebar">
+    <label><input type="checkbox" id="cleaning" value="cleaning">Cleaning Companies</label>
+    <button onclick="filterPlaces('cleaning')">Find Cleaning Companies</button>
+    <label><input type="checkbox" id="moving" value="moving">Moving Companies</label>
+    <button onclick="filterPlaces('moving')">Find Moving Companies</button>
+    <label><input type="checkbox" id="photographers" value="photographers">Photographers</label>
+    <button onclick="filterPlaces('photographers')">Find Photographers</button>
+    <label><input type="checkbox" id="staging" value="staging">Staging Companies</label>
+    <button onclick="filterPlaces('staging')">Find Staging Companies</button>
+    <label><input type="checkbox" id="landscaping" value="landscaping">Landscaping</label>
+    <button onclick="filterPlaces('landscaping')">Find Landscaping</button>
+    <label><input type="checkbox" id="storage" value="storage">Storage</label>
+    <button onclick="filterPlaces('storage')">Find Storage</button>
   </div>
   
   <div id="results" class="results"></div>
+
+  <div class="selected-services">
+    <h3>Selected Services</h3>
+    <div id="selected-services-links"></div>
+  </div>
   
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places"></script>
   <script>
@@ -166,6 +220,13 @@
           var resultsContainer = document.getElementById('results');
           resultsContainer.innerHTML = '';
           resultsContainer.classList.add('visible');
+          
+          var selectedServicesLinks = document.getElementById('selected-services-links');
+          var selectedCheckbox = document.querySelector(`input[type="checkbox"][value="${type}"]`);
+          if (selectedCheckbox.checked) {
+            selectedCheckbox.checked = false; // Uncheck the box after selecting the service
+            selectedServicesLinks.innerHTML += `<a href="#" onclick="showResults('${type}')">${type}</a>`;
+          }
 
           for (var i = 0; i < results.length; i++) {
             var place = results[i];
@@ -187,6 +248,31 @@
       google.maps.event.addListener(marker, 'click', function() {
         infowindow.setContent(place.name);
         infowindow.open(map, this);
+      });
+    }
+
+    function showResults(type) {
+      var request = {
+        location: userLocation,
+        radius: '5000', // Search within 5km radius
+        keyword: type
+      };
+
+      service = new google.maps.places.PlacesService(map);
+      service.nearbySearch(request, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          var resultsContainer = document.getElementById('results');
+          resultsContainer.innerHTML = '';
+          resultsContainer.classList.add('visible');
+
+          for (var i = 0; i < results.length; i++) {
+            var place = results[i];
+            resultsContainer.innerHTML += `<p>${place.name} - ${place.vicinity}</p>`;
+            createMarker(place);
+          }
+        } else {
+          alert('Search was not successful for the following reason: ' + status);
+        }
       });
     }
 
