@@ -256,23 +256,15 @@
     .modal-content button:hover {
       background-color: #45a049;
     }
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    .close:hover, .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
   <header>
     <div class="container">
-      <img src="logo.png" alt="Open House Logo">
+      <div class="logo">
+        <img src="https://github.com/CPOMalley/XYZ.github.io/blob/main/open%20house%20logo.png?raw=true" alt="Company Logo">
+        <h1 style="color: black;">Open House</h1>
+      </div>
       <nav>
         <a href="#">Home</a>
         <a href="#">Services</a>
@@ -280,61 +272,319 @@
       </nav>
     </div>
   </header>
-  <div class="hero">
-    <h1>Welcome to Open House</h1>
-    <p>Find local home services for your open house.</p>
-  </div>
-  <div id="map"></div>
+
+  <section class="hero">
+    <div class="container">
+      <h1 style="color: black;">Welcome to Open House</h1>
+      <p style="color: black;">Find the best home services for your open house.</p>
+    </div>
+  </section>
+
   <div class="container">
-    <h2>Find Local Services</h2>
+    <div class="sub-header">
+      <h2>Home Services Finder</h2>
+    </div>
     <div class="search-bar">
-      <input type="text" id="addressInput" placeholder="Enter address">
-      <select id="serviceSelect">
-        <option value="cleaning">Cleaning</option>
-        <option value="moving">Moving</option>
-        <option value="photography">Photography</option>
-        <option value="staging">Staging</option>
-        <option value="landscaping">Landscaping</option>
-        <option value="storage">Storage</option>
-      </select>
-      <div class="center-container">
-        <button onclick="searchAddress()">Search</button>
+      <div class="instructions">To begin looking for local professionals, please enter the address for the home you are listing below:</div>
+      <div style="display: flex; justify-content: center;">
+        <input id="address" type="text" placeholder="Enter your address">
+        <select id="radius">
+          <option value="5000">&lt;5 miles</option>
+          <option value="25000">5-25 miles</option>
+          <option value="50000">25-50 miles</option>
+          <option value="100000">50-100 miles</option>
+          <option value="1000000">100+ miles</option>
+        </select>
       </div>
+      <button onclick="searchAddress()">Search</button>
     </div>
   </div>
-  <div class="sub-header">
-    <h2>Select Companies</h2>
-    <div class="sidebar"></div>
+
+  <div id="map"></div>
+
+  <div class="sidebar" id="service-sidebar">
+    <div class="service-banner">
+      <img src="https://github.com/CPOMalley/XYZ.github.io/blob/main/images/cleaning%20logo.jpg?raw=true" alt="Cleaning Logo">
+      <label><input type="checkbox" id="cleaning" value="cleaning">Cleaning</label>
+    </div>
+    <div class="service-banner">
+      <img src="https://github.com/CPOMalley/XYZ.github.io/blob/main/images/moving%20logo.jpg?raw=true" alt="Moving Logo">
+      <label><input type="checkbox" id="moving" value="moving">Moving</label>
+    </div>
+    <div class="service-banner">
+      <img src="https://github.com/CPOMalley/XYZ.github.io/blob/main/images/photography%20logo.jpg?raw=true" alt="Photography Logo">
+      <label><input type="checkbox" id="photographers" value="photographers">Photography</label>
+    </div>
+    <div class="service-banner">
+      <img src="https://github.com/CPOMalley/XYZ.github.io/blob/main/images/Staging%20Company%20Logo.png?raw=true" alt="Staging Logo">
+      <label><input type="checkbox" id="staging" value="staging">Staging</label>
+    </div>
+    <div class="service-banner">
+      <img src="https://github.com/CPOMalley/XYZ.github.io/blob/main/images/Landscaper%20Logo.png?raw=true" alt="Landscaping Logo">
+      <label><input type="checkbox" id="landscaping" value="landscaping">Landscaping</label>
+    </div>
+    <div class="service-banner">
+      <img src="https://github.com/CPOMalley/XYZ.github.io/blob/main/images/storage.png?raw=true" alt="Storage Logo">
+      <label><input type="checkbox" id="storage" value="storage">Storage</label>
+    </div>
+    <div class="centered-button">
+      <button onclick="selectServices()">Select Services</button>
+    </div>
   </div>
-  <div class="results"></div>
-  <div class="selected-companies"></div>
-  <div class="footer">
+
+  <div id="results" class="results"></div>
+  <div class="centered-button" id="select-companies-button" style="display: none;">
+    <button onclick="generateSelectedCompanies()">Select Companies</button>
+  </div>
+  <div id="selected-companies" class="selected-companies">
+    <h3>Selected Companies</h3>
+    <div id="selected-companies-list"></div>
+    <button onclick="saveAsPDF()">Save as PDF</button>
+  </div>
+  <div class="new-search" id="new-search" onclick="startNewSearch()">Start a New Search</div>
+
+  <div id="userInfoModal" class="modal">
+    <div class="modal-content">
+      <h2>To generate a list of the selected companies, please enter the following information:</h2>
+      <input type="text" id="firstName" placeholder="First Name">
+      <input type="text" id="lastName" placeholder="Last Name">
+      <input type="email" id="email" placeholder="Email Address">
+      <button onclick="submitUserInfo()">Submit</button>
+    </div>
+  </div>
+
+  <footer class="footer">
     <p>&copy; 2024 Open House. All rights reserved.</p>
-    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
-  </div>
-  <div class="loading-overlay">
+    <p>Follow us on <a href="#">Facebook</a>, <a href="#">Twitter</a>, and <a href="#">LinkedIn</a>.</p>
+  </footer>
+
+  <div class="loading-overlay" id="loading-overlay">
     <div class="loading-spinner"></div>
   </div>
-  <div id="myModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2>Contact Us</h2>
-      <input type="text" placeholder="Your Name">
-      <input type="email" placeholder="Your Email">
-      <button type="button" onclick="submitContactForm()">Submit</button>
-    </div>
-  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places"></script>
   <script>
+    var map;
+    var service;
+    var infowindow;
+    var userLocation;
+    var autocomplete;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 8
+      });
+      infowindow = new google.maps.InfoWindow();
+      autocomplete = new google.maps.places.Autocomplete(document.getElementById('address'));
+      autocomplete.addListener('place_changed', onPlaceChanged);
+    }
+
+    function onPlaceChanged() {
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+      userLocation = place.geometry.location;
+      map.setCenter(userLocation);
+      map.setZoom(15);
+      new google.maps.Marker({
+        map: map,
+        position: userLocation
+      });
+    }
+
     function searchAddress() {
-      // Your search logic here
+      var address = document.getElementById('address').value;
+      var radius = document.getElementById('radius').value;
+      var geocoder = new google.maps.Geocoder();
+
+      geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+          userLocation = results[0].geometry.location;
+          map.setCenter(userLocation);
+          new google.maps.Marker({
+            map: map,
+            position: userLocation
+          });
+          document.getElementById('service-sidebar').classList.add('visible'); // Show sidebar on successful search
+          document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
+          // Store the radius for later use
+          userLocation.radius = radius;
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
     }
-    function closeModal() {
-      document.getElementById('myModal').style.display = 'none';
+
+    function filterPlaces(type, callback) {
+      var request = {
+        location: userLocation,
+        radius: userLocation.radius || '5000', // Use the stored radius or default to 5km
+        keyword: type
+      };
+
+      service = new google.maps.places.PlacesService(map);
+      service.nearbySearch(request, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          callback(results, type);
+        } else {
+          alert('Search was not successful for the following reason: ' + status);
+        }
+      });
     }
-    function submitContactForm() {
-      // Your form submission logic here
-      closeModal();
+
+    function getPlaceDetails(place, callback) {
+      service.getDetails({placeId: place.place_id}, function(details, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          callback(details);
+        } else {
+          console.error('Place details request failed due to ' + status);
+        }
+      });
     }
+
+    function calculateDistance(origin, destination) {
+      var distanceService = new google.maps.DistanceMatrixService();
+      return new Promise(function(resolve, reject) {
+        distanceService.getDistanceMatrix({
+          origins: [origin],
+          destinations: [destination],
+          travelMode: 'DRIVING',
+        }, function(response, status) {
+          if (status === 'OK') {
+            var distanceText = response.rows[0].elements[0].distance.text;
+            // Convert distance to miles if it is in km
+            if (distanceText.includes('km')) {
+              var distanceKm = parseFloat(distanceText.replace(' km', ''));
+              var distanceMiles = (distanceKm * 0.621371).toFixed(2);
+              resolve(distanceMiles + ' miles');
+            } else {
+              resolve(distanceText);
+            }
+          } else {
+            reject('Distance calculation failed due to ' + status);
+          }
+        });
+      });
+    }
+
+    function selectServices() {
+      if (!userLocation) {
+        alert('Please search for an address first.');
+        return;
+      }
+
+      var selectedServices = [];
+      var checkboxes = document.querySelectorAll('.sidebar input[type="checkbox"]:checked');
+      checkboxes.forEach(function(checkbox) {
+        selectedServices.push(checkbox.value);
+      });
+
+      if (selectedServices.length === 0) {
+        alert('Please select at least one service.');
+        return;
+      }
+
+      var resultsContainer = document.getElementById('results');
+      resultsContainer.innerHTML = '<h3>Selected Services</h3>';
+      resultsContainer.classList.add('visible');
+
+      selectedServices.forEach(function(service) {
+        var serviceContainer = document.createElement('div');
+        serviceContainer.innerHTML = `<h4>${service.charAt(0).toUpperCase() + service.slice(1)} Companies</h4>`;
+        resultsContainer.appendChild(serviceContainer);
+
+        filterPlaces(service, function(results, type) {
+          results.forEach(function(place) {
+            getPlaceDetails(place, function(details) {
+              calculateDistance(userLocation, details.geometry.location).then(function(distance) {
+                var placeDetails = `
+                  <div>
+                    <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a> - ${details.vicinity}<br>
+                    Distance: ${distance}<br>
+                    Phone: ${details.formatted_phone_number || 'N/A'}
+                  </div>`;
+                serviceContainer.innerHTML += placeDetails;
+              }).catch(function(error) {
+                console.error(error);
+              });
+            });
+          });
+        });
+      });
+
+      // Show the "Select Companies" button after services are selected
+      var selectCompaniesButton = document.getElementById('select-companies-button');
+      selectCompaniesButton.style.display = 'block';
+    }
+
+    function generateSelectedCompanies() {
+      var selectedCompanies = document.querySelectorAll('.company-checkbox:checked');
+      if (selectedCompanies.length === 0) {
+        alert('Please select at least one company.');
+        return;
+      }
+
+      // Show user info modal before displaying results
+      var userInfoModal = document.getElementById('userInfoModal');
+      userInfoModal.style.display = 'block';
+    }
+
+    function submitUserInfo() {
+      var firstName = document.getElementById('firstName').value;
+      var lastName = document.getElementById('lastName').value;
+      var email = document.getElementById('email').value;
+
+      if (firstName && lastName && email) {
+        var selectedCompaniesContainer = document.getElementById('selected-companies');
+        var selectedCompaniesList = document.getElementById('selected-companies-list');
+        selectedCompaniesList.innerHTML = '';
+
+        var selectedCompanies = document.querySelectorAll('.company-checkbox:checked');
+        selectedCompanies.forEach(function(checkbox) {
+          var companyDetails = `
+            <p>
+              ${checkbox.dataset.name}<br>
+              Address: ${checkbox.dataset.address}<br>
+              Distance: ${checkbox.dataset.distance}<br>
+              Phone: ${checkbox.dataset.phone}
+            </p>`;
+          selectedCompaniesList.innerHTML += companyDetails;
+        });
+
+        selectedCompaniesContainer.classList.add('visible');
+        document.getElementById('userInfoModal').style.display = 'none'; // Hide the modal
+      } else {
+        alert('Please fill out all fields.');
+      }
+    }
+
+    function saveAsPDF() {
+      var { jsPDF } = window.jspdf;
+      var doc = new jsPDF();
+      var selectedCompaniesList = document.getElementById('selected-companies-list');
+      var content = selectedCompaniesList.innerHTML.replace(/<br>/g, '\n').replace(/<\/?[^>]+(>|$)/g, "");
+      var lines = doc.splitTextToSize(content, 180);
+      doc.text(lines, 10, 10);
+      doc.save('selected-companies.pdf');
+    }
+
+    function startNewSearch() {
+      location.reload(); // Refresh the page
+    }
+
+    window.onload = function() {
+      initMap();
+      // Hide the "Select Companies" button and "Start a New Search" text initially
+      var selectCompaniesButton = document.getElementById('select-companies-button');
+      selectCompaniesButton.style.display = 'none';
+      var newSearchText = document.getElementById('new-search');
+      newSearchText.style.display = 'none';
+    };
   </script>
 </body>
 </html>
