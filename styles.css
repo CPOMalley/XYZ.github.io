@@ -10,6 +10,14 @@ body {
   background-color: #fff;
   border-bottom: 1px solid #ccc;
 }
+.header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header-text {
+  margin-left: 10px;
+}
 .header h1 {
   margin: 0;
   color: black;
@@ -19,7 +27,7 @@ body {
   color: black;
 }
 .logo {
-  max-width: 100px;
+  max-width: 80px; /* Adjust this value to make the logo smaller */
   margin-bottom: 10px;
 }
 .container {
@@ -31,8 +39,7 @@ body {
 }
 .banner {
   text-align: center;
-  background: url('Images/open house logo.png') no-repeat center center;
-  background-size: cover;
+  background-color: #2a9df4; /* Shade of blue */
   color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -40,7 +47,7 @@ body {
 .banner h2 {
   margin: 0;
   font-size: 24px;
-  color: black;
+  color: white;
 }
 .search-container {
   margin-top: 20px;
@@ -149,6 +156,13 @@ body {
   cursor: pointer;
 }
 @media (max-width: 600px) {
+  .header-content {
+    flex-direction: column;
+  }
+  .header-text {
+    margin-left: 0;
+    text-align: center;
+  }
   .search-container input[type="text"],
   .search-container select {
     width: 100%;
