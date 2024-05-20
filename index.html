@@ -356,9 +356,10 @@
     function saveAsPDF() {
       var { jsPDF } = window.jspdf;
       var doc = new jsPDF();
-      var content = document.getElementById('selected-companies-list').innerText;
-
-      doc.text(content, 10, 10);
+      var selectedCompaniesList = document.getElementById('selected-companies-list');
+      var content = selectedCompaniesList.innerHTML.replace(/<br>/g, '\n').replace(/<\/?[^>]+(>|$)/g, "");
+      var lines = doc.splitTextToSize(content, 180);
+      doc.text(lines, 10, 10);
       doc.save('selected-companies.pdf');
     }
 
