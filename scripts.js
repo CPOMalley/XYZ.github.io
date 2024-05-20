@@ -118,9 +118,11 @@ function selectServices() {
   selectedServices.forEach(function (service) {
     filterPlaces(service, function (results, type) {
       var serviceContainer = document.createElement('div');
+      serviceContainer.classList.add('service-container');
       serviceContainer.innerHTML = `<h4>${type.charAt(0).toUpperCase() + type.slice(1)} Companies</h4>`;
       results.forEach(function (place) {
         var div = document.createElement('div');
+        div.classList.add('service-tile');
         div.innerHTML = `<label><input type="checkbox" value="${place.name}"><strong>${place.name}</strong></label><br>${place.vicinity}<br>Distance: ${calculateDistance(place.geometry.location)} miles<br><a href="${place.url}" target="_blank">View on Google Maps</a>`;
         serviceContainer.appendChild(div);
       });
