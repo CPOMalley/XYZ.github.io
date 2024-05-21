@@ -186,6 +186,11 @@ body {
     width: 100%;
   }
 /* Add this new button style at the end of your styles.css */
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
 #select-companies-btn {
   display: none; /* Hide button initially */
   padding: 10px 20px;
@@ -194,7 +199,6 @@ body {
   background-color: #007bff;
   color: #fff;
   cursor: pointer;
-  margin: 10px auto;
-  text-align: center;
 }
+
 
