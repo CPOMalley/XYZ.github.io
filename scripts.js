@@ -37,6 +37,7 @@ function initMap() {
     marker.setVisible(true);
 
     userLocation = place.geometry.location;
+    document.getElementById('select-companies-btn').style.display = 'block'; // Show the button after address input
   });
 }
 
