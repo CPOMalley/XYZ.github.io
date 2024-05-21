@@ -151,6 +151,31 @@ function deg2rad(deg) {
   return deg * (Math.PI / 180)
 }
 
+function toggleSelectCompaniesButton() {
+  var selectedCompanies = document.querySelectorAll('.results-container input[type="checkbox"]:checked');
+  var selectCompaniesButton = document.getElementById('select-companies-button');
+  if (selectedCompanies.length > 0) {
+    selectCompaniesButton.style.display = 'block';
+  } else {
+    selectCompaniesButton.style.display = 'none';
+  }
+}
+
+function selectCompanies() {
+  var selectedCompanies = document.querySelectorAll('.results-container input[type="checkbox"]:checked');
+  var selectedCompaniesList = document.getElementById('selected-companies-list');
+  selectedCompaniesList.innerHTML = '';
+
+  selectedCompanies.forEach(function (company) {
+    var div = document.createElement('div');
+    div.innerHTML = `<strong>${company.value}</strong><br>`;
+    selectedCompaniesList.appendChild(div);
+  });
+
+  document.getElementById('userInfoModal').style.display = 'none';
+  document.getElementById('selected-companies').classList.add('visible');
+}
+
 function saveAsPDF() {
   var pdfContent = document.getElementById('selected-companies-list').innerHTML;
   var opt = {
@@ -191,18 +216,8 @@ function submitUserInfo() {
   document.getElementById('selected-companies').classList.add('visible');
 }
 
-function toggleSelectCompaniesButton() {
-  var selectedCompanies = document.querySelectorAll('.results-container input[type="checkbox"]:checked');
-  var savePdfButton = document.getElementById('save-pdf-button');
-  if (selectedCompanies.length > 0) {
-    savePdfButton.style.display = 'block';
-  } else {
-    savePdfButton.style.display = 'none';
-  }
-}
-
 window.onload = function () {
   initMap();
   document.getElementById('new-search').style.display = 'none';
-  document.getElementById('save-pdf-button').style.display = 'none';
+  document.getElementById('select-companies-button').style.display = 'none';
 };
