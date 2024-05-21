@@ -103,7 +103,8 @@ body {
   margin-bottom: 10px;
 }
 .center {
-  text-align: center;
+  display: flex;
+  justify-content: center; /* Center the button horizontally */
   margin-top: 20px;
 }
 #select-services-button {
