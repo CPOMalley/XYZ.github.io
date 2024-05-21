@@ -37,7 +37,6 @@ function initMap() {
     marker.setVisible(true);
 
     userLocation = place.geometry.location;
-    document.getElementById('select-companies-btn').style.display = 'block'; // Show the button after address input
   });
 }
 
@@ -134,27 +133,6 @@ function selectServices() {
   document.getElementById('selected-companies').classList.add('visible');
 }
 
-function showSelectedCompanies() {
-  var selectedCompanies = [];
-  document.querySelectorAll('.results-container input[type="checkbox"]:checked').forEach(function (checkbox) {
-    selectedCompanies.push(checkbox.value);
-  });
-
-  var selectedCompaniesList = document.getElementById('selected-companies-list');
-  selectedCompaniesList.innerHTML = '';
-
-  if (selectedCompanies.length === 0) {
-    alert('Please select at least one company.');
-    return;
-  }
-
-  selectedCompanies.forEach(function (company) {
-    var div = document.createElement('div');
-    div.innerHTML = `<strong>${company}</strong><br>`;
-    selectedCompaniesList.appendChild(div);
-  });
-}
-
 function calculateDistance(location) {
   if (!userLocation) return 'N/A';
   var R = 6371; // Radius of the earth in km
@@ -216,5 +194,4 @@ function submitUserInfo() {
 window.onload = function () {
   initMap();
   document.getElementById('new-search').style.display = 'none';
-  document.getElementById('select-companies-btn').style.display = 'none'; // Hide the button initially
 };
