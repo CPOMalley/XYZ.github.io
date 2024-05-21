@@ -123,7 +123,7 @@ function selectServices() {
       results.forEach(function (place) {
         var div = document.createElement('div');
         div.classList.add('service-tile');
-        div.innerHTML = `<label><input type="checkbox" value="${place.name}"><strong>${place.name}</strong></label><br>${place.vicinity}<br>Distance: ${calculateDistance(place.geometry.location)} miles<br><a href="${place.url}" target="_blank">View on Google Maps</a>`;
+        div.innerHTML = `<label><input type="checkbox" value="${place.name}" onchange="toggleSelectCompaniesButton()"><strong>${place.name}</strong></label><br>${place.vicinity}<br>Distance: ${calculateDistance(place.geometry.location)} miles<br><a href="${place.url}" target="_blank">View on Google Maps</a>`;
         serviceContainer.appendChild(div);
       });
       resultsContainer.appendChild(serviceContainer);
@@ -191,7 +191,18 @@ function submitUserInfo() {
   document.getElementById('selected-companies').classList.add('visible');
 }
 
+function toggleSelectCompaniesButton() {
+  var selectedCompanies = document.querySelectorAll('.results-container input[type="checkbox"]:checked');
+  var savePdfButton = document.getElementById('save-pdf-button');
+  if (selectedCompanies.length > 0) {
+    savePdfButton.style.display = 'block';
+  } else {
+    savePdfButton.style.display = 'none';
+  }
+}
+
 window.onload = function () {
   initMap();
   document.getElementById('new-search').style.display = 'none';
+  document.getElementById('save-pdf-button').style.display = 'none';
 };
