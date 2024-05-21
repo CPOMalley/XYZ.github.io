@@ -151,6 +151,16 @@ function deg2rad(deg) {
   return deg * (Math.PI / 180)
 }
 
+function toggleSelectServicesButton() {
+  var selectedServices = document.querySelectorAll('.sidebar input[type="checkbox"]:checked');
+  var selectServicesButton = document.getElementById('select-services-button');
+  if (selectedServices.length > 0) {
+    selectServicesButton.style.display = 'block';
+  } else {
+    selectServicesButton.style.display = 'none';
+  }
+}
+
 function toggleSelectCompaniesButton() {
   var selectedCompanies = document.querySelectorAll('.results-container input[type="checkbox"]:checked');
   var selectCompaniesButton = document.getElementById('select-companies-button');
@@ -219,5 +229,6 @@ function submitUserInfo() {
 window.onload = function () {
   initMap();
   document.getElementById('new-search').style.display = 'none';
+  document.getElementById('select-services-button').style.display = 'none';
   document.getElementById('select-companies-button').style.display = 'none';
 };
