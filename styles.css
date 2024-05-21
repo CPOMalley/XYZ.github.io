@@ -108,13 +108,13 @@ body {
   margin-top: 20px;
 }
 #select-services-button {
-  padding: 20px 40px; /* Double the size */
+  padding: 10px 20px; /* Adjusted size */
   border: none;
   border-radius: 4px;
   background-color: #007bff;
   color: #fff;
   cursor: pointer;
-  font-size: 20px; /* Increase the font size */
+  font-size: 16px; /* Adjusted font size */
 }
 #select-services-button:hover {
   background-color: #0056b3;
