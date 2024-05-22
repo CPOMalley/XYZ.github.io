@@ -94,32 +94,7 @@ function filterPlaces(type, callback) {
   service = new google.maps.places.PlacesService(map);
   service.nearbySearch(request, function (results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-      // Additional filtering logic based on name or vicinity
-      var filteredResults = results.filter(place => {
-        var name = place.name.toLowerCase();
-        var vicinity = place.vicinity.toLowerCase();
-
-        if (type === 'cleaning' && !name.includes('cleaning') && !vicinity.includes('cleaning')) {
-          return false;
-        }
-        if (type === 'moving' && !name.includes('moving') && !vicinity.includes('moving')) {
-          return false;
-        }
-        if (type === 'photography' && !name.includes('photo') && !vicinity.includes('photo')) {
-          return false;
-        }
-        if (type === 'staging' && !name.includes('furniture') && !name.includes('interior') && !vicinity.includes('furniture') && !vicinity.includes('interior')) {
-          return false;
-        }
-        if (type === 'landscaping' && !name.includes('landscape') && !vicinity.includes('landscape') && !name.includes('gardener') && !vicinity.includes('gardener')) {
-          return false;
-        }
-        if (type === 'storage' && !name.includes('storage') && !vicinity.includes('storage')) {
-          return false;
-        }
-        return true;
-      });
-      callback(filteredResults, type);
+      callback(results, type);
     } else {
       alert('Places search was not successful for the following reason: ' + status);
     }
