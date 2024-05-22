@@ -145,20 +145,11 @@ header nav a {
   margin-right: 10px;
 }
 .result-banner {
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  background-color: #e0f7fa;
+  border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  text-align: left;
-}
-.result-banner a {
-  color: #007bff;
-  text-decoration: none;
-}
-.result-banner a:hover {
-  text-decoration: underline;
 }
 .centered-button, .new-search {
   text-align: center;
