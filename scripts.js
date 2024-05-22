@@ -147,7 +147,7 @@ function selectServices() {
           calculateDistance(userLocation, details.geometry.location).then(function (distance) {
             var placeDetails = `
               <div class="result-banner">
-                <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}" data-type="${type}" onchange="handleCompanySelection(event)">
+                <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
                 <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
                 ${details.vicinity}<br>
                 Distance: ${distance}<br>
@@ -165,20 +165,6 @@ function selectServices() {
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'block';
 }
-
-// Add this function to handle moving selected companies
-function handleCompanySelection(event) {
-  var checkbox = event.target;
-  var companyBox = checkbox.parentNode.parentNode;
-
-  if (checkbox.checked) {
-    document.getElementById('selected-companies-list').appendChild(companyBox);
-  } else {
-    var originalContainer = document.querySelector(`.service-container h4:contains(${checkbox.dataset.type})`).parentNode;
-    originalContainer.appendChild(companyBox);
-  }
-}
-
 
 function toggleSelectServicesButton() {
   var selectedServices = document.querySelectorAll('.sidebar input[type="checkbox"]:checked');
