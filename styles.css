@@ -228,9 +228,9 @@ body {
 }
 
 .centered-button button {
-  padding: 12px 25px; /* Adjusted padding */
+  padding: 12px 25px;
   border: none;
-  border-radius: 25px; /* More rounded corners */
+  border-radius: 25px;
   background-color: #4CAF50;
   color: white;
   cursor: pointer;
@@ -240,6 +240,5 @@ body {
 
 .centered-button button:hover {
   background-color: #45a049;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Add shadow on hover */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
-
