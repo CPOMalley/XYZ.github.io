@@ -165,6 +165,19 @@ function selectServices() {
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'block';
 }
+// Add this function to handle moving selected companies
+function handleCompanySelection(event) {
+  var checkbox = event.target;
+  var companyBox = checkbox.parentNode.parentNode;
+
+  if (checkbox.checked) {
+    document.getElementById('selected-companies-list').appendChild(companyBox);
+  } else {
+    var originalContainer = document.querySelector(`.service-container h4:contains(${checkbox.dataset.type})`).parentNode;
+    originalContainer.appendChild(companyBox);
+  }
+}
+
 
 function toggleSelectServicesButton() {
   var selectedServices = document.querySelectorAll('.sidebar input[type="checkbox"]:checked');
