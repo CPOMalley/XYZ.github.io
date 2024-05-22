@@ -165,6 +165,16 @@ function selectServices() {
   selectCompaniesButton.style.display = 'block';
 }
 
+function toggleSelectServicesButton() {
+  var selectedServices = document.querySelectorAll('.sidebar input[type="checkbox"]:checked');
+  var selectServicesButton = document.getElementById('select-services-button');
+  if (selectedServices.length > 0) {
+    selectServicesButton.style.display = 'block';
+  } else {
+    selectServicesButton.style.display = 'none';
+  }
+}
+
 function generateSelectedCompanies() {
   var selectedCompanies = document.querySelectorAll('.company-checkbox:checked');
   if (selectedCompanies.length === 0) {
@@ -222,9 +232,18 @@ function startNewSearch() {
 
 window.onload = function () {
   initMap();
+  // Hide the "Select Services" button initially
+  var selectServicesButton = document.getElementById('select-services-button');
+  selectServicesButton.style.display = 'none';
   // Hide the "Select Companies" button and "Start a New Search" text initially
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'none';
   var newSearchText = document.getElementById('new-search');
   newSearchText.style.display = 'none';
+
+  // Attach the change event to checkboxes to toggle the "Select Services" button
+  var serviceCheckboxes = document.querySelectorAll('.sidebar input[type="checkbox"]');
+  serviceCheckboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('change', toggleSelectServicesButton);
+  });
 };
