@@ -188,6 +188,28 @@ function generateSelectedCompanies() {
   userInfoModal.style.display = 'block';
 }
 
+function handleCompanySelection(event) {
+  var checkbox = event.target;
+  var companyBox = checkbox.parentNode.parentNode;
+
+  if (checkbox.checked) {
+    document.getElementById('selected-companies-list').appendChild(companyBox);
+  } else {
+    var originalContainer = document.querySelector(`.service-container h4:contains(${checkbox.dataset.type})`).parentNode;
+    originalContainer.appendChild(companyBox);
+  }
+
+  // Check if any company is selected to display the "Select Companies" button
+  var selectedCompanies = document.querySelectorAll('.company-checkbox:checked');
+  var selectCompaniesButton = document.getElementById('select-companies-button');
+  if (selectedCompanies.length > 0) {
+    selectCompaniesButton.style.display = 'block';
+  } else {
+    selectCompaniesButton.style.display = 'none';
+  }
+}
+
+
 function submitUserInfo() {
   var firstName = document.getElementById('firstName').value;
   var lastName = document.getElementById('lastName').value;
