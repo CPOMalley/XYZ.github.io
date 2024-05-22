@@ -73,10 +73,10 @@ function filterPlaces(type, callback) {
       placeTypes = ['photographer'];
       break;
     case 'staging':
-      placeTypes = ['furniture_store', 'home_goods_store'];
+      placeTypes = ['furniture_store', 'home_goods_store', 'interior_designer'];
       break;
     case 'landscaping':
-      placeTypes = ['landscaper'];
+      placeTypes = ['landscaper', 'gardener'];
       break;
     case 'storage':
       placeTypes = ['storage'];
@@ -94,7 +94,32 @@ function filterPlaces(type, callback) {
   service = new google.maps.places.PlacesService(map);
   service.nearbySearch(request, function (results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-      callback(results, type);
+      var filteredResults = results.filter(place => {
+        // Additional filtering logic based on name or vicinity
+        var name = place.name.toLowerCase();
+        var vicinity = place.vicinity.toLowerCase();
+
+        if (type === 'cleaning' && !name.includes('cleaning') && !vicinity.includes('cleaning')) {
+          return false;
+        }
+        if (type === 'moving' && !name.includes('moving') && !vicinity.includes('moving')) {
+          return false;
+        }
+        if (type === 'photography' && !name.includes('photo') && !vicinity.includes('photo')) {
+          return false;
+        }
+        if (type === 'staging' && !name.includes('staging') && !vicinity.includes('staging')) {
+          return false;
+        }
+        if (type === 'landscaping' && !name.includes('landscaping') && !vicinity.includes('landscaping')) {
+          return false;
+        }
+        if (type === 'storage' && !name.includes('storage') && !vicinity.includes('storage')) {
+          return false;
+        }
+        return true;
+      });
+      callback(filteredResults, type);
     } else {
       alert('Places search was not successful for the following reason: ' + status);
     }
@@ -204,8 +229,8 @@ function startNewSearch() {
 
 function submitUserInfo() {
   var firstName = document.getElementById('firstName').value;
-  var lastName = document.getElementById('lastName').value;
-  var email = document.getElementById('email').value;
+  var lastName = document.getElement.getElementById('lastName').value;
+  var email = document.getElement.getElementById('email').value;
 
   if (!firstName || !lastName || !email) {
     alert('Please fill out all fields.');
