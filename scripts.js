@@ -147,7 +147,7 @@ function selectServices() {
           calculateDistance(userLocation, details.geometry.location).then(function (distance) {
             var placeDetails = `
               <div class="result-banner">
-                <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
+                <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}" data-type="${type}" onchange="handleCompanySelection(event)">
                 <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
                 ${details.vicinity}<br>
                 Distance: ${distance}<br>
@@ -165,6 +165,7 @@ function selectServices() {
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'block';
 }
+
 // Add this function to handle moving selected companies
 function handleCompanySelection(event) {
   var checkbox = event.target;
