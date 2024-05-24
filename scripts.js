@@ -155,8 +155,6 @@ function selectServices() {
   selectedServices.forEach(function (service) {
     var serviceContainer = document.createElement('div');
     serviceContainer.classList.add('service-container');
-    // Comment out the following line to remove the selected services text
-    // serviceContainer.innerHTML = `<h4>${service.charAt(0).toUpperCase() + service.slice(1)} Companies</h4>`;
     resultsContainer.appendChild(serviceContainer);
 
     filterPlaces(service, function (results, type) {
