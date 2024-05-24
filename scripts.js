@@ -221,12 +221,12 @@ function submitUserInfo() {
 }
 
 function saveAsPDF() {
-  var { jsPDF } = window.jspdf;
-  var doc = new jsPDF();
-  var selectedCompaniesList = document.getElementById('selected-companies-list');
-  var content = selectedCompaniesList.innerHTML.replace(/<br>/g, '\n').replace(/<\/?[^>]+(>|$)/g, "");
-  var lines = doc.splitTextToSize(content, 180);
-  doc.text(lines, 10, 10);
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const selectedCompaniesList = document.getElementById('selected-companies-list');
+  const content = selectedCompaniesList.innerHTML.replace(/<br>/g, '\n').replace(/<\/?[^>]+(>|$)/g, "");
+
+  doc.text(content, 10, 10);
   doc.save('selected-companies.pdf');
 }
 
