@@ -107,7 +107,7 @@ body {
   justify-content: center; /* Center the button horizontally */
   margin-top: 20px;
 }
-#select-services-button {
+#select-services-button, #select-companies-button {
   padding: 10px 20px; /* Adjusted size */
   border: none;
   border-radius: 4px;
@@ -116,7 +116,7 @@ body {
   cursor: pointer;
   font-size: 16px; /* Adjusted font size */
 }
-#select-services-button:hover {
+#select-services-button:hover, #select-companies-button:hover {
   background-color: #0056b3;
 }
 .results-container {
