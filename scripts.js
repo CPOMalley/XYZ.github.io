@@ -148,11 +148,13 @@ function selectServices() {
       results.forEach(function (place) {
         getPlaceDetails(place, function (details) {
           calculateDistance(userLocation, details.geometry.location).then(function (distance) {
+            var rating = details.rating ? `${details.rating} stars` : 'No rating';
             var placeDetails = `
               <div class="result-banner">
                 <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
                 <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
                 ${details.vicinity}<br>
+                Rating: ${rating}<br>
                 Distance: ${distance}<br>
                 Phone: ${details.formatted_phone_number || 'N/A'}
               </div>`;
