@@ -256,7 +256,6 @@ window.onload = function () {
   userInfoModal.style.display = 'none';
 
   // Add event listener for select companies button
-  var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.addEventListener('click', function() {
     userInfoModal.style.display = 'flex';
   });
