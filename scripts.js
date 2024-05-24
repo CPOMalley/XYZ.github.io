@@ -131,23 +131,6 @@ function selectServices() {
     return;
   }
 
-function selectServices() {
-  if (!userLocation) {
-    alert('Please search for an address first.');
-    return;
-  }
-
-  var selectedServices = [];
-  var checkboxes = document.querySelectorAll('.sidebar input[type="checkbox"]:checked');
-  checkboxes.forEach(function (checkbox) {
-    selectedServices.push(checkbox.value);
-  });
-
-  if (selectedServices.length === 0) {
-    alert('Please select at least one service.');
-    return;
-  }
-
   var resultsContainer = document.getElementById('results');
   resultsContainer.innerHTML = ''; // Clear the container
   resultsContainer.classList.add('visible');
@@ -158,6 +141,10 @@ function selectServices() {
     resultsContainer.appendChild(serviceContainer);
 
     filterPlaces(service, function (results, type) {
+      var serviceTitle = document.createElement('h4');
+      serviceTitle.innerText = `${service.charAt(0).toUpperCase() + service.slice(1)} Companies`;
+      serviceContainer.appendChild(serviceTitle);
+
       results.forEach(function (place) {
         getPlaceDetails(place, function (details) {
           calculateDistance(userLocation, details.geometry.location).then(function (distance) {
@@ -177,11 +164,6 @@ function selectServices() {
       });
     });
   });
-
-  var selectCompaniesButton = document.getElementById('select-companies-button');
-  selectCompaniesButton.style.display = 'block';
-}
-
 
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'block';
