@@ -131,10 +131,6 @@ function selectServices() {
     return;
   }
 
-  var resultsContainer = document.getElementById('results');
-  resultsContainer.innerHTML = '<h3>Selected Services</h3>';
-  resultsContainer.classList.add('visible');
-
   selectedServices.forEach(function (service) {
     var serviceContainer = document.createElement('div');
     serviceContainer.classList.add('service-container');
