@@ -226,7 +226,10 @@ function saveAsPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
   const selectedCompaniesList = document.getElementById('selected-companies-list');
-  const content = selectedCompaniesList.innerHTML.replace(/<br>/g, '\n').replace(/<\/?[^>]+(>|$)/g, "");
+  let content = "";
+  selectedCompaniesList.childNodes.forEach(node => {
+    content += node.textContent + "\n";
+  });
 
   doc.text(content, 10, 10);
   doc.save('selected-companies.pdf');
