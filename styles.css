@@ -208,7 +208,7 @@ body {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  width: 350px; /* Increased width */
+  width: 400px; /* Increased width */
   text-align: center;
 }
 
@@ -216,7 +216,7 @@ body {
 .modal-content input[type="text"],
 .modal-content input[type="email"] {
   padding: 10px;
-  width: 90%; /* Adjusted width to fit within the modal */
+  width: 95%; /* Adjusted width to fit within the modal */
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
