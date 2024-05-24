@@ -250,4 +250,21 @@ window.onload = function () {
   serviceCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener('change', toggleSelectServicesButton);
   });
+
+  // Ensure modal is hidden initially
+  var userInfoModal = document.getElementById('userInfoModal');
+  userInfoModal.style.display = 'none';
+
+  // Add event listener for select companies button
+  var selectCompaniesButton = document.getElementById('select-companies-button');
+  selectCompaniesButton.addEventListener('click', function() {
+    userInfoModal.style.display = 'flex';
+  });
+
+  // Hide the modal when clicking outside of it
+  window.addEventListener('click', function(event) {
+    if (event.target === userInfoModal) {
+      userInfoModal.style.display = 'none';
+    }
+  });
 };
