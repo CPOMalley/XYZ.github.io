@@ -188,7 +188,7 @@ function generateSelectedCompanies() {
 
   // Show user info modal before displaying results
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.style.display = 'block';
+  userInfoModal.style.display = 'flex'; // Use 'flex' to display the modal centered
 }
 
 function submitUserInfo() {
