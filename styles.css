@@ -193,9 +193,23 @@ body {
 
 .selected-companies.visible {
   display: block;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Flexbox centering for the modal */
+.selected-companies h3 {
+  text-align: center;
+}
+
+.selected-companies p {
+  margin: 10px 0;
+}
+
 .modal {
   display: none;
   position: fixed;
@@ -217,7 +231,6 @@ body {
   text-align: center;
 }
 
-/* Styling for modal input fields */
 .modal-content input[type="text"],
 .modal-content input[type="email"] {
   padding: 10px;
@@ -227,7 +240,6 @@ body {
   border-radius: 4px;
 }
 
-/* Styling for modal button */
 .modal-content button {
   padding: 10px 20px;
   border: none;
@@ -239,6 +251,24 @@ body {
 
 .modal-content button:hover {
   background-color: #0056b3; /* Darker blue on hover */
+}
+
+#save-as-pdf-button {
+  padding: 10px 20px; /* Adjusted size */
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px; /* Adjusted font size */
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#save-as-pdf-button:hover {
+  background-color: #0056b3;
 }
 
 @media (max-width: 600px) {
