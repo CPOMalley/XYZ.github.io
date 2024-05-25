@@ -289,7 +289,8 @@ body {
   }
 }
 
-.business-photo {
+.business-photo,
+.business-photo-placeholder {
   width: 100px;
   height: 100px;
   object-fit: cover;
@@ -310,4 +311,8 @@ body {
 
 .result-banner a {
   margin-left: 120px; /* Adjust margin to make space for the image */
+}
+
+.result-details {
+  margin-left: 120px; /* Make space for the image */
 }
