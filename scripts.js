@@ -261,12 +261,12 @@ window.onload = function () {
   userInfoModal.style.display = 'none';
 
   // Add event listener for select companies button
-  selectCompaniesButton.addEventListener('click', function() {
+  selectCompaniesButton.addEventListener('click', function () {
     userInfoModal.style.display = 'flex';
   });
 
   // Hide the modal when clicking outside of it
-  window.addEventListener('click', function(event) {
+  window.addEventListener('click', function (event) {
     if (event.target === userInfoModal) {
       userInfoModal.style.display = 'none';
     }
