@@ -289,10 +289,26 @@ body {
   }
 }
 
+.business-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 10px;
+  float: left; /* Make the image float to the left */
+}
+
 .result-banner {
+  display: flex;
+  align-items: center;
   border: 1px solid #ddd;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
   background-color: #f9f9f9;
 }
+
+.result-banner a {
+  margin-left: 120px; /* Adjust margin to make space for the image */
+}
+
