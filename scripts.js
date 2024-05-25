@@ -82,6 +82,12 @@ function filterPlaces(type, callback) {
 function getPlaceDetails(place, callback) {
   service.getDetails({ placeId: place.place_id }, function (details, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
+      // Get the photo URL if available
+      let photoUrl = '';
+      if (details.photos && details.photos.length > 0) {
+        photoUrl = details.photos[0].getUrl({ maxWidth: 200, maxHeight: 200 });
+      }
+      details.photoUrl = photoUrl; // Add photoUrl to details object
       callback(details);
     } else {
       console.error('Place details request failed due to ' + status);
@@ -149,8 +155,10 @@ function selectServices() {
         getPlaceDetails(place, function (details) {
           calculateDistance(userLocation, details.geometry.location).then(function (distance) {
             var rating = details.rating ? `${details.rating} stars` : 'No rating';
+            var photoHtml = details.photoUrl ? `<img src="${details.photoUrl}" alt="${details.name}" class="business-photo">` : '';
             var placeDetails = `
               <div class="result-banner">
+                ${photoHtml}
                 <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
                 <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
                 ${details.vicinity}<br>
