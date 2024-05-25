@@ -155,16 +155,18 @@ function selectServices() {
         getPlaceDetails(place, function (details) {
           calculateDistance(userLocation, details.geometry.location).then(function (distance) {
             var rating = details.rating ? `${details.rating} stars` : 'No rating';
-            var photoHtml = details.photoUrl ? `<img src="${details.photoUrl}" alt="${details.name}" class="business-photo">` : '';
+            var photoHtml = details.photoUrl ? `<img src="${details.photoUrl}" alt="${details.name}" class="business-photo">` : '<div class="business-photo-placeholder"></div>';
             var placeDetails = `
               <div class="result-banner">
                 ${photoHtml}
-                <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
-                <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
-                ${details.vicinity}<br>
-                Rating: ${rating}<br>
-                Distance: ${distance}<br>
-                Phone: ${details.formatted_phone_number || 'N/A'}
+                <div class="result-details">
+                  <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
+                  <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
+                  ${details.vicinity}<br>
+                  Rating: ${rating}<br>
+                  Distance: ${distance}<br>
+                  Phone: ${details.formatted_phone_number || 'N/A'}
+                </div>
               </div>`;
             serviceContainer.innerHTML += placeDetails;
           }).catch(function (error) {
