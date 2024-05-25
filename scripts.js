@@ -223,7 +223,14 @@ function submitUserInfo() {
 }
 
 function saveAsPDF() {
+  console.log("Save as PDF button clicked");
   const { jsPDF } = window.jspdf;
+  if (!jsPDF) {
+    console.error("jsPDF is not loaded");
+    alert("Error: jsPDF library is not loaded.");
+    return;
+  }
+
   const doc = new jsPDF();
   const selectedCompaniesList = document.getElementById('selected-companies-list');
   let content = "";
@@ -231,6 +238,7 @@ function saveAsPDF() {
     content += node.textContent + "\n";
   });
 
+  console.log("Content to be saved in PDF:", content);
   doc.text(content, 10, 10);
   doc.save('selected-companies.pdf');
 }
@@ -261,12 +269,12 @@ window.onload = function () {
   userInfoModal.style.display = 'none';
 
   // Add event listener for select companies button
-  selectCompaniesButton.addEventListener('click', function () {
+  selectCompaniesButton.addEventListener('click', function() {
     userInfoModal.style.display = 'flex';
   });
 
   // Hide the modal when clicking outside of it
-  window.addEventListener('click', function (event) {
+  window.addEventListener('click', function(event) {
     if (event.target === userInfoModal) {
       userInfoModal.style.display = 'none';
     }
