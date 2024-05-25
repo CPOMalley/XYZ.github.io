@@ -38,7 +38,7 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1400px; /* Increased max width */
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -156,7 +156,7 @@ body {
 
 .results-container {
   margin-top: 20px;
-  max-height: 400px; /* Set a maximum height for the container */
+  max-height: 600px; /* Increased max height */
   overflow-y: auto; /* Enable vertical scrolling */
 }
 
@@ -291,8 +291,8 @@ body {
 
 .business-photo,
 .business-photo-placeholder {
-  width: 100px;
-  height: 100px;
+  width: 150px; /* Increased size */
+  height: 150px; /* Increased size */
   object-fit: cover;
   border-radius: 5px;
   margin-right: 10px;
@@ -310,9 +310,14 @@ body {
 }
 
 .result-banner a {
-  margin-left: 120px; /* Adjust margin to make space for the image */
+  margin-left: 160px; /* Adjust margin to make space for the image */
 }
 
 .result-details {
-  margin-left: 120px; /* Make space for the image */
+  margin-left: 160px; /* Make space for the image */
+}
+
+.detail-item {
+  display: block;
+  margin-bottom: 5px;
 }
