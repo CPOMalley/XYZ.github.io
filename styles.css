@@ -188,15 +188,16 @@ body {
   background-color: #f9f9f9;
 }
 
-.result-banner a {
-  margin-left: 260px;
-  font-weight: bold;
-  font-size: 18px;
-}
-
 .result-details {
   margin-left: 260px;
   flex: 1;
+}
+
+.result-details a {
+  display: inline-block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .result-details p {
@@ -211,6 +212,7 @@ body {
 
 .company-checkbox {
   margin-right: 10px;
+  margin-top: 5px;
 }
 
 .selected-companies {
