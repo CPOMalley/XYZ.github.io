@@ -52,9 +52,8 @@ function searchAddress() {
     if (status === 'OK') {
       map.setCenter(results[0].geometry.location);
       userLocation = results[0].geometry.location;
-      document.getElementById('service-sidebar').classList.add('visible'); // Show sidebar on successful search
-      document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
-      // Store the radius for later use
+      document.getElementById('service-sidebar').classList.add('visible');
+      document.getElementById('new-search').classList.add('visible');
       userLocation.radius = document.getElementById('radius').value;
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
@@ -65,7 +64,7 @@ function searchAddress() {
 function filterPlaces(type, callback) {
   var request = {
     location: userLocation,
-    radius: userLocation.radius || '5000', // Use the stored radius or default to 5km
+    radius: userLocation.radius || '5000',
     keyword: type
   };
 
@@ -82,12 +81,11 @@ function filterPlaces(type, callback) {
 function getPlaceDetails(place, callback) {
   service.getDetails({ placeId: place.place_id }, function (details, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-      // Get the photo URL if available
       let photoUrl = '';
       if (details.photos && details.photos.length > 0) {
         photoUrl = details.photos[0].getUrl({ maxWidth: 200, maxHeight: 200 });
       }
-      details.photoUrl = photoUrl; // Add photoUrl to details object
+      details.photoUrl = photoUrl;
       callback(details);
     } else {
       console.error('Place details request failed due to ' + status);
@@ -105,7 +103,6 @@ function calculateDistance(origin, destination) {
     }, function (response, status) {
       if (status === 'OK') {
         var distanceText = response.rows[0].elements[0].distance.text;
-        // Convert distance to miles if it is in km
         if (distanceText.includes('km')) {
           var distanceKm = parseFloat(distanceText.replace(' km', ''));
           var distanceMiles = (distanceKm * 0.621371).toFixed(2);
@@ -138,7 +135,7 @@ function selectServices() {
   }
 
   var resultsContainer = document.getElementById('results');
-  resultsContainer.innerHTML = ''; // Clear the container
+  resultsContainer.innerHTML = '';
   resultsContainer.classList.add('visible');
 
   selectedServices.forEach(function (service) {
@@ -161,11 +158,11 @@ function selectServices() {
                 ${photoHtml}
                 <div class="result-details">
                   <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
-                  <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
-                  <span class="detail-item">${details.vicinity}</span><br>
-                  <span class="detail-item">Rating: ${rating}</span><br>
-                  <span class="detail-item">Distance: ${distance}</span><br>
-                  <span class="detail-item">Phone: ${details.formatted_phone_number || 'N/A'}</span>
+                  <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a>
+                  <p class="detail-item">${details.vicinity}</p>
+                  <p class="detail-item">Rating: ${rating}</p>
+                  <p class="detail-item">Distance: ${distance}</p>
+                  <p class="detail-item">Phone: ${details.formatted_phone_number || 'N/A'}</p>
                 </div>
               </div>`;
             serviceContainer.innerHTML += placeDetails;
@@ -198,9 +195,8 @@ function generateSelectedCompanies() {
     return;
   }
 
-  // Show user info modal before displaying results
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.style.display = 'flex'; // Use 'flex' to display the modal centered
+  userInfoModal.style.display = 'flex';
 }
 
 function submitUserInfo() {
@@ -226,7 +222,7 @@ function submitUserInfo() {
     });
 
     selectedCompaniesContainer.classList.add('visible');
-    document.getElementById('userInfoModal').style.display = 'none'; // Hide the modal
+    document.getElementById('userInfoModal').style.display = 'none';
   } else {
     alert('Please fill out all fields.');
   }
@@ -254,36 +250,30 @@ function saveAsPDF() {
 }
 
 function startNewSearch() {
-  location.reload(); // Refresh the page
+  location.reload();
 }
 
 window.onload = function () {
   initMap();
-  // Hide the "Select Services" button initially
   var selectServicesButton = document.getElementById('select-services-button');
   selectServicesButton.style.display = 'none';
-  // Hide the "Select Companies" button and "Start a New Search" text initially
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'none';
   var newSearchText = document.getElementById('new-search');
   newSearchText.style.display = 'none';
 
-  // Attach the change event to checkboxes to toggle the "Select Services" button
   var serviceCheckboxes = document.querySelectorAll('.sidebar input[type="checkbox"]');
   serviceCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener('change', toggleSelectServicesButton);
   });
 
-  // Ensure modal is hidden initially
   var userInfoModal = document.getElementById('userInfoModal');
   userInfoModal.style.display = 'none';
 
-  // Add event listener for select companies button
   selectCompaniesButton.addEventListener('click', function() {
     userInfoModal.style.display = 'flex';
   });
 
-  // Hide the modal when clicking outside of it
   window.addEventListener('click', function(event) {
     if (event.target === userInfoModal) {
       userInfoModal.style.display = 'none';
