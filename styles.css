@@ -33,12 +33,12 @@ body {
 }
 
 .logo {
-  max-width: 80px; /* Adjust this value to make the logo smaller */
+  max-width: 80px;
   margin-bottom: 10px;
 }
 
 .container {
-  max-width: 1400px; /* Increased max width */
+  max-width: 1400px;
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -70,13 +70,13 @@ body {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: #007bff; /* Same blue color as the other buttons */
+  background-color: #007bff;
   color: #fff;
   cursor: pointer;
 }
 
 .search-container button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3;
 }
 
 .map-container {
@@ -92,11 +92,11 @@ body {
 
 .sidebar {
   margin-top: 20px;
-  display: none; /* Hide sidebar initially */
+  display: none;
 }
 
 .sidebar.visible {
-  display: block; /* Show sidebar when visible */
+  display: block;
 }
 
 .sidebar h3 {
@@ -128,22 +128,22 @@ body {
 
 .center {
   display: flex;
-  justify-content: center; /* Center the button horizontally */
+  justify-content: center;
   margin-top: 20px;
 }
 
 #select-services-button,
 #select-companies-button,
 #save-as-pdf-button {
-  padding: 10px 20px; /* Adjusted size */
+  padding: 10px 20px;
   border: none;
   border-radius: 4px;
   background-color: #007bff;
   color: #fff;
   cursor: pointer;
-  font-size: 16px; /* Adjusted font size */
-  display: block; /* Initially hidden */
-  margin-top: 20px; /* Margin for spacing */
+  font-size: 16px;
+  display: block;
+  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -156,8 +156,8 @@ body {
 
 .results-container {
   margin-top: 20px;
-  max-height: 600px; /* Increased max height */
-  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 600px;
+  overflow-y: auto;
 }
 
 .service-container {
@@ -165,28 +165,52 @@ body {
   padding: 10px;
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
-.service-tile {
-  background-color: #fff;
+.business-photo,
+.business-photo-placeholder {
+  width: 250px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 10px;
+  float: left;
+}
+
+.result-banner {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
   padding: 10px;
-  border-radius: 4px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
 }
 
-.service-tile label {
+.result-banner a {
+  margin-left: 260px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.result-details {
+  margin-left: 260px;
+  flex: 1;
+}
+
+.result-details p {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.detail-item {
   display: block;
   margin-bottom: 5px;
 }
 
-.service-tile a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.service-tile a:hover {
-  text-decoration: underline;
+.company-checkbox {
+  margin-right: 10px;
 }
 
 .selected-companies {
@@ -230,14 +254,14 @@ body {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  width: 400px; /* Increased width */
+  width: 400px;
   text-align: center;
 }
 
 .modal-content input[type="text"],
 .modal-content input[type="email"] {
   padding: 10px;
-  width: 95%; /* Adjusted width to fit within the modal */
+  width: 95%;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -287,42 +311,4 @@ body {
   .service-banner {
     width: 100%;
   }
-}
-
-.business-photo,
-.business-photo-placeholder {
-  width: 200px; /* Increased size */
-  height: 150px; /* Increased size */
-  object-fit: cover;
-  border-radius: 5px;
-  margin-right: 10px;
-  float: left; /* Make the image float to the left */
-}
-
-.result-banner {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
-
-.result-banner a {
-  margin-left: 220px; /* Adjust margin to make space for the image */
-}
-
-.result-details {
-  margin-left: 220px; /* Make space for the image */
-  flex: 1;
-}
-
-.detail-item {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.company-checkbox {
-  margin-right: 10px;
 }
