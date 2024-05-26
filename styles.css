@@ -19,7 +19,7 @@ body {
 }
 
 .header-text {
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .header h1 {
@@ -33,7 +33,7 @@ body {
 }
 
 .logo {
-  max-width: 80px;
+  max-width: 150px; /* Increased size for better visibility */
   margin-bottom: 10px;
 }
 
@@ -122,7 +122,7 @@ body {
 }
 
 .service-logo {
-  max-width: 60px;
+  max-width: 100px; /* Increased size for service logos */
   margin-bottom: 10px;
 }
 
