@@ -291,7 +291,7 @@ body {
 
 .business-photo,
 .business-photo-placeholder {
-  width: 150px; /* Increased size */
+  width: 200px; /* Increased size */
   height: 150px; /* Increased size */
   object-fit: cover;
   border-radius: 5px;
@@ -310,14 +310,19 @@ body {
 }
 
 .result-banner a {
-  margin-left: 160px; /* Adjust margin to make space for the image */
+  margin-left: 220px; /* Adjust margin to make space for the image */
 }
 
 .result-details {
-  margin-left: 160px; /* Make space for the image */
+  margin-left: 220px; /* Make space for the image */
+  flex: 1;
 }
 
 .detail-item {
   display: block;
   margin-bottom: 5px;
+}
+
+.company-checkbox {
+  margin-right: 10px;
 }
