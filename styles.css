@@ -156,8 +156,11 @@ body {
 
 .results-container {
   margin-top: 20px;
-  max-height: 600px;
+  max-width: 60%; /* Adjusted width */
+  max-height: 800px; /* Increased height */
   overflow-y: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .service-container {
