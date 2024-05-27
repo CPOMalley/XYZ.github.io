@@ -229,13 +229,27 @@ function submitUserInfo() {
 function saveAsPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
+  
+  // Add header
+  doc.addImage('Images/open house logo.png', 'PNG', 10, 10, 30, 30); // Adjust the position and size as needed
+  doc.setFontSize(22);
+  doc.text('Open House', 50, 20);
+  doc.setFontSize(16);
+  doc.text('Find the best home services for your open house.', 50, 30);
+  doc.setLineWidth(0.5);
+  doc.line(10, 40, 200, 40); // Horizontal line to separate header
+  
   const selectedCompaniesList = document.getElementById('selected-companies-list');
   let content = "";
   selectedCompaniesList.childNodes.forEach(node => {
-    content += node.textContent + "\n";
+    content += node.textContent + "\n\n";
   });
+  
+  // Add content
+  doc.setFontSize(12);
+  doc.text(content, 10, 50);
 
-  doc.text(content, 10, 10);
+  // Save the PDF
   doc.save('selected-companies.pdf');
 }
 
