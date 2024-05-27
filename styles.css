@@ -193,7 +193,7 @@ body {
 }
 
 .result-details {
-  margin-left: 310px; /* Adjusted for larger business photos */
+  margin-left: 20px; /* Adjusted for better alignment */
   flex: 1;
 }
 
