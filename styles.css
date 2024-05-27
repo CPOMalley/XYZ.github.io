@@ -243,7 +243,7 @@ body {
 }
 
 .modal {
-  display: none;
+  display: none; /* Ensure the modal is hidden by default */
   position: fixed;
   top: 0;
   left: 0;
