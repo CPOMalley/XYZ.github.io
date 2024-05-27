@@ -52,8 +52,9 @@ function searchAddress() {
     if (status === 'OK') {
       map.setCenter(results[0].geometry.location);
       userLocation = results[0].geometry.location;
-      document.getElementById('service-sidebar').classList.add('visible');
-      document.getElementById('new-search').classList.add('visible');
+      document.getElementById('service-sidebar').classList.add('visible'); // Show sidebar on successful search
+      document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
+      // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
@@ -64,7 +65,7 @@ function searchAddress() {
 function filterPlaces(type, callback) {
   var request = {
     location: userLocation,
-    radius: userLocation.radius || '5000',
+    radius: userLocation.radius || '5000', // Use the stored radius or default to 5km
     keyword: type
   };
 
@@ -81,11 +82,6 @@ function filterPlaces(type, callback) {
 function getPlaceDetails(place, callback) {
   service.getDetails({ placeId: place.place_id }, function (details, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-      let photoUrl = '';
-      if (details.photos && details.photos.length > 0) {
-        photoUrl = details.photos[0].getUrl({ maxWidth: 200, maxHeight: 200 });
-      }
-      details.photoUrl = photoUrl;
       callback(details);
     } else {
       console.error('Place details request failed due to ' + status);
@@ -103,6 +99,7 @@ function calculateDistance(origin, destination) {
     }, function (response, status) {
       if (status === 'OK') {
         var distanceText = response.rows[0].elements[0].distance.text;
+        // Convert distance to miles if it is in km
         if (distanceText.includes('km')) {
           var distanceKm = parseFloat(distanceText.replace(' km', ''));
           var distanceMiles = (distanceKm * 0.621371).toFixed(2);
@@ -135,7 +132,7 @@ function selectServices() {
   }
 
   var resultsContainer = document.getElementById('results');
-  resultsContainer.innerHTML = '';
+  resultsContainer.innerHTML = ''; // Clear the container
   resultsContainer.classList.add('visible');
 
   selectedServices.forEach(function (service) {
@@ -152,17 +149,17 @@ function selectServices() {
         getPlaceDetails(place, function (details) {
           calculateDistance(userLocation, details.geometry.location).then(function (distance) {
             var rating = details.rating ? `${details.rating} stars` : 'No rating';
-            var photoHtml = details.photoUrl ? `<img src="${details.photoUrl}" alt="${details.name}" class="business-photo">` : '<div class="business-photo-placeholder"></div>';
+            var photo = details.photos ? details.photos[0].getUrl({maxWidth: 300, maxHeight: 200}) : 'Images/no-image-available.png';
             var placeDetails = `
               <div class="result-banner">
-                ${photoHtml}
+                <img src="${photo}" alt="${details.name}" class="business-photo">
                 <div class="result-details">
                   <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
-                  <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a>
-                  <p class="detail-item">${details.vicinity}</p>
-                  <p class="detail-item">Rating: ${rating}</p>
-                  <p class="detail-item">Distance: ${distance}</p>
-                  <p class="detail-item">Phone: ${details.formatted_phone_number || 'N/A'}</p>
+                  <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
+                  ${details.vicinity}<br>
+                  Rating: ${rating}<br>
+                  Distance: ${distance}<br>
+                  Phone: ${details.formatted_phone_number || 'N/A'}
                 </div>
               </div>`;
             serviceContainer.innerHTML += placeDetails;
@@ -195,8 +192,9 @@ function generateSelectedCompanies() {
     return;
   }
 
+  // Show user info modal before displaying results
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.style.display = 'flex';
+  userInfoModal.style.display = 'flex'; // Use 'flex' to display the modal centered
 }
 
 function submitUserInfo() {
@@ -222,21 +220,14 @@ function submitUserInfo() {
     });
 
     selectedCompaniesContainer.classList.add('visible');
-    document.getElementById('userInfoModal').style.display = 'none';
+    document.getElementById('userInfoModal').style.display = 'none'; // Hide the modal
   } else {
     alert('Please fill out all fields.');
   }
 }
 
 function saveAsPDF() {
-  console.log("Save as PDF button clicked");
   const { jsPDF } = window.jspdf;
-  if (!jsPDF) {
-    console.error("jsPDF is not loaded");
-    alert("Error: jsPDF library is not loaded.");
-    return;
-  }
-
   const doc = new jsPDF();
   const selectedCompaniesList = document.getElementById('selected-companies-list');
   let content = "";
@@ -244,21 +235,23 @@ function saveAsPDF() {
     content += node.textContent + "\n";
   });
 
-  console.log("Content to be saved in PDF:", content);
   doc.text(content, 10, 10);
   doc.save('selected-companies.pdf');
 }
 
 function startNewSearch() {
-  location.reload();
+  location.reload(); // Refresh the page
 }
 
 window.onload = function () {
   initMap();
+
   var selectServicesButton = document.getElementById('select-services-button');
   selectServicesButton.style.display = 'none';
+  
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'none';
+  
   var newSearchText = document.getElementById('new-search');
   newSearchText.style.display = 'none';
 
@@ -268,7 +261,7 @@ window.onload = function () {
   });
 
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.style.display = 'none';
+  userInfoModal.style.display = 'none'; // Ensure the modal is hidden on page load
 
   selectCompaniesButton.addEventListener('click', function() {
     userInfoModal.style.display = 'flex';
