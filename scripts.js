@@ -195,7 +195,7 @@ function generateSelectedCompanies() {
 
   // Show user info modal before displaying results
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.style.display = 'flex'; // Use 'flex' to display the modal centered
+  userInfoModal.classList.remove('hidden'); // Remove the hidden class to display the modal
 }
 
 function submitUserInfo() {
@@ -221,7 +221,7 @@ function submitUserInfo() {
     });
 
     selectedCompaniesContainer.classList.add('visible');
-    document.getElementById('userInfoModal').style.display = 'none'; // Hide the modal
+    document.getElementById('userInfoModal').classList.add('hidden'); // Hide the modal
   } else {
     alert('Please fill out all fields.');
   }
@@ -276,15 +276,15 @@ window.onload = function () {
   });
 
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.style.display = 'none'; // Ensure the modal is hidden on page load
+  userInfoModal.classList.add('hidden'); // Ensure the modal is hidden on page load
 
   selectCompaniesButton.addEventListener('click', function() {
-    userInfoModal.style.display = 'flex';
+    userInfoModal.classList.remove('hidden'); // Display the modal when the button is clicked
   });
 
   window.addEventListener('click', function(event) {
     if (event.target === userInfoModal) {
-      userInfoModal.style.display = 'none';
+      userInfoModal.classList.add('hidden'); // Hide the modal when clicking outside of it
     }
   });
 };
