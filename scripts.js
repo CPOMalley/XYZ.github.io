@@ -15,7 +15,6 @@ function initMap() {
 
   var marker = new google.maps.Marker({
     map: map,
-    icon: 'path_to_custom_marker.png',
     anchorPoint: new google.maps.Point(0, -29)
   });
 
