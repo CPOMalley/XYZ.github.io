@@ -5,8 +5,8 @@ var userLocation = null;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: -33.867, lng: 151.195 },
-    zoom: 15
+    center: { lat: 37.0902, lng: -95.7129 }, // Centered on the United States
+    zoom: 4 // Appropriate zoom level for a broad view of the United States
   });
 
   var input = document.getElementById('address');
