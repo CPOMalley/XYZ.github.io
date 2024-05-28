@@ -15,6 +15,7 @@ function initMap() {
 
   var marker = new google.maps.Marker({
     map: map,
+    icon: 'path_to_custom_marker.png',
     anchorPoint: new google.maps.Point(0, -29)
   });
 
@@ -197,7 +198,7 @@ function generateSelectedCompanies() {
 
   // Show user info modal before displaying results
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.style.display = 'flex'; // Use 'flex' to display the modal centered
+  userInfoModal.classList.remove('hidden');
   userInfoModal.scrollIntoView({ behavior: 'smooth' }); // Scroll to the user info modal
 }
 
@@ -224,7 +225,7 @@ function submitUserInfo() {
     });
 
     selectedCompaniesContainer.classList.add('visible');
-    userInfoModal.style.display = 'none'; // Hide the modal
+    document.getElementById('userInfoModal').classList.add('hidden');
     selectedCompaniesContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the selected companies container
   } else {
     alert('Please fill out all fields.');
@@ -280,17 +281,15 @@ window.onload = function () {
   });
 
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.style.display = 'none';
+  userInfoModal.classList.add('hidden');
 
   selectCompaniesButton.addEventListener('click', function() {
-    userInfoModal.style.display = 'flex';
+    userInfoModal.classList.remove('hidden');
   });
 
   window.addEventListener('click', function(event) {
     if (event.target === userInfoModal) {
-      userInfoModal.style.display = 'none';
+      userInfoModal.classList.add('hidden');
     }
   });
-
-  document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
 };
