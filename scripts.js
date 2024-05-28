@@ -153,9 +153,9 @@ function selectServices() {
             var photo = details.photos ? details.photos[0].getUrl({maxWidth: 300, maxHeight: 200}) : 'Images/no-image-available.png';
             var placeDetails = `
               <div class="result-banner">
+                <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
                 <img src="${photo}" alt="${details.name}" class="business-photo">
                 <div class="result-details">
-                  <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
                   <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
                   ${details.vicinity}<br>
                   Rating: ${rating} ${userRatingsTotal}<br>
