@@ -5,8 +5,8 @@ var userLocation = null;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 37.0902, lng: -95.7129 }, // Centered on the United States
-    zoom: 4 // Appropriate zoom level for a broad view of the United States
+    center: { lat: 39.8283, lng: -98.5795 }, // Center on the United States
+    zoom: 4
   });
 
   var input = document.getElementById('address');
@@ -15,7 +15,6 @@ function initMap() {
 
   var marker = new google.maps.Marker({
     map: map,
-    icon: 'path_to_custom_marker.png',
     anchorPoint: new google.maps.Point(0, -29)
   });
 
@@ -57,7 +56,7 @@ function searchAddress() {
       document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
-      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
+      document.getElementById('search-button').scrollIntoView({ behavior: 'smooth' }); // Auto-scroll
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -150,17 +149,15 @@ function selectServices() {
       results.forEach(function (place) {
         getPlaceDetails(place, function (details) {
           calculateDistance(userLocation, details.geometry.location).then(function (distance) {
-            var rating = details.rating ? `${details.rating} stars` : 'No rating';
-            var userRatingsTotal = details.user_ratings_total ? `(${details.user_ratings_total})` : '';
-            var photo = details.photos ? details.photos[0].getUrl({maxWidth: 300, maxHeight: 200}) : 'Images/no-image-available.png';
+            var rating = details.rating ? `${details.rating} stars (${details.user_ratings_total})` : 'No rating';
             var placeDetails = `
               <div class="result-banner">
                 <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
-                <img src="${photo}" alt="${details.name}" class="business-photo">
+                <img src="${details.photos ? details.photos[0].getUrl({maxWidth: 100, maxHeight: 100}) : 'Images/default.png'}" alt="${details.name}">
                 <div class="result-details">
                   <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
                   ${details.vicinity}<br>
-                  Rating: ${rating} ${userRatingsTotal}<br>
+                  Rating: ${rating}<br>
                   Distance: ${distance}<br>
                   Phone: ${details.formatted_phone_number || 'N/A'}
                 </div>
@@ -176,7 +173,7 @@ function selectServices() {
 
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'block';
-  resultsContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the results container
+  document.getElementById('select-services-button').scrollIntoView({ behavior: 'smooth' }); // Auto-scroll
 }
 
 function toggleSelectServicesButton() {
@@ -199,7 +196,8 @@ function generateSelectedCompanies() {
   // Show user info modal before displaying results
   var userInfoModal = document.getElementById('userInfoModal');
   userInfoModal.classList.remove('hidden');
-  userInfoModal.scrollIntoView({ behavior: 'smooth' }); // Scroll to the user info modal
+  userInfoModal.style.display = 'flex'; // Use 'flex' to display the modal centered
+  document.getElementById('select-companies-button').scrollIntoView({ behavior: 'smooth' }); // Auto-scroll
 }
 
 function submitUserInfo() {
@@ -225,8 +223,8 @@ function submitUserInfo() {
     });
 
     selectedCompaniesContainer.classList.add('visible');
-    document.getElementById('userInfoModal').classList.add('hidden');
-    selectedCompaniesContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the selected companies container
+    document.getElementById('userInfoModal').style.display = 'none'; // Hide the modal
+    selectedCompaniesContainer.scrollIntoView({ behavior: 'smooth' }); // Auto-scroll
   } else {
     alert('Please fill out all fields.');
   }
@@ -235,61 +233,57 @@ function submitUserInfo() {
 function saveAsPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
-
-  doc.addImage('Images/open house logo.png', 'PNG', 10, 10, 30, 30);
-  doc.setFontSize(22);
-  doc.text('Open House', 50, 20);
-  doc.setFontSize(16);
-  doc.text('Find the best home services for your open house.', 50, 30);
-  doc.setLineWidth(0.5);
-  doc.line(10, 40, 200, 40);
-
   const selectedCompaniesList = document.getElementById('selected-companies-list');
   let content = "";
   selectedCompaniesList.childNodes.forEach(node => {
-    content += node.textContent + "\n\n";
+    content += node.textContent + "\n";
   });
 
-  doc.setFontSize(12);
-  doc.text(content, 10, 50);
+  doc.text(content, 10, 10);
   doc.save('selected-companies.pdf');
 }
 
 function startNewSearch() {
-  location.reload();
-}
-
-function scrollToSearch() {
-  document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
+  location.reload(); // Refresh the page
 }
 
 window.onload = function () {
   initMap();
-
+  // Hide the "Select Services" button initially
   var selectServicesButton = document.getElementById('select-services-button');
   selectServicesButton.style.display = 'none';
-
+  // Hide the "Select Companies" button and "Start a New Search" text initially
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'none';
-
   var newSearchText = document.getElementById('new-search');
   newSearchText.style.display = 'none';
 
+  // Attach the change event to checkboxes to toggle the "Select Services" button
   var serviceCheckboxes = document.querySelectorAll('.sidebar input[type="checkbox"]');
   serviceCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener('change', toggleSelectServicesButton);
   });
 
+  // Ensure modal is hidden initially
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.classList.add('hidden');
+  userInfoModal.classList.add('hidden'); // Ensure modal is hidden initially
 
+  // Add event listener for select companies button
   selectCompaniesButton.addEventListener('click', function() {
     userInfoModal.classList.remove('hidden');
+    userInfoModal.style.display = 'flex';
   });
 
+  // Hide the modal when clicking outside of it
   window.addEventListener('click', function(event) {
     if (event.target === userInfoModal) {
       userInfoModal.classList.add('hidden');
+      userInfoModal.style.display = 'none';
     }
+  });
+
+  // Smooth scrolling for "Get Started" button
+  document.getElementById('get-started-button').addEventListener('click', function() {
+    document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
   });
 };
