@@ -39,7 +39,7 @@ body {
 }
 
 .container {
-  max-width: 1400px;
+  max-width: 1200px; /* Reduced width for the container */
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -199,6 +199,11 @@ body {
 
 .result-details a:hover {
   text-decoration: underline;
+}
+
+.result-banner input[type="checkbox"] {
+  align-self: flex-start; /* Align the checkbox to the top */
+  margin-right: 10px;
 }
 
 .selected-companies {
