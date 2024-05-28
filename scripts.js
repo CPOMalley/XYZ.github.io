@@ -57,6 +57,7 @@ function searchAddress() {
       document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
+      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -175,6 +176,7 @@ function selectServices() {
 
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'block';
+  resultsContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the results container
 }
 
 function toggleSelectServicesButton() {
@@ -197,6 +199,7 @@ function generateSelectedCompanies() {
   // Show user info modal before displaying results
   var userInfoModal = document.getElementById('userInfoModal');
   userInfoModal.classList.remove('hidden');
+  userInfoModal.scrollIntoView({ behavior: 'smooth' }); // Scroll to the user info modal
 }
 
 function submitUserInfo() {
@@ -223,6 +226,7 @@ function submitUserInfo() {
 
     selectedCompaniesContainer.classList.add('visible');
     document.getElementById('userInfoModal').classList.add('hidden');
+    selectedCompaniesContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the selected companies container
   } else {
     alert('Please fill out all fields.');
   }
