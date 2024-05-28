@@ -144,9 +144,7 @@ body {
   cursor: pointer;
   font-size: 16px;
   display: block;
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 10px auto;
 }
 
 #select-services-button:hover,
@@ -157,11 +155,11 @@ body {
 
 .results-container {
   margin-top: 20px;
-  max-width: 60%; /* Adjusted width */
-  max-height: 800px; /* Increased height */
+  display: grid;
+  grid-template-columns: 1fr; /* Single column layout */
+  gap: 10px;
+  max-height: 800px;
   overflow-y: auto;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .service-container {
@@ -169,54 +167,33 @@ body {
   padding: 10px;
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-.business-photo,
-.business-photo-placeholder {
-  width: 300px; /* Increased size for business photos */
-  height: 200px; /* Increased size for business photos */
-  object-fit: cover;
-  border-radius: 5px;
-  margin-right: 10px;
-  float: left;
 }
 
 .result-banner {
   display: flex;
-  align-items: center;
-  border: 1px solid #ddd;
+  gap: 10px;
   padding: 10px;
-  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
   border-radius: 5px;
-  background-color: #f9f9f9;
+}
+
+.business-photo {
+  max-width: 150px;
+  border-radius: 5px;
 }
 
 .result-details {
-  margin-left: 20px; /* Adjusted for better alignment */
-  flex: 1;
+  flex-grow: 1;
 }
 
 .result-details a {
-  display: inline-block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  font-size: 18px;
+  color: #007bff;
+  text-decoration: none;
 }
 
-.result-details p {
-  margin: 5px 0;
-  line-height: 1.5;
-}
-
-.detail-item {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.company-checkbox {
-  margin-right: 10px;
-  margin-top: 5px;
+.result-details a:hover {
+  text-decoration: underline;
 }
 
 .selected-companies {
@@ -244,7 +221,7 @@ body {
 }
 
 .modal {
-  display: none; /* Ensure the modal is hidden by default */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
