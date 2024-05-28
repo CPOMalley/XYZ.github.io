@@ -39,7 +39,7 @@ body {
 }
 
 .container {
-  max-width: 1200px; /* Reduced width for the container */
+  max-width: 1000px; /* Reduced width for the container */
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -180,7 +180,7 @@ body {
 }
 
 .business-photo {
-  max-width: 150px;
+  max-width: 100px; /* Adjusted width for a more compact layout */
   border-radius: 5px;
 }
 
@@ -189,6 +189,7 @@ body {
   display: flex;
   flex-direction: column; /* Stack the items vertically */
   justify-content: center; /* Center the text vertically */
+  padding-left: 10px; /* Add padding to the left */
 }
 
 .result-details a {
@@ -202,7 +203,7 @@ body {
 }
 
 .result-banner input[type="checkbox"] {
-  align-self: flex-start; /* Align the checkbox to the top */
+  align-self: center; /* Align the checkbox vertically in the center */
   margin-right: 10px;
 }
 
