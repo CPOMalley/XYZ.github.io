@@ -15,7 +15,6 @@ function initMap() {
 
   var marker = new google.maps.Marker({
     map: map,
-    icon: 'path_to_custom_marker.png',
     anchorPoint: new google.maps.Point(0, -29)
   });
 
@@ -57,6 +56,7 @@ function searchAddress() {
       document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
+      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -175,6 +175,7 @@ function selectServices() {
 
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'block';
+  resultsContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the results container
 }
 
 function toggleSelectServicesButton() {
@@ -196,7 +197,8 @@ function generateSelectedCompanies() {
 
   // Show user info modal before displaying results
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.classList.remove('hidden');
+  userInfoModal.style.display = 'flex'; // Use 'flex' to display the modal centered
+  userInfoModal.scrollIntoView({ behavior: 'smooth' }); // Scroll to the user info modal
 }
 
 function submitUserInfo() {
@@ -222,7 +224,8 @@ function submitUserInfo() {
     });
 
     selectedCompaniesContainer.classList.add('visible');
-    document.getElementById('userInfoModal').classList.add('hidden');
+    userInfoModal.style.display = 'none'; // Hide the modal
+    selectedCompaniesContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the selected companies container
   } else {
     alert('Please fill out all fields.');
   }
@@ -277,15 +280,17 @@ window.onload = function () {
   });
 
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.classList.add('hidden');
+  userInfoModal.style.display = 'none';
 
   selectCompaniesButton.addEventListener('click', function() {
-    userInfoModal.classList.remove('hidden');
+    userInfoModal.style.display = 'flex';
   });
 
   window.addEventListener('click', function(event) {
     if (event.target === userInfoModal) {
-      userInfoModal.classList.add('hidden');
+      userInfoModal.style.display = 'none';
     }
   });
+
+  document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
 };
