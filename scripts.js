@@ -15,6 +15,7 @@ function initMap() {
 
   var marker = new google.maps.Marker({
     map: map,
+    icon: 'path_to_custom_marker.png',
     anchorPoint: new google.maps.Point(0, -29)
   });
 
@@ -195,7 +196,7 @@ function generateSelectedCompanies() {
 
   // Show user info modal before displaying results
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.classList.remove('hidden'); // Remove the hidden class to display the modal
+  userInfoModal.classList.remove('hidden');
 }
 
 function submitUserInfo() {
@@ -221,7 +222,7 @@ function submitUserInfo() {
     });
 
     selectedCompaniesContainer.classList.add('visible');
-    document.getElementById('userInfoModal').classList.add('hidden'); // Hide the modal
+    document.getElementById('userInfoModal').classList.add('hidden');
   } else {
     alert('Please fill out all fields.');
   }
@@ -230,32 +231,32 @@ function submitUserInfo() {
 function saveAsPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
-  
-  // Add header
-  doc.addImage('Images/open house logo.png', 'PNG', 10, 10, 30, 30); // Adjust the position and size as needed
+
+  doc.addImage('Images/open house logo.png', 'PNG', 10, 10, 30, 30);
   doc.setFontSize(22);
   doc.text('Open House', 50, 20);
   doc.setFontSize(16);
   doc.text('Find the best home services for your open house.', 50, 30);
   doc.setLineWidth(0.5);
-  doc.line(10, 40, 200, 40); // Horizontal line to separate header
-  
+  doc.line(10, 40, 200, 40);
+
   const selectedCompaniesList = document.getElementById('selected-companies-list');
   let content = "";
   selectedCompaniesList.childNodes.forEach(node => {
     content += node.textContent + "\n\n";
   });
-  
-  // Add content
+
   doc.setFontSize(12);
   doc.text(content, 10, 50);
-
-  // Save the PDF
   doc.save('selected-companies.pdf');
 }
 
 function startNewSearch() {
-  location.reload(); // Refresh the page
+  location.reload();
+}
+
+function scrollToSearch() {
+  document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
 }
 
 window.onload = function () {
@@ -263,10 +264,10 @@ window.onload = function () {
 
   var selectServicesButton = document.getElementById('select-services-button');
   selectServicesButton.style.display = 'none';
-  
+
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'none';
-  
+
   var newSearchText = document.getElementById('new-search');
   newSearchText.style.display = 'none';
 
@@ -276,15 +277,15 @@ window.onload = function () {
   });
 
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.classList.add('hidden'); // Ensure the modal is hidden on page load
+  userInfoModal.classList.add('hidden');
 
   selectCompaniesButton.addEventListener('click', function() {
-    userInfoModal.classList.remove('hidden'); // Display the modal when the button is clicked
+    userInfoModal.classList.remove('hidden');
   });
 
   window.addEventListener('click', function(event) {
     if (event.target === userInfoModal) {
-      userInfoModal.classList.add('hidden'); // Hide the modal when clicking outside of it
+      userInfoModal.classList.add('hidden');
     }
   });
 };
