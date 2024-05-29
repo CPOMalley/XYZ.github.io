@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OpenHouse</title>
+  <title>Open House</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="Images/open house logo.png" type="image/x-icon">
   <meta name="description" content="Find local home services for your open house. Cleaning, moving, photography, staging, landscaping, and storage services all in one place.">
@@ -43,20 +43,6 @@
         <option value="1000000">100+ miles</option>
       </select>
       <button id="search-button" onclick="searchAddress()">Search</button>
-    </div>
-    <div class="filter-container">
-      <label for="rating-filter">Minimum Rating:</label>
-      <select id="rating-filter" onchange="applyFilters()">
-        <option value="0">Any</option>
-        <option value="1">1 star</option>
-        <option value="2">2 stars</option>
-        <option value="3">3 stars</option>
-        <option value="4">4 stars</option>
-        <option value="5">5 stars</option>
-      </select>
-  
-      <label for="distance-filter">Maximum Distance (miles):</label>
-      <input type="number" id="distance-filter" onchange="applyFilters()" placeholder="Enter miles">
     </div>
     <div class="map-container">
       <div id="map"></div>
