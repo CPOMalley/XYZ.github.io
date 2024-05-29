@@ -152,12 +152,14 @@ function selectServices() {
             var rating = details.rating ? `${details.rating} stars` : 'No rating';
             var userRatingsTotal = details.user_ratings_total ? `(${details.user_ratings_total})` : '';
             var photo = details.photos ? details.photos[0].getUrl({maxWidth: 300, maxHeight: 200}) : 'Images/no-image-available.png';
+            var website = details.website ? `<a href="${details.website}" target="_blank">${details.website}</a><br>` : '';
             var placeDetails = `
               <div class="result-banner">
                 <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
                 <img src="${photo}" alt="${details.name}" class="business-photo">
                 <div class="result-details">
-                  <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
+                  ${website}
+                  ${details.name}<br>
                   ${details.vicinity}<br>
                   Rating: ${rating} ${userRatingsTotal}<br>
                   Distance: ${distance}<br>
@@ -204,9 +206,11 @@ function generateSelectedCompanies() {
 function submitUserInfo() {
   var firstName = document.getElementById('firstName').value;
   var lastName = document.getElementById('lastName').value;
+  var city = document.getElementById('city').value;
+  var state = document.getElementById('state').value;
   var email = document.getElementById('email').value;
 
-  if (firstName && lastName && email) {
+  if (firstName && lastName && city && state && email) {
     var selectedCompaniesContainer = document.getElementById('selected-companies');
     var selectedCompaniesList = document.getElementById('selected-companies-list');
     selectedCompaniesList.innerHTML = '';
