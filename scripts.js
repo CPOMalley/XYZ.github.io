@@ -1,356 +1,298 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
-  margin: 0;
-  padding: 0;
+var map;
+var service;
+var infowindow;
+var userLocation = null;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: { lat: 37.0902, lng: -95.7129 }, // Centered on the United States
+    zoom: 4 // Appropriate zoom level for a broad view of the United States
+  });
+
+  var input = document.getElementById('address');
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+
+  var marker = new google.maps.Marker({
+    map: map,
+    anchorPoint: new google.maps.Point(0, -29)
+  });
+
+  autocomplete.addListener('place_changed', function () {
+    infowindow.close();
+    marker.setVisible(false);
+    var place = autocomplete.getPlace();
+    if (!place.geometry) {
+      window.alert("Autocomplete's returned place contains no geometry");
+      return;
+    }
+
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);
+    }
+    marker.setPosition(place.geometry.location);
+    marker.setVisible(true);
+
+    userLocation = place.geometry.location;
+  });
 }
 
-.hero {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-}
-
-#hero-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-}
-.hero-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: #fff;
-  padding: 20px;
-}
-
-.hero-content h1 {
-  font-size: 3em;
-  margin: 0;
-}
-
-.hero-content p {
-  font-size: 1.5em;
-  margin: 10px 0;
-}
-
-.hero-content button {
-  padding: 10px 20px;
-  font-size: 1em;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-}
-
-.hero-content button:hover {
-  background-color: #0056b3;
-}
-
-.header {
-  text-align: center;
-  padding: 20px;
-  background-color: #fff;
-  border-bottom: 1px solid #ccc;
-}
-
-.header-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.header-text {
-  margin-left: 20px;
-}
-
-.header h1 {
-  margin: 0;
-  color: black;
-}
-
-.header p {
-  margin: 5px 0 0;
-  color: black;
-}
-
-.logo {
-  max-width: 200px; /* Increased size for better visibility */
-  margin-bottom: 10px;
-}
-
-.container {
-  max-width: 1000px; /* Reduced width for the container */
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.search-container {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.search-container input[type="text"] {
-  padding: 10px;
-  width: 80%;
-  max-width: 400px;
-  margin-right: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.search-container select {
-  padding: 10px;
-  margin-right: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.search-container button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-}
-
-.search-container button:hover {
-  background-color: #0056b3;
-}
-
-.map-container {
-  margin-top: 20px;
-}
-
-#map {
-  width: 100%;
-  height: 400px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-.sidebar {
-  margin-top: 20px;
-  display: none;
-}
-
-.sidebar.visible {
-  display: block;
-}
-
-.sidebar h3 {
-  margin-top: 0;
-  text-align: center;
-}
-
-.service-banners {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.service-banner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f0f0f0;
-  padding: 20px;
-  border-radius: 4px;
-  text-align: center;
-}
-
-.service-logo {
-  max-width: 150px; /* Increased size for service logos */
-  margin-bottom: 10px;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-#select-services-button,
-#select-companies-button,
-#save-as-pdf-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  font-size: 16px;
-  display: block;
-  margin: 10px auto;
-}
-
-#select-services-button:hover,
-#select-companies-button:hover,
-#save-as-pdf-button:hover {
-  background-color: #0056b3;
-}
-
-.results-container {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: 1fr; /* Single column layout */
-  gap: 10px;
-  max-height: 800px;
-  overflow-y: auto;
-}
-
-.service-container {
-  background-color: #f9f9f9;
-  padding: 10px;
-  border-radius: 4px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.result-banner {
-  display: flex;
-  gap: 10px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  border-radius: 5px;
-  align-items: center; /* Ensure items are vertically centered */
-}
-
-.business-photo {
-  max-width: 100px; /* Adjusted width for a more compact layout */
-  border-radius: 5px;
-}
-
-.result-details {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column; /* Stack the items vertically */
-  justify-content: center; /* Center the text vertically */
-  padding-left: 10px; /* Add padding to the left */
-}
-
-.result-details a {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold; /* Make the link bold */
-}
-
-.result-details a:hover {
-  text-decoration: underline;
-}
-
-.result-banner input[type="checkbox"] {
-  align-self: center; /* Align the checkbox vertically in the center */
-  margin-right: 10px;
-}
-
-.selected-companies {
-  display: none;
-  margin-top: 20px;
-}
-
-.selected-companies.visible {
-  display: block;
-  margin: 20px auto;
-  padding: 20px;
-  max-width: 800px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.selected-companies h3 {
-  text-align: center;
-}
-
-.selected-companies p {
-  margin: 10px 0;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 400px;
-  text-align: center;
-}
-
-.modal-content input[type="text"],
-.modal-content input[type="email"] {
-  padding: 10px;
-  width: 95%;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.modal-content button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-}
-
-.hidden {
-  display: none;
-}
-
-.visible {
-  display: block;
-}
-
-@media (max-width: 600px) {
-  .header-content {
-    flex-direction: column;
+function searchAddress() {
+  var address = document.getElementById('address').value;
+  if (!address) {
+    alert('Please enter an address.');
+    return;
   }
 
-  .header-text {
-    margin-left: 0;
-    text-align: center;
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ 'address': address }, function (results, status) {
+    if (status === 'OK') {
+      map.setCenter(results[0].geometry.location);
+      userLocation = results[0].geometry.location;
+      document.getElementById('service-sidebar').classList.add('visible'); // Show sidebar on successful search
+      document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
+      // Store the radius for later use
+      userLocation.radius = document.getElementById('radius').value;
+      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+function filterPlaces(type, callback) {
+  var request = {
+    location: userLocation,
+    radius: userLocation.radius || '5000', // Use the stored radius or default to 5km
+    keyword: type
+  };
+
+  service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, function (results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      callback(results, type);
+    } else {
+      alert('Search was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+function getPlaceDetails(place, callback) {
+  service.getDetails({ placeId: place.place_id }, function (details, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      callback(details);
+    } else {
+      console.error('Place details request failed due to ' + status);
+    }
+  });
+}
+
+function calculateDistance(origin, destination) {
+  var distanceService = new google.maps.DistanceMatrixService();
+  return new Promise(function (resolve, reject) {
+    distanceService.getDistanceMatrix({
+      origins: [origin],
+      destinations: [destination],
+      travelMode: 'DRIVING',
+    }, function (response, status) {
+      if (status === 'OK') {
+        var distanceText = response.rows[0].elements[0].distance.text;
+        // Convert distance to miles if it is in km
+        if (distanceText.includes('km')) {
+          var distanceKm = parseFloat(distanceText.replace(' km', ''));
+          var distanceMiles = (distanceKm * 0.621371).toFixed(2);
+          resolve(distanceMiles + ' miles');
+        } else {
+          resolve(distanceText);
+        }
+      } else {
+        reject('Distance calculation failed due to ' + status);
+      }
+    });
+  });
+}
+
+function selectServices() {
+  if (!userLocation) {
+    alert('Please search for an address first.');
+    return;
   }
 
-  .search-container input[type="text"],
-  .search-container select {
-    width: 100%;
-    margin-bottom: 10px;
+  var selectedServices = [];
+  var checkboxes = document.querySelectorAll('.sidebar input[type="checkbox"]:checked');
+  checkboxes.forEach(function (checkbox) {
+    selectedServices.push(checkbox.value);
+  });
+
+  if (selectedServices.length === 0) {
+    alert('Please select at least one service.');
+    return;
   }
 
-  .search-container button {
-    width: 100%;
-  }
+  var resultsContainer = document.getElementById('results');
+  resultsContainer.innerHTML = ''; // Clear the container
+  resultsContainer.classList.add('visible');
 
-  .service-banners {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  selectedServices.forEach(function (service) {
+    var serviceContainer = document.createElement('div');
+    serviceContainer.classList.add('service-container');
+    resultsContainer.appendChild(serviceContainer);
 
-  .service-banner {
-    width: 100%;
+    filterPlaces(service, function (results, type) {
+      var serviceTitle = document.createElement('h4');
+      serviceTitle.innerText = `${service.charAt(0).toUpperCase() + service.slice(1)} Companies`;
+      serviceContainer.appendChild(serviceTitle);
+
+      results.forEach(function (place) {
+        getPlaceDetails(place, function (details) {
+          calculateDistance(userLocation, details.geometry.location).then(function (distance) {
+            var rating = details.rating ? `${details.rating} stars` : 'No rating';
+            var userRatingsTotal = details.user_ratings_total ? `(${details.user_ratings_total})` : '';
+            var photo = details.photos ? details.photos[0].getUrl({maxWidth: 300, maxHeight: 200}) : 'Images/no-image-available.png';
+            var website = details.website ? `<a href="${details.website}" target="_blank">${details.website}</a><br>` : 'No website available<br>';
+            var placeDetails = `
+              <div class="result-banner">
+                <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
+                <img src="${photo}" alt="${details.name}" class="business-photo">
+                <div class="result-details">
+                  <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
+                  ${website}
+                  ${details.vicinity}<br>
+                  Rating: ${rating} ${userRatingsTotal}<br>
+                  Distance: ${distance}<br>
+                  Phone: ${details.formatted_phone_number || 'N/A'}
+                </div>
+              </div>`;
+            serviceContainer.innerHTML += placeDetails;
+          }).catch(function (error) {
+            console.error(error);
+          });
+        });
+      });
+    });
+  });
+
+  var selectCompaniesButton = document.getElementById('select-companies-button');
+  selectCompaniesButton.style.display = 'block';
+  resultsContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the results container
+}
+
+function toggleSelectServicesButton() {
+  var selectedServices = document.querySelectorAll('.sidebar input[type="checkbox"]:checked');
+  var selectServicesButton = document.getElementById('select-services-button');
+  if (selectedServices.length > 0) {
+    selectServicesButton.style.display = 'block';
+  } else {
+    selectServicesButton.style.display = 'none';
   }
 }
+
+function generateSelectedCompanies() {
+  var selectedCompanies = document.querySelectorAll('.company-checkbox:checked');
+  if (selectedCompanies.length === 0) {
+    alert('Please select at least one company.');
+    return;
+  }
+
+  // Show user info modal before displaying results
+  var userInfoModal = document.getElementById('userInfoModal');
+  userInfoModal.style.display = 'flex'; // Use 'flex' to display the modal centered
+  userInfoModal.scrollIntoView({ behavior: 'smooth' }); // Scroll to the user info modal
+}
+
+function submitUserInfo() {
+  var firstName = document.getElementById('firstName').value;
+  var lastName = document.getElementById('lastName').value;
+  var email = document.getElementById('email').value;
+
+  if (firstName && lastName && email) {
+    var selectedCompaniesContainer = document.getElementById('selected-companies');
+    var selectedCompaniesList = document.getElementById('selected-companies-list');
+    selectedCompaniesList.innerHTML = '';
+
+    var selectedCompanies = document.querySelectorAll('.company-checkbox:checked');
+    selectedCompanies.forEach(function (checkbox) {
+      var companyDetails = `
+        <p>
+          ${checkbox.dataset.name}<br>
+          Address: ${checkbox.dataset.address}<br>
+          Distance: ${checkbox.dataset.distance}<br>
+          Phone: ${checkbox.dataset.phone}
+        </p>`;
+      selectedCompaniesList.innerHTML += companyDetails;
+    });
+
+    selectedCompaniesContainer.classList.add('visible');
+    userInfoModal.style.display = 'none'; // Hide the modal
+    selectedCompaniesContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the selected companies container
+  } else {
+    alert('Please fill out all fields.');
+  }
+}
+
+function saveAsPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.addImage('Images/open house logo.png', 'PNG', 10, 10, 30, 30);
+  doc.setFontSize(22);
+  doc.text('Open House', 50, 20);
+  doc.setFontSize(16);
+  doc.text('Find the best home services for your open house.', 50, 30);
+  doc.setLineWidth(0.5);
+  doc.line(10, 40, 200, 40);
+
+  const selectedCompaniesList = document.getElementById('selected-companies-list');
+  let content = "";
+  selectedCompaniesList.childNodes.forEach(node => {
+    content += node.textContent + "\n\n";
+  });
+
+  doc.setFontSize(12);
+  doc.text(content, 10, 50);
+  doc.save('selected-companies.pdf');
+}
+
+function startNewSearch() {
+  location.reload();
+}
+
+function scrollToSearch() {
+  document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
+}
+
+window.onload = function () {
+  initMap();
+
+  var selectServicesButton = document.getElementById('select-services-button');
+  selectServicesButton.style.display = 'none';
+
+  var selectCompaniesButton = document.getElementById('select-companies-button');
+  selectCompaniesButton.style.display = 'none';
+
+  var newSearchText = document.getElementById('new-search');
+  newSearchText.style.display = 'none';
+
+  var serviceCheckboxes = document.querySelectorAll('.sidebar input[type="checkbox"]');
+  serviceCheckboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('change', toggleSelectServicesButton);
+  });
+
+  var userInfoModal = document.getElementById('userInfoModal');
+  userInfoModal.style.display = 'none';
+
+  selectCompaniesButton.addEventListener('click', function() {
+    userInfoModal.style.display = 'flex';
+  });
+
+  window.addEventListener('click', function(event) {
+    if (event.target === userInfoModal) {
+      userInfoModal.style.display = 'none';
+    }
+  });
+
+  document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
+};
