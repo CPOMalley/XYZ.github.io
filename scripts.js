@@ -101,7 +101,7 @@ function calculateDistance(origin, destination) {
       if (status === 'OK') {
         var distanceText = response.rows[0].elements[0].distance.text;
         // Convert distance to miles if it is in km
-        if (distanceText includes 'km') {
+        if (distanceText.includes('km')) {
           var distanceKm = parseFloat(distanceText.replace(' km', ''));
           var distanceMiles = (distanceKm * 0.621371).toFixed(2);
           resolve(distanceMiles + ' miles');
@@ -152,14 +152,14 @@ function selectServices() {
             var rating = details.rating ? `${details.rating} stars` : 'No rating';
             var userRatingsTotal = details.user_ratings_total ? `(${details.user_ratings_total})` : '';
             var photo = details.photos ? details.photos[0].getUrl({maxWidth: 300, maxHeight: 200}) : 'Images/no-image-available.png';
-            var website = details.website ? `<a href="${details.website}" target="_blank">${details.website}</a>` : 'No website';
+            var website = details.website ? `<a href="${details.website}" target="_blank">${details.website}</a><br>` : 'No website available<br>';
             var placeDetails = `
               <div class="result-banner">
-                <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}" data-website="${website}">
+                <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
                 <img src="${photo}" alt="${details.name}" class="business-photo">
                 <div class="result-details">
-                  ${details.name}<br>
-                  ${website}<br>
+                  <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
+                  ${website}
                   ${details.vicinity}<br>
                   Rating: ${rating} ${userRatingsTotal}<br>
                   Distance: ${distance}<br>
@@ -218,7 +218,6 @@ function submitUserInfo() {
       var companyDetails = `
         <p>
           ${checkbox.dataset.name}<br>
-          ${checkbox.dataset.website}<br>
           Address: ${checkbox.dataset.address}<br>
           Distance: ${checkbox.dataset.distance}<br>
           Phone: ${checkbox.dataset.phone}
@@ -240,7 +239,7 @@ function saveAsPDF() {
 
   doc.addImage('Images/open house logo.png', 'PNG', 10, 10, 30, 30);
   doc.setFontSize(22);
-  doc.text('OpenHouse', 50, 20);
+  doc.text('Open House', 50, 20);
   doc.setFontSize(16);
   doc.text('Find the best home services for your open house.', 50, 30);
   doc.setLineWidth(0.5);
