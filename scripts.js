@@ -101,7 +101,7 @@ function calculateDistance(origin, destination) {
       if (status === 'OK') {
         var distanceText = response.rows[0].elements[0].distance.text;
         // Convert distance to miles if it is in km
-        if (distanceText includes('km')) {
+        if (distanceText.includes('km')) {
           var distanceKm = parseFloat(distanceText.replace(' km', ''));
           var distanceMiles = (distanceKm * 0.621371).toFixed(2);
           resolve(distanceMiles + ' miles');
@@ -154,11 +154,10 @@ function selectServices() {
             var photo = details.photos ? details.photos[0].getUrl({maxWidth: 300, maxHeight: 200}) : 'Images/no-image-available.png';
             var placeDetails = `
               <div class="result-banner">
-                <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}" data-website="${details.website || 'N/A'}">
+                <input type="checkbox" class="company-checkbox" data-name="${details.name}" data-address="${details.vicinity}" data-phone="${details.formatted_phone_number || 'N/A'}" data-distance="${distance}">
                 <img src="${photo}" alt="${details.name}" class="business-photo">
                 <div class="result-details">
-                  ${details.name}<br>
-                  <a href="${details.website || '#'}" target="_blank">${details.website || 'No website available'}</a><br>
+                  <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
                   ${details.vicinity}<br>
                   Rating: ${rating} ${userRatingsTotal}<br>
                   Distance: ${distance}<br>
@@ -217,7 +216,6 @@ function submitUserInfo() {
       var companyDetails = `
         <p>
           ${checkbox.dataset.name}<br>
-          Website: <a href="${checkbox.dataset.website}" target="_blank">${checkbox.dataset.website}</a><br>
           Address: ${checkbox.dataset.address}<br>
           Distance: ${checkbox.dataset.distance}<br>
           Phone: ${checkbox.dataset.phone}
