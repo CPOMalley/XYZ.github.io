@@ -20,6 +20,7 @@ body {
   object-fit: cover;
   z-index: -1;
 }
+
 .hero-content {
   position: absolute;
   top: 50%;
@@ -126,6 +127,17 @@ body {
 
 .search-container button:hover {
   background-color: #0056b3;
+}
+
+.filter-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.filter-container label,
+.filter-container select,
+.filter-container input {
+  margin-right: 10px;
 }
 
 .map-container {
