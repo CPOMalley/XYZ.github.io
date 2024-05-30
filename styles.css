@@ -8,61 +8,54 @@ body {
 .navbar {
   position: sticky;
   top: 0;
-  width: 75%; /* Reduced width of the navbar */
+  width: 100%;
   background-color: #fff;
-  padding: 10px 0;
   z-index: 1000;
   border-bottom: 1px solid #ccc;
-  margin: 0 auto; /* Center the navbar */
 }
 
 .navbar-content {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 10px;
 }
 
 .logo {
   max-width: 50px;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 .header-text {
-  flex-grow: 1; /* Ensure the header text takes available space */
-  text-align: left; /* Align text to the left */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .header-text h1 {
   margin: 0;
-  font-size: 1.5em;
-  color: black;
+  font-size: 24px;
 }
 
 .header-text p {
   margin: 0;
-  color: black;
+  font-size: 14px;
 }
 
-.navbar ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.navbar-links {
   display: flex;
+  gap: 20px;
 }
 
-.navbar ul li {
-  margin-left: 20px;
-}
-
-.navbar ul li a {
+.navbar-links a {
   text-decoration: none;
   color: black;
   font-weight: bold;
 }
 
-.navbar ul li a:hover {
+.navbar-links a:hover {
   color: #007bff;
 }
 
@@ -117,7 +110,7 @@ body {
 }
 
 .container {
-  max-width: 1000px; /* Reduced width for the container */
+  max-width: 1000px;
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -201,7 +194,7 @@ body {
 }
 
 .service-logo {
-  max-width: 150px; /* Increased size for service logos */
+  max-width: 150px;
   margin-bottom: 10px;
 }
 
@@ -234,7 +227,7 @@ body {
 .results-container {
   margin-top: 20px;
   display: grid;
-  grid-template-columns: 1fr; /* Single column layout */
+  grid-template-columns: 1fr;
   gap: 10px;
   max-height: 800px;
   overflow-y: auto;
@@ -254,26 +247,26 @@ body {
   border: 1px solid #ddd;
   background-color: #fff;
   border-radius: 5px;
-  align-items: center; /* Ensure items are vertically centered */
+  align-items: center;
 }
 
 .business-photo {
-  max-width: 100px; /* Adjusted width for a more compact layout */
+  max-width: 100px;
   border-radius: 5px;
 }
 
 .result-details {
   flex-grow: 1;
   display: flex;
-  flex-direction: column; /* Stack the items vertically */
-  justify-content: center; /* Center the text vertically */
-  padding-left: 10px; /* Add padding to the left */
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 10px;
 }
 
 .result-details a {
   color: #007bff;
   text-decoration: none;
-  font-weight: bold; /* Make the link bold */
+  font-weight: bold;
 }
 
 .result-details a:hover {
@@ -281,7 +274,7 @@ body {
 }
 
 .result-banner input[type="checkbox"] {
-  align-self: center; /* Align the checkbox vertically in the center */
+  align-self: center;
   margin-right: 10px;
 }
 
@@ -359,6 +352,7 @@ body {
 @media (max-width: 600px) {
   .navbar-content {
     flex-direction: column;
+    align-items: center;
   }
 
   .header-text {
