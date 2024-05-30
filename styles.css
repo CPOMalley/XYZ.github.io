@@ -6,57 +6,58 @@ body {
 }
 
 .navbar {
-  position: sticky;
-  top: 0;
   width: 100%;
   background-color: #fff;
-  z-index: 1000;
   border-bottom: 1px solid #ccc;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 10px 0; /* Adjusted padding for better layout */
 }
 
 .navbar-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
+  max-width: 1000px; /* Max width for the navbar content */
   margin: 0 auto;
-  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space out elements */
 }
 
 .logo {
-  max-width: 50px;
-  margin-right: 10px;
+  max-width: 80px; /* Adjust logo size for better visibility */
+  margin-right: 20px; /* Space between logo and text */
 }
 
 .header-text {
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
-.header-text h1 {
+.header h1 {
   margin: 0;
-  font-size: 24px;
+  color: black;
+  font-size: 1.5em; /* Adjust font size */
 }
 
-.header-text p {
+.header p {
   margin: 0;
-  font-size: 14px;
+  color: black;
+  font-size: 1em; /* Adjust font size */
 }
 
-.navbar-links {
+.nav-links {
   display: flex;
   gap: 20px;
 }
 
-.navbar-links a {
-  text-decoration: none;
+.nav-links a {
   color: black;
-  font-weight: bold;
+  text-decoration: none;
+  font-size: 1em;
 }
 
-.navbar-links a:hover {
-  color: #007bff;
+.nav-links a:hover {
+  text-decoration: underline;
 }
 
 .hero {
@@ -358,6 +359,11 @@ body {
   .header-text {
     margin-left: 0;
     text-align: center;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
   }
 
   .search-container input[type="text"],
