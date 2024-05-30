@@ -18,13 +18,13 @@
         <h1>Open House</h1>
         <p>Find the best home services for your open house.</p>
       </div>
-      <ul>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Companies</a></li>
-        <li><a href="#">Testimonials</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
+      <nav class="navbar-links">
+        <a href="#">About Us</a>
+        <a href="#">Services</a>
+        <a href="#">Companies</a>
+        <a href="#">Testimonials</a>
+        <a href="#">Contact</a>
+      </nav>
     </div>
   </header>
   <div class="hero">
@@ -97,18 +97,18 @@
       <div id="new-search" onclick="startNewSearch()" style="cursor:pointer; color:blue; text-decoration:underline; margin-top: 10px;">Start a New Search</div>
     </div>
   </div>
- 
-<div id="userInfoModal" class="modal hidden">
-  <div class="modal-content">
-    <p>To generate a list of the selected companies, please enter the following information:</p>
-    <input type="text" id="firstName" placeholder="First Name" aria-label="First Name">
-    <input type="text" id="lastName" placeholder="Last Name" aria-label="Last Name">
-    <input type="text" id="city" placeholder="City" aria-label="City">
-    <input type="text" id="state" placeholder="State" aria-label="State">
-    <input type="email" id="email" placeholder="Email Address" aria-label="Email Address">
-    <button onclick="submitUserInfo()">Submit</button>
+
+  <div id="userInfoModal" class="modal hidden">
+    <div class="modal-content">
+      <p>To generate a list of the selected companies, please enter the following information:</p>
+      <input type="text" id="firstName" placeholder="First Name" aria-label="First Name">
+      <input type="text" id="lastName" placeholder="Last Name" aria-label="Last Name">
+      <input type="text" id="city" placeholder="City" aria-label="City">
+      <input type="text" id="state" placeholder="State" aria-label="State">
+      <input type="email" id="email" placeholder="Email Address" aria-label="Email Address">
+      <button onclick="submitUserInfo()">Submit</button>
+    </div>
   </div>
-</div>
   <script src="scripts.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
     async defer></script>
