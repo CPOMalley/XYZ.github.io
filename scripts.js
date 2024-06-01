@@ -261,7 +261,14 @@ function startNewSearch() {
 }
 
 function scrollToSearch() {
+  const searchContainer = document.querySelector('.search-container');
+  searchContainer.style.opacity = 0;
+  searchContainer.style.transition = 'opacity 1s';
+  searchContainer.style.display = 'block';
   document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => {
+    searchContainer.style.opacity = 1;
+  }, 100); // Delay to start the fade-in effect
 }
 
 window.onload = function () {
