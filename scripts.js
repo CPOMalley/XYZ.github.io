@@ -261,8 +261,6 @@ function startNewSearch() {
 }
 
 function scrollToSearch() {
-  const searchContainer = document.querySelector('.search-container');
-  searchContainer.classList.add('visible');
   document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
 }
 
