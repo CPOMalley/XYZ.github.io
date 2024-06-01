@@ -20,7 +20,6 @@ body {
   object-fit: cover;
   z-index: -1;
 }
-
 .hero-content {
   position: absolute;
   top: 50%;
@@ -60,22 +59,16 @@ body {
   padding: 20px;
   background-color: #fff;
   border-bottom: 1px solid #ccc;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  width: 100%;
 }
 
 .header-content {
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .header-text {
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .header h1 {
@@ -88,28 +81,13 @@ body {
   color: black;
 }
 
-nav {
-  margin-left: auto;
-  display: flex;
-  gap: 15px;
-}
-
-nav a {
-  color: black;
-  text-decoration: none;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
-
 .logo {
-  max-width: 70px;
-  margin-right: 10px;
+  max-width: 200px; /* Increased size for better visibility */
+  margin-bottom: 10px;
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 1000px; /* Reduced width for the container */
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -193,7 +171,7 @@ nav a:hover {
 }
 
 .service-logo {
-  max-width: 150px;
+  max-width: 150px; /* Increased size for service logos */
   margin-bottom: 10px;
 }
 
@@ -226,7 +204,7 @@ nav a:hover {
 .results-container {
   margin-top: 20px;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr; /* Single column layout */
   gap: 10px;
   max-height: 800px;
   overflow-y: auto;
@@ -246,26 +224,26 @@ nav a:hover {
   border: 1px solid #ddd;
   background-color: #fff;
   border-radius: 5px;
-  align-items: center;
+  align-items: center; /* Ensure items are vertically centered */
 }
 
 .business-photo {
-  max-width: 100px;
+  max-width: 120px; /* Increased width for a better display */
   border-radius: 5px;
 }
 
 .result-details {
   flex-grow: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-left: 10px;
+  flex-direction: column; /* Stack the items vertically */
+  justify-content: center; /* Center the text vertically */
+  padding-left: 10px; /* Add padding to the left */
 }
 
 .result-details a {
   color: #007bff;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: bold; /* Make the link bold */
 }
 
 .result-details a:hover {
@@ -273,7 +251,7 @@ nav a:hover {
 }
 
 .result-banner input[type="checkbox"] {
-  align-self: center;
+  align-self: center; /* Align the checkbox vertically in the center */
   margin-right: 10px;
 }
 
