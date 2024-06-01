@@ -11,6 +11,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 </head>
 <body>
+  <header class="header">
+    <div class="header-content">
+      <img src="Images/open house logo.png" alt="Open House Logo" class="logo">
+      <div class="header-text">
+        <h1>Open House</h1>
+        <p>Find the best home services for your open house.</p>
+      </div>
+      <nav>
+        <a href="#">About Us</a>
+        <a href="#">Services</a>
+        <a href="#">Companies</a>
+        <a href="#">Testimonials</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </header>
   <div class="hero">
     <video autoplay muted loop id="hero-video">
       <source src="Videos/OpenHouse.mp4" type="video/mp4">
@@ -22,16 +38,7 @@
       <button id="get-started-button">Get Started</button>
     </div>
   </div>
-  <header class="header">
-    <div class="header-content">
-      <img src="Images/open house logo.png" alt="Open House Logo" class="logo">
-      <div class="header-text">
-        <h1>Open House</h1>
-        <p>Find the best home services for your open house.</p>
-      </div>
-    </div>
-  </header>
-  <div class="container">
+  <div class="container" id="search-container" style="display: none;">
     <div class="search-container">
       <p>To begin looking for local professionals, please enter the address for the home you are listing below:</p>
       <input type="text" id="address" placeholder="Enter your address" aria-label="Enter your address">
@@ -91,20 +98,26 @@
     </div>
   </div>
  
-<div id="userInfoModal" class="modal hidden">
-  <div class="modal-content">
-    <p>To generate a list of the selected companies, please enter the following information:</p>
-    <input type="text" id="firstName" placeholder="First Name" aria-label="First Name">
-    <input type="text" id="lastName" placeholder="Last Name" aria-label="Last Name">
-    <input type="text" id="city" placeholder="City" aria-label="City">
-    <input type="text" id="state" placeholder="State" aria-label="State">
-    <input type="email" id="email" placeholder="Email Address" aria-label="Email Address">
-    <button onclick="submitUserInfo()">Submit</button>
+  <div id="userInfoModal" class="modal hidden">
+    <div class="modal-content">
+      <p>To generate a list of the selected companies, please enter the following information:</p>
+      <input type="text" id="firstName" placeholder="First Name" aria-label="First Name">
+      <input type="text" id="lastName" placeholder="Last Name" aria-label="Last Name">
+      <input type="text" id="city" placeholder="City" aria-label="City">
+      <input type="text" id="state" placeholder="State" aria-label="State">
+      <input type="email" id="email" placeholder="Email Address" aria-label="Email Address">
+      <button onclick="submitUserInfo()">Submit</button>
+    </div>
   </div>
-</div>
+
   <script src="scripts.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
     async defer></script>
+  <script>
+    document.getElementById('get-started-button').addEventListener('click', function() {
+      document.getElementById('search-container').style.display = 'block';
+      document.getElementById('search-container').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
 </body>
 </html>
-
