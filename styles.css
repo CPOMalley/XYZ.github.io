@@ -56,7 +56,7 @@ body {
 }
 
 .header {
-  text-align: center;
+  text-align: left;
   padding: 20px;
   background-color: #fff;
   border-bottom: 1px solid #ccc;
@@ -69,7 +69,6 @@ body {
 .header-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -104,7 +103,7 @@ nav a:hover {
 }
 
 .logo {
-  max-width: 70px;
+  max-width: 210px; /* Increased size to be 3x the current size */
   margin-right: 10px;
 }
 
@@ -250,7 +249,7 @@ nav a:hover {
 }
 
 .business-photo {
-  max-width: 150px; /* Increased photo size */
+  max-width: 100px;
   border-radius: 5px;
 }
 
@@ -270,10 +269,6 @@ nav a:hover {
 
 .result-details a:hover {
   text-decoration: underline;
-}
-
-.result-details p {
-  margin: 5px 0;
 }
 
 .result-banner input[type="checkbox"] {
