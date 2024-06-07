@@ -101,12 +101,14 @@
   <div id="userInfoModal" class="modal hidden">
     <div class="modal-content">
       <p>To generate a list of the selected companies, please enter the following information:</p>
-      <input type="text" id="firstName" placeholder="First Name" aria-label="First Name">
-      <input type="text" id="lastName" placeholder="Last Name" aria-label="Last Name">
-      <input type="text" id="city" placeholder="City" aria-label="City">
-      <input type="text" id="state" placeholder="State" aria-label="State">
-      <input type="email" id="email" placeholder="Email Address" aria-label="Email Address">
-      <button onclick="submitUserInfo()">Submit</button>
+      <form name="user-info" method="POST" data-netlify="true">
+        <input type="text" id="firstName" name="firstName" placeholder="First Name" aria-label="First Name">
+        <input type="text" id="lastName" name="lastName" placeholder="Last Name" aria-label="Last Name">
+        <input type="text" id="city" name="city" placeholder="City" aria-label="City">
+        <input type="text" id="state" name="state" placeholder="State" aria-label="State">
+        <input type="email" id="email" name="email" placeholder="Email Address" aria-label="Email Address">
+        <button type="submit" onclick="submitUserInfo()">Submit</button>
+      </form>
     </div>
   </div>
 
