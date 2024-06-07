@@ -161,9 +161,9 @@ function selectServices() {
                   <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(details.name)}&query_place_id=${details.place_id}" target="_blank">${details.name}</a><br>
                   ${website}
                   ${details.vicinity}<br>
-                  Rating: ${rating} ${userRatingsTotal}<br>
-                  Distance: ${distance}<br>
-                  Phone: ${details.formatted_phone_number || 'N/A'}
+                  <strong>Rating:</strong> ${rating} ${userRatingsTotal}<br>
+                  <strong>Distance:</strong> ${distance}<br>
+                  <strong>Phone:</strong> ${details.formatted_phone_number || 'N/A'}
                 </div>
               </div>`;
             serviceContainer.innerHTML += placeDetails;
