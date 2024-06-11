@@ -295,4 +295,6 @@ window.onload = function () {
   });
 
   document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
+
+  document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
 };
