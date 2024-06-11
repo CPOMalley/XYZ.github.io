@@ -56,7 +56,7 @@ function searchAddress() {
       document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
-      transitionToSection('search-container', 'service-sidebar'); // Transition to service sidebar
+      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -177,7 +177,7 @@ function selectServices() {
 
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'block';
-  transitionToSection('service-sidebar', 'results-container'); // Transition to results container
+  resultsContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the results container
 }
 
 function toggleSelectServicesButton() {
@@ -260,14 +260,24 @@ function startNewSearch() {
   location.reload();
 }
 
-function transitionToSection(fromSection, toSection) {
-  document.getElementById(fromSection).style.display = 'none';
-  document.getElementById('loading-screen').style.display = 'flex';
+function scrollToSearch() {
+  const hero = document.querySelector('.hero');
+  const searchContainer = document.getElementById('search-container');
+  const logoAnimation = document.createElement('div');
+  logoAnimation.innerHTML = '<img src="Images/open house logo.png" alt="Open House Logo" class="logo-animation">';
+  document.body.appendChild(logoAnimation);
 
-  setTimeout(function() {
-    document.getElementById('loading-screen').style.display = 'none';
-    document.getElementById(toSection).style.display = 'block';
-  }, 1000); // Adjust the timeout as needed for the loading screen duration
+  hero.style.display = 'none'; // Hide the hero section
+  logoAnimation.classList.add('logo-fade-in');
+
+  setTimeout(() => {
+    logoAnimation.classList.add('logo-fade-out');
+    setTimeout(() => {
+      document.body.removeChild(logoAnimation);
+      searchContainer.style.display = 'block';
+      searchContainer.scrollIntoView({ behavior: 'smooth' });
+    }, 1000); // Duration of the fade-out effect
+  }, 2000); // Duration of the fade-in effect
 }
 
 window.onload = function () {
@@ -300,33 +310,5 @@ window.onload = function () {
     }
   });
 
-  document.getElementById('get-started-button').addEventListener('click', function() {
-    transitionToSection('hero', 'search-container');
-  });
-
-  document.getElementById('contact-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the form from submitting the default way
-
-    var formData = new FormData(this);
-    fetch('/', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/x-www-form-urlencoded'
-      }
-    })
-    .then(function(response) {
-      if (response.ok) {
-        alert('Form submitted successfully!');
-        // You can call the function to generate the PDF here
-        saveAsPDF();
-      } else {
-        alert('Form submission failed.');
-      }
-    })
-    .catch(function(error) {
-      console.error('Form submission error:', error);
-      alert('Form submission error.');
-    });
-  });
+  document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
 };
