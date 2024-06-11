@@ -296,3 +296,29 @@ window.onload = function () {
 
   document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
 };
+
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent the form from submitting the default way
+
+  var formData = new FormData(this);
+  fetch('/', {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Accept': 'application/x-www-form-urlencoded'
+    }
+  })
+  .then(function(response) {
+    if (response.ok) {
+      alert('Form submitted successfully!');
+      // You can call the function to generate the PDF here
+      saveAsPDF();
+    } else {
+      alert('Form submission failed.');
+    }
+  })
+  .catch(function(error) {
+    console.error('Form submission error:', error);
+    alert('Form submission error.');
+  });
+});
