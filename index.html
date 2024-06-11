@@ -112,11 +112,33 @@
     </div>
   </div>
 
+  <!-- Transition Video Element -->
+  <video id="transition-video" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:2000;" muted>
+    <source src="Videos/Get Started Transition.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
   <script src="scripts.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
     async defer></script>
   <script>
-    document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
+    function playTransitionVideo(callback) {
+      var transitionVideo = document.getElementById('transition-video');
+      transitionVideo.style.display = 'block';
+      transitionVideo.play();
+
+      transitionVideo.onended = function() {
+        transitionVideo.style.display = 'none';
+        callback();
+      };
+    }
+
+    document.getElementById('get-started-button').addEventListener('click', function() {
+      playTransitionVideo(function() {
+        document.getElementById('search-container').style.display = 'block';
+        document.getElementById('search-container').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
 
     document.getElementById('contact-form').addEventListener('submit', function(event) {
       event.preventDefault(); // Prevent the form from submitting the default way
