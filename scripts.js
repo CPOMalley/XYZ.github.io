@@ -56,7 +56,7 @@ function searchAddress() {
       document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
-      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
+      transitionToSection('search-container', 'service-sidebar'); // Transition to service sidebar
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -177,7 +177,7 @@ function selectServices() {
 
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'block';
-  resultsContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the results container
+  transitionToSection('service-sidebar', 'results-container'); // Transition to results container
 }
 
 function toggleSelectServicesButton() {
@@ -260,8 +260,14 @@ function startNewSearch() {
   location.reload();
 }
 
-function scrollToSearch() {
-  document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
+function transitionToSection(fromSection, toSection) {
+  document.getElementById(fromSection).style.display = 'none';
+  document.getElementById('loading-screen').style.display = 'flex';
+
+  setTimeout(function() {
+    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById(toSection).style.display = 'block';
+  }, 1000); // Adjust the timeout as needed for the loading screen duration
 }
 
 window.onload = function () {
@@ -294,7 +300,33 @@ window.onload = function () {
     }
   });
 
-  document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
+  document.getElementById('get-started-button').addEventListener('click', function() {
+    transitionToSection('hero', 'search-container');
+  });
 
-  document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting the default way
+
+    var formData = new FormData(this);
+    fetch('/', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/x-www-form-urlencoded'
+      }
+    })
+    .then(function(response) {
+      if (response.ok) {
+        alert('Form submitted successfully!');
+        // You can call the function to generate the PDF here
+        saveAsPDF();
+      } else {
+        alert('Form submission failed.');
+      }
+    })
+    .catch(function(error) {
+      console.error('Form submission error:', error);
+      alert('Form submission error.');
+    });
+  });
 };
