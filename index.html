@@ -11,9 +11,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <div id="loading-screen" class="loading-screen">
-    <img src="Images/open house logo.png" alt="Loading...">
-  </div>
   <header class="header">
     <div class="header-content">
       <img src="Images/open house logo.png" alt="Open House Logo" class="logo">
@@ -119,9 +116,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
     async defer></script>
   <script>
-    document.getElementById('get-started-button').addEventListener('click', function() {
-      transitionToSection('hero', 'search-container');
-    });
+    document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
 
     document.getElementById('contact-form').addEventListener('submit', function(event) {
       event.preventDefault(); // Prevent the form from submitting the default way
