@@ -135,9 +135,7 @@
       .then(function(response) {
         if (response.ok) {
           alert('Form submitted successfully!');
-          // You can call the function to generate the PDF here
-          submitUserInfo();
-          saveAsPDF();
+          submitUserInfo(); // Collect user information
         } else {
           alert('Form submission failed.');
         }
@@ -147,7 +145,31 @@
         alert('Form submission error.');
       });
     });
+
+    function saveAsPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.addImage('Images/open house logo.png', 'PNG', 10, 10, 30, 30);
+      doc.setFontSize(22);
+      doc.text('Open House', 50, 20);
+      doc.setFontSize(16);
+      doc.text('Find the best home services for your open house.', 50, 30);
+      doc.setLineWidth(0.5);
+      doc.line(10, 40, 200, 40);
+
+      const selectedCompaniesList = document.getElementById('selected-companies-list');
+      let content = "";
+      selectedCompaniesList.childNodes.forEach(node => {
+        content += node.textContent + "\n\n";
+      });
+
+      doc.setFontSize(12);
+      doc.text(content, 10, 50);
+      doc.save('selected-companies.pdf');
+    }
+
+    document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
   </script>
 </body>
 </html>
-
