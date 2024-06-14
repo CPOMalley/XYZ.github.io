@@ -112,9 +112,13 @@
     </div>
   </div>
 
-  <!-- Transition Video Element -->
-  <video id="transition-video" style="display:none; width:100%; height:auto;" muted>
+  <!-- Transition Video Elements -->
+  <video id="get-started-transition-video" style="display:none; width:100%; height:auto;" muted>
     <source src="Videos/Get Started Transition.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <video id="search-transition-video" style="display:none; width:50%; height:auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" muted>
+    <source src="Videos/OH Transition.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
@@ -122,10 +126,8 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
     async defer></script>
   <script>
-    function playTransitionVideo(callback) {
-      var transitionVideo = document.getElementById('transition-video');
-      var headerHeight = document.querySelector('.header').offsetHeight;
-      transitionVideo.style.marginTop = headerHeight + 'px';
+    function playTransitionVideo(videoId, callback) {
+      var transitionVideo = document.getElementById(videoId);
       transitionVideo.style.display = 'block';
       transitionVideo.play();
 
@@ -136,9 +138,17 @@
     }
 
     document.getElementById('get-started-button').addEventListener('click', function() {
-      playTransitionVideo(function() {
+      playTransitionVideo('get-started-transition-video', function() {
         document.getElementById('search-container').style.display = 'block';
         document.getElementById('search-container').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    document.getElementById('search-button').addEventListener('click', function() {
+      playTransitionVideo('search-transition-video', function() {
+        document.querySelector('.map-container').style.display = 'none';
+        document.getElementById('service-sidebar').style.display = 'block';
+        document.getElementById('service-sidebar').scrollIntoView({ behavior: 'smooth' });
       });
     });
 
