@@ -54,7 +54,7 @@
     <div class="map-container" id="map-container">
       <div id="map"></div>
     </div>
-    <div class="sidebar" id="service-sidebar">
+    <div class="sidebar" id="service-sidebar" style="display: none;">
       <h3>Which types of companies are you looking for?</h3>
       <div class="service-banners">
         <div class="service-banner">
@@ -112,7 +112,12 @@
     </div>
   </div>
 
-  <video id="search-transition-video" width="640" height="360" style="display: none;">
+  <video id="get-started-transition-video" width="100%" style="display: none;">
+    <source src="Videos/Get Started Transition.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  
+  <video id="search-transition-video" width="100%" style="display: none;">
     <source src="Videos/OH Transition.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
@@ -123,7 +128,14 @@
   <script>
     document.getElementById('get-started-button').addEventListener('click', function() {
       document.getElementById('hero-video').style.display = 'none';
-      document.getElementById('search-container').style.display = 'block';
+      var transitionVideo = document.getElementById('get-started-transition-video');
+      transitionVideo.style.display = 'block';
+      transitionVideo.play();
+      
+      transitionVideo.onended = function() {
+        transitionVideo.style.display = 'none';
+        document.getElementById('search-container').style.display = 'block';
+      };
     });
 
     document.getElementById('search-button').addEventListener('click', function() {
