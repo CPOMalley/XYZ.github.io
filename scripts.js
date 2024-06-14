@@ -295,7 +295,7 @@ window.onload = function () {
   });
 
   document.getElementById('get-started-button').addEventListener('click', function() {
-    document.getElementById('hero-video').style.display = 'none';
+    document.getElementById('hero-section').style.display = 'none';
     var transitionVideo = document.getElementById('get-started-transition-video');
     transitionVideo.style.display = 'block';
     transitionVideo.play();
@@ -308,56 +308,14 @@ window.onload = function () {
 
   document.getElementById('search-button').addEventListener('click', function() {
     var transitionVideo = document.getElementById('search-transition-video');
-    var searchContainer = document.getElementById('search-container');
-    var searchText = document.getElementById('search-text');
-    var addressInput = document.getElementById('address');
-    var radiusSelect = document.getElementById('radius');
-    var mapContainer = document.getElementById('map-container');
-    var serviceSidebar = document.getElementById('service-sidebar');
-
-    // Hide the search container components
-    searchText.style.display = 'none';
-    addressInput.style.display = 'none';
-    radiusSelect.style.display = 'none';
-    document.getElementById('search-button').style.display = 'none';
-    mapContainer.style.display = 'none';
-
-    // Show the transition video
     transitionVideo.style.display = 'block';
     transitionVideo.play();
-
+    
     transitionVideo.onended = function() {
-      // Hide the transition video
       transitionVideo.style.display = 'none';
-
-      // Show the service sidebar
-      serviceSidebar.style.display = 'block';
+      document.getElementById('map-container').style.display = 'none';
+      document.getElementById('search-text').style.display = 'none';
+      document.getElementById('service-sidebar').style.display = 'block';
     };
-  });
-
-  document.getElementById('contact-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the form from submitting the default way
-
-    var formData = new FormData(this);
-    fetch('/', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/x-www-form-urlencoded'
-      }
-    })
-    .then(function(response) {
-      if (response.ok) {
-        alert('Form submitted successfully!');
-        // You can call the function to generate the PDF here
-        saveAsPDF();
-      } else {
-        alert('Form submission failed.');
-      }
-    })
-    .catch(function(error) {
-      console.error('Form submission error:', error);
-      alert('Form submission error.');
-    });
   });
 };
