@@ -40,7 +40,7 @@
   </div>
   <div class="container" id="search-container" style="display: none;">
     <div class="search-container">
-      <p>To begin looking for local professionals, please enter the address for the home you are listing below:</p>
+      <p id="search-text">To begin looking for local professionals, please enter the address for the home you are listing below:</p>
       <input type="text" id="address" placeholder="Enter your address" aria-label="Enter your address">
       <select id="radius" aria-label="Select radius">
         <option value="5000">&lt;5 miles</option>
@@ -51,7 +51,7 @@
       </select>
       <button id="search-button" onclick="searchAddress()">Search</button>
     </div>
-    <div class="map-container">
+    <div class="map-container" id="map-container">
       <div id="map"></div>
     </div>
     <div class="sidebar" id="service-sidebar">
@@ -112,12 +112,7 @@
     </div>
   </div>
 
-  <!-- Transition Video Elements -->
-  <video id="get-started-transition-video" style="display:none; width:100%; height:auto;" muted>
-    <source src="Videos/Get Started Transition.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-  <video id="search-transition-video" style="display:none; width:50%; height:auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" muted>
+  <video id="search-transition-video" width="640" height="360" style="display: none;">
     <source src="Videos/OH Transition.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
@@ -126,30 +121,38 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
     async defer></script>
   <script>
-    function playTransitionVideo(videoId, callback) {
-      var transitionVideo = document.getElementById(videoId);
+    document.getElementById('get-started-button').addEventListener('click', function() {
+      document.getElementById('hero-video').style.display = 'none';
+      document.getElementById('search-container').style.display = 'block';
+    });
+
+    document.getElementById('search-button').addEventListener('click', function() {
+      var transitionVideo = document.getElementById('search-transition-video');
+      var searchContainer = document.getElementById('search-container');
+      var searchText = document.getElementById('search-text');
+      var addressInput = document.getElementById('address');
+      var radiusSelect = document.getElementById('radius');
+      var mapContainer = document.getElementById('map-container');
+      var serviceSidebar = document.getElementById('service-sidebar');
+
+      // Hide the search container components
+      searchText.style.display = 'none';
+      addressInput.style.display = 'none';
+      radiusSelect.style.display = 'none';
+      document.getElementById('search-button').style.display = 'none';
+      mapContainer.style.display = 'none';
+
+      // Show the transition video
       transitionVideo.style.display = 'block';
       transitionVideo.play();
 
       transitionVideo.onended = function() {
+        // Hide the transition video
         transitionVideo.style.display = 'none';
-        callback();
+
+        // Show the service sidebar
+        serviceSidebar.style.display = 'block';
       };
-    }
-
-    document.getElementById('get-started-button').addEventListener('click', function() {
-      playTransitionVideo('get-started-transition-video', function() {
-        document.getElementById('search-container').style.display = 'block';
-        document.getElementById('search-container').scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
-    document.getElementById('search-button').addEventListener('click', function() {
-      playTransitionVideo('search-transition-video', function() {
-        document.querySelector('.map-container').style.display = 'none';
-        document.getElementById('service-sidebar').style.display = 'block';
-        document.getElementById('service-sidebar').scrollIntoView({ behavior: 'smooth' });
-      });
     });
 
     document.getElementById('contact-form').addEventListener('submit', function(event) {
