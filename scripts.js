@@ -261,23 +261,7 @@ function startNewSearch() {
 }
 
 function scrollToSearch() {
-  const hero = document.querySelector('.hero');
-  const searchContainer = document.getElementById('search-container');
-  const logoAnimation = document.createElement('div');
-  logoAnimation.innerHTML = '<img src="Images/open house logo.png" alt="Open House Logo" class="logo-animation">';
-  document.body.appendChild(logoAnimation);
-
-  hero.style.display = 'none'; // Hide the hero section
-  logoAnimation.classList.add('logo-fade-in');
-
-  setTimeout(() => {
-    logoAnimation.classList.add('logo-fade-out');
-    setTimeout(() => {
-      document.body.removeChild(logoAnimation);
-      searchContainer.style.display = 'block';
-      searchContainer.scrollIntoView({ behavior: 'smooth' });
-    }, 1000); // Duration of the fade-out effect
-  }, 2000); // Duration of the fade-in effect
+  document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
 }
 
 window.onload = function () {
@@ -310,5 +294,70 @@ window.onload = function () {
     }
   });
 
-  document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
+  document.getElementById('get-started-button').addEventListener('click', function() {
+    document.getElementById('hero-video').style.display = 'none';
+    var transitionVideo = document.getElementById('get-started-transition-video');
+    transitionVideo.style.display = 'block';
+    transitionVideo.play();
+    
+    transitionVideo.onended = function() {
+      transitionVideo.style.display = 'none';
+      document.getElementById('search-container').style.display = 'block';
+    };
+  });
+
+  document.getElementById('search-button').addEventListener('click', function() {
+    var transitionVideo = document.getElementById('search-transition-video');
+    var searchContainer = document.getElementById('search-container');
+    var searchText = document.getElementById('search-text');
+    var addressInput = document.getElementById('address');
+    var radiusSelect = document.getElementById('radius');
+    var mapContainer = document.getElementById('map-container');
+    var serviceSidebar = document.getElementById('service-sidebar');
+
+    // Hide the search container components
+    searchText.style.display = 'none';
+    addressInput.style.display = 'none';
+    radiusSelect.style.display = 'none';
+    document.getElementById('search-button').style.display = 'none';
+    mapContainer.style.display = 'none';
+
+    // Show the transition video
+    transitionVideo.style.display = 'block';
+    transitionVideo.play();
+
+    transitionVideo.onended = function() {
+      // Hide the transition video
+      transitionVideo.style.display = 'none';
+
+      // Show the service sidebar
+      serviceSidebar.style.display = 'block';
+    };
+  });
+
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting the default way
+
+    var formData = new FormData(this);
+    fetch('/', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/x-www-form-urlencoded'
+      }
+    })
+    .then(function(response) {
+      if (response.ok) {
+        alert('Form submitted successfully!');
+        // You can call the function to generate the PDF here
+        saveAsPDF();
+      } else {
+        alert('Form submission failed.');
+      }
+    })
+    .catch(function(error) {
+      console.error('Form submission error:', error);
+      alert('Form submission error.');
+    });
+  });
 };
