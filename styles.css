@@ -3,7 +3,6 @@ body {
   background-color: #f8f9fa;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
 }
 
 .hero {
@@ -349,6 +348,17 @@ nav a:hover {
   display: block;
 }
 
+.transition-video {
+  position: fixed;
+  top: 60px; /* Adjusting for the header height */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 60px); /* Adjusting for the header height */
+  object-fit: cover;
+  z-index: 999;
+  background-color: black; /* Fallback background */
+}
+
 @media (max-width: 600px) {
   .header-content {
     flex-direction: column;
@@ -376,21 +386,4 @@ nav a:hover {
   .service-banner {
     width: 100%;
   }
-}
-
-.video-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-  position: relative;
-  z-index: 1000;
-}
-
-#search-transition-video,
-#get-started-transition-video {
-  width: 100%;
-  height: calc(100vh - 80px); /* Subtract the height of the header */
-  object-fit: cover;
 }
