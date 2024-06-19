@@ -56,6 +56,7 @@ function searchAddress() {
       document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
+      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -176,6 +177,7 @@ function selectServices() {
 
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'block';
+  resultsContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the results container
 }
 
 function toggleSelectServicesButton() {
@@ -294,10 +296,11 @@ window.onload = function () {
 
   document.getElementById('get-started-button').addEventListener('click', function() {
     document.querySelector('.hero').style.display = 'none';
-    document.getElementById('transition-video').classList.remove('hidden');
-    document.getElementById('transition-video').play();
-    document.getElementById('transition-video').onended = function() {
-      document.getElementById('transition-video').classList.add('hidden');
+    var transitionVideo = document.getElementById('get-started-transition');
+    transitionVideo.classList.remove('hidden');
+    transitionVideo.play();
+    transitionVideo.onended = function() {
+      transitionVideo.classList.add('hidden');
       document.getElementById('search-container').style.display = 'block';
     };
   });
@@ -306,12 +309,39 @@ window.onload = function () {
     searchAddress();
     document.querySelector('.search-container').style.display = 'none';
     document.querySelector('.map-container').style.display = 'none';
-    document.getElementById('transition-video').classList.remove('hidden');
-    document.getElementById('transition-video').play();
-    document.getElementById('transition-video').onended = function() {
-      document.getElementById('transition-video').classList.add('hidden');
+    var transitionVideo = document.getElementById('search-transition');
+    transitionVideo.classList.remove('hidden');
+    transitionVideo.play();
+    transitionVideo.onended = function() {
+      transitionVideo.classList.add('hidden');
       document.getElementById('service-sidebar').scrollIntoView({ behavior: 'smooth' });
     };
+  });
+
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting the default way
+
+    var formData = new FormData(this);
+    fetch('/', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/x-www-form-urlencoded'
+      }
+    })
+    .then(function(response) {
+      if (response.ok) {
+        alert('Form submitted successfully!');
+        // You can call the function to generate the PDF here
+        saveAsPDF();
+      } else {
+        alert('Form submission failed.');
+      }
+    })
+    .catch(function(error) {
+      console.error('Form submission error:', error);
+      alert('Form submission error.');
+    });
   });
 
   document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
