@@ -56,7 +56,6 @@ function searchAddress() {
       document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
-      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -177,7 +176,6 @@ function selectServices() {
 
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'block';
-  resultsContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the results container
 }
 
 function toggleSelectServicesButton() {
@@ -295,27 +293,26 @@ window.onload = function () {
   });
 
   document.getElementById('get-started-button').addEventListener('click', function() {
-    document.getElementById('hero-section').style.display = 'none';
-    var transitionVideo = document.getElementById('get-started-transition-video');
-    transitionVideo.style.display = 'block';
-    transitionVideo.play();
-    
-    transitionVideo.onended = function() {
-      transitionVideo.style.display = 'none';
+    document.querySelector('.hero').style.display = 'none';
+    document.getElementById('transition-video').classList.remove('hidden');
+    document.getElementById('transition-video').play();
+    document.getElementById('transition-video').onended = function() {
+      document.getElementById('transition-video').classList.add('hidden');
       document.getElementById('search-container').style.display = 'block';
     };
   });
 
   document.getElementById('search-button').addEventListener('click', function() {
-    var transitionVideo = document.getElementById('search-transition-video');
-    transitionVideo.style.display = 'block';
-    transitionVideo.play();
-    
-    transitionVideo.onended = function() {
-      transitionVideo.style.display = 'none';
-      document.getElementById('map-container').style.display = 'none';
-      document.getElementById('search-text').style.display = 'none';
-      document.getElementById('service-sidebar').style.display = 'block';
+    searchAddress();
+    document.querySelector('.search-container').style.display = 'none';
+    document.querySelector('.map-container').style.display = 'none';
+    document.getElementById('transition-video').classList.remove('hidden');
+    document.getElementById('transition-video').play();
+    document.getElementById('transition-video').onended = function() {
+      document.getElementById('transition-video').classList.add('hidden');
+      document.getElementById('service-sidebar').scrollIntoView({ behavior: 'smooth' });
     };
   });
+
+  document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
 };
