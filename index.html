@@ -38,6 +38,12 @@
       <button id="get-started-button">Get Started</button>
     </div>
   </div>
+  <div class="video-container hidden" id="get-started-transition">
+    <video id="get-started-transition-video">
+      <source src="Videos/Get Started Transition.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
   <div class="container" id="search-container" style="display: none;">
     <div class="search-container">
       <p>To begin looking for local professionals, please enter the address for the home you are listing below:</p>
@@ -53,6 +59,12 @@
     </div>
     <div class="map-container">
       <div id="map"></div>
+    </div>
+    <div class="video-container hidden" id="search-transition">
+      <video id="search-transition-video">
+        <source src="Videos/OH Transition.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     </div>
     <div class="sidebar" id="service-sidebar">
       <h3>Which types of companies are you looking for?</h3>
@@ -112,68 +124,8 @@
     </div>
   </div>
 
-  <video id="get-started-transition" class="transition-video hidden">
-    <source src="Videos/Get Started Transition.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-  <video id="search-transition" class="transition-video hidden">
-    <source src="Videos/OH Transition.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-
   <script src="scripts.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
     async defer></script>
-  <script>
-    document.getElementById('get-started-button').addEventListener('click', function() {
-      document.querySelector('.hero').style.display = 'none';
-      var transitionVideo = document.getElementById('get-started-transition');
-      transitionVideo.classList.remove('hidden');
-      transitionVideo.play();
-      transitionVideo.onended = function() {
-        transitionVideo.classList.add('hidden');
-        document.getElementById('search-container').style.display = 'block';
-      };
-    });
-
-    document.getElementById('search-button').addEventListener('click', function() {
-      searchAddress();
-      document.querySelector('.search-container').style.display = 'none';
-      document.querySelector('.map-container').style.display = 'none';
-      var transitionVideo = document.getElementById('search-transition');
-      transitionVideo.classList.remove('hidden');
-      transitionVideo.play();
-      transitionVideo.onended = function() {
-        transitionVideo.classList.add('hidden');
-        document.getElementById('service-sidebar').scrollIntoView({ behavior: 'smooth' });
-      };
-    });
-
-    document.getElementById('contact-form').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent the form from submitting the default way
-
-      var formData = new FormData(this);
-      fetch('/', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/x-www-form-urlencoded'
-        }
-      })
-      .then(function(response) {
-        if (response.ok) {
-          alert('Form submitted successfully!');
-          // You can call the function to generate the PDF here
-          saveAsPDF();
-        } else {
-          alert('Form submission failed.');
-        }
-      })
-      .catch(function(error) {
-        console.error('Form submission error:', error);
-        alert('Form submission error.');
-      });
-    });
-  </script>
 </body>
 </html>
