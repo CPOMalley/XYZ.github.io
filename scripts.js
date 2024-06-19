@@ -57,6 +57,17 @@ function searchAddress() {
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
       document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
+
+      // Hide the search bar and map, and show the transition video
+      document.querySelector('.search-container').style.display = 'none';
+      document.querySelector('.map-container').style.display = 'none';
+      var transitionVideo = document.getElementById('search-transition');
+      transitionVideo.classList.remove('hidden');
+      transitionVideo.play();
+      transitionVideo.onended = function() {
+        transitionVideo.classList.add('hidden');
+        document.getElementById('service-sidebar').scrollIntoView({ behavior: 'smooth' });
+      };
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -260,10 +271,6 @@ function startNewSearch() {
   location.reload();
 }
 
-function scrollToSearch() {
-  document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
-}
-
 window.onload = function () {
   initMap();
 
@@ -318,31 +325,6 @@ window.onload = function () {
     };
   });
 
-  document.getElementById('contact-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the form from submitting the default way
-
-    var formData = new FormData(this);
-    fetch('/', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/x-www-form-urlencoded'
-      }
-    })
-    .then(function(response) {
-      if (response.ok) {
-        alert('Form submitted successfully!');
-        // You can call the function to generate the PDF here
-        saveAsPDF();
-      } else {
-        alert('Form submission failed.');
-      }
-    })
-    .catch(function(error) {
-      console.error('Form submission error:', error);
-      alert('Form submission error.');
-    });
-  });
-
   document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
 };
+
