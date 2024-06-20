@@ -38,6 +38,12 @@
       <button id="get-started-button">Get Started</button>
     </div>
   </div>
+  <div class="transition hidden" id="get-started-transition">
+    <video autoplay muted id="get-started-transition-video">
+      <source src="Videos/Get Started Transition.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
   <div class="container hidden" id="search-container">
     <div class="search-container">
       <p>To begin looking for local professionals, please enter the address for the home you are listing below:</p>
@@ -54,50 +60,55 @@
     <div class="map-container">
       <div id="map"></div>
     </div>
-    <div class="sidebar hidden" id="service-sidebar">
-      <h3>Which types of companies are you looking for?</h3>
-      <div class="service-banners">
-        <div class="service-banner">
-          <img src="Images/cleaning logo.jpg" alt="Cleaning Logo" class="service-logo">
-          <label><input type="checkbox" value="cleaning" aria-label="Select Cleaning" onchange="toggleSelectServicesButton()"> Cleaning</label>
-        </div>
-        <div class="service-banner">
-          <img src="Images/moving logo.jpg" alt="Moving Logo" class="service-logo">
-          <label><input type="checkbox" value="moving" aria-label="Select Moving" onchange="toggleSelectServicesButton()"> Moving</label>
-        </div>
-        <div class="service-banner">
-          <img src="Images/photography logo.jpg" alt="Photography Logo" class="service-logo">
-          <label><input type="checkbox" value="photography" aria-label="Select Photography" onchange="toggleSelectServicesButton()"> Photography</label>
-        </div>
-        <div class="service-banner">
-          <img src="Images/Staging Company Logo.png" alt="Staging Logo" class="service-logo">
-          <label><input type="checkbox" value="staging" aria-label="Select Staging" onchange="toggleSelectServicesButton()"> Staging</label>
-        </div>
-        <div class="service-banner">
-          <img src="Images/Landscaper Logo.png" alt="Landscaping Logo" class="service-logo">
-          <label><input type="checkbox" value="landscaping" aria-label="Select Landscaping" onchange="toggleSelectServicesButton()"> Landscaping</label>
-        </div>
-        <div class="service-banner">
-          <img src="Images/Storage.png" alt="Storage Logo" class="service-logo">
-          <label><input type="checkbox" value="storage" aria-label="Select Storage" onchange="toggleSelectServicesButton()"> Storage</label>
-        </div>
+  </div>
+  <div class="transition hidden" id="search-transition">
+    <video autoplay muted id="search-transition-video">
+      <source src="Videos/OH Transition.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div class="sidebar hidden" id="service-sidebar">
+    <h3>Which types of companies are you looking for?</h3>
+    <div class="service-banners">
+      <div class="service-banner">
+        <img src="Images/cleaning logo.jpg" alt="Cleaning Logo" class="service-logo">
+        <label><input type="checkbox" value="cleaning" aria-label="Select Cleaning" onchange="toggleSelectServicesButton()"> Cleaning</label>
       </div>
-      <div class="center">
-        <button id="select-services-button" onclick="selectServices()" style="display: none;">Select Services</button>
+      <div class="service-banner">
+        <img src="Images/moving logo.jpg" alt="Moving Logo" class="service-logo">
+        <label><input type="checkbox" value="moving" aria-label="Select Moving" onchange="toggleSelectServicesButton()"> Moving</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/photography logo.jpg" alt="Photography Logo" class="service-logo">
+        <label><input type="checkbox" value="photography" aria-label="Select Photography" onchange="toggleSelectServicesButton()"> Photography</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/Staging Company Logo.png" alt="Staging Logo" class="service-logo">
+        <label><input type="checkbox" value="staging" aria-label="Select Staging" onchange="toggleSelectServicesButton()"> Staging</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/Landscaper Logo.png" alt="Landscaping Logo" class="service-logo">
+        <label><input type="checkbox" value="landscaping" aria-label="Select Landscaping" onchange="toggleSelectServicesButton()"> Landscaping</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/Storage.png" alt="Storage Logo" class="service-logo">
+        <label><input type="checkbox" value="storage" aria-label="Select Storage" onchange="toggleSelectServicesButton()"> Storage</label>
       </div>
     </div>
-    <div id="results" class="results-container"></div>
     <div class="center">
-      <button id="select-companies-button" onclick="generateSelectedCompanies()" style="display: none;">Select Companies</button>
-    </div>
-    <div id="selected-companies" class="selected-companies">
-      <h3>Selected Companies</h3>
-      <div id="selected-companies-list"></div>
-      <button id="save-as-pdf-button" onclick="saveAsPDF()">Save as PDF</button>
-      <div id="new-search" onclick="startNewSearch()" style="cursor:pointer; color:blue; text-decoration:underline; margin-top: 10px;">Start a New Search</div>
+      <button id="select-services-button" onclick="selectServices()" style="display: none;">Select Services</button>
     </div>
   </div>
-
+  <div id="results" class="results-container hidden"></div>
+  <div class="center hidden" id="select-companies-button-container">
+    <button id="select-companies-button" onclick="generateSelectedCompanies()" style="display: none;">Select Companies</button>
+  </div>
+  <div id="selected-companies" class="selected-companies hidden">
+    <h3>Selected Companies</h3>
+    <div id="selected-companies-list"></div>
+    <button id="save-as-pdf-button" onclick="saveAsPDF()">Save as PDF</button>
+    <div id="new-search" onclick="startNewSearch()" style="cursor:pointer; color:blue; text-decoration:underline; margin-top: 10px;">Start a New Search</div>
+  </div>
   <div id="userInfoModal" class="modal hidden">
     <div class="modal-content">
       <p>To generate a list of the selected companies, please enter the following information:</p>
@@ -111,48 +122,8 @@
       </form>
     </div>
   </div>
-
-  <div id="get-started-transition" class="hidden">
-    <video id="get-started-transition-video" src="Videos/Get Started Transition.mp4" type="video/mp4"></video>
-  </div>
-
-  <div id="search-transition" class="hidden">
-    <video id="search-transition-video" src="Videos/OH Transition.mp4" type="video/mp4"></video>
-  </div>
-
   <script src="scripts.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
     async defer></script>
-  <script>
-    document.getElementById('get-started-button').addEventListener('click', function () {
-      document.querySelector('.hero').classList.add('hidden');
-      showTransition('get-started-transition', scrollToSearch);
-    });
-
-    document.getElementById('contact-form').addEventListener('submit', function (event) {
-      event.preventDefault(); // Prevent the form from submitting the default way
-
-      var formData = new FormData(this);
-      fetch('/', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/x-www-form-urlencoded'
-        }
-      })
-        .then(function (response) {
-          if (response.ok) {
-            alert('Form submitted successfully!');
-            saveAsPDF();
-          } else {
-            alert('Form submission failed.');
-          }
-        })
-        .catch(function (error) {
-          console.error('Form submission error:', error);
-          alert('Form submission error.');
-        });
-    });
-  </script>
 </body>
 </html>
