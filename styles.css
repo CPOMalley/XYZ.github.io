@@ -3,7 +3,6 @@ body {
   background-color: #f8f9fa;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
 }
 
 .hero {
@@ -349,6 +348,15 @@ nav a:hover {
   display: block;
 }
 
+.transition-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 80px); /* Adjust height based on header */
+  object-fit: cover;
+}
+
 @media (max-width: 600px) {
   .header-content {
     flex-direction: column;
@@ -376,21 +384,4 @@ nav a:hover {
   .service-banner {
     width: 100%;
   }
-}
-
-.transition-video {
-  display: none;
-  position: absolute;
-  top: 80px; /* Adjust to place below header */
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 80px); /* Adjust to place below header */
-  background-color: #000;
-  z-index: 1000;
-}
-
-.transition-video video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
