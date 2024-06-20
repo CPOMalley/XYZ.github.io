@@ -349,22 +349,12 @@ nav a:hover {
   display: block;
 }
 
-.video-container {
-  display: none;
-  position: fixed;
-  top: 60px; /* below the header */
+.transition-video {
+  position: absolute;
+  top: 70px; /* Below the header */
   left: 0;
   width: 100%;
-  height: calc(100vh - 60px); /* adjust for header height */
-  background-color: #000;
-  z-index: 1001; /* ensure it is on top */
-  justify-content: center;
-  align-items: center;
-}
-
-.transition-video {
-  width: 100%;
-  height: 100%;
+  height: calc(100vh - 70px); /* Adjust for header height */
   object-fit: cover;
 }
 
@@ -395,4 +385,9 @@ nav a:hover {
   .service-banner {
     width: 100%;
   }
+
+  .transition-video {
+    height: calc(100vh - 60px); /* Adjust for mobile header height */
+  }
 }
+
