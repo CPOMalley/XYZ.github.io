@@ -27,7 +27,7 @@
       </nav>
     </div>
   </header>
-  <div class="hero">
+  <div class="hero" id="hero-section">
     <video autoplay muted loop id="hero-video">
       <source src="Videos/OpenHouse.mp4" type="video/mp4">
       Your browser does not support the video tag.
@@ -38,8 +38,8 @@
       <button id="get-started-button">Get Started</button>
     </div>
   </div>
-  <div id="transition-container" class="video-container">
-    <video id="transition-video">
+  <div class="transition-video" id="transition-video-container">
+    <video id="transition-video" class="transition-video">
       <source src="Videos/Get Started Transition.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
@@ -121,32 +121,26 @@
     async defer></script>
   <script>
     document.getElementById('get-started-button').addEventListener('click', function() {
-      document.querySelector('.hero').style.display = 'none';
-      var transitionContainer = document.getElementById('transition-container');
-      var transitionVideo = document.getElementById('transition-video');
-      transitionVideo.src = 'Videos/Get Started Transition.mp4'; // Ensure the correct video is played
-      transitionContainer.style.display = 'block';
-      transitionVideo.play();
-      transitionVideo.onended = function() {
-        transitionContainer.style.display = 'none';
+      document.getElementById('hero-section').style.display = 'none';
+      document.getElementById('transition-video-container').style.display = 'block';
+      var video = document.getElementById('transition-video');
+      video.play();
+      video.onended = function() {
+        document.getElementById('transition-video-container').style.display = 'none';
         document.getElementById('search-container').style.display = 'block';
         document.getElementById('search-container').scrollIntoView({ behavior: 'smooth' });
       };
     });
 
     document.getElementById('search-button').addEventListener('click', function() {
-      document.querySelector('.search-container').style.display = 'none';
-      document.getElementById('map').style.display = 'none';
-      var transitionContainer = document.getElementById('transition-container');
-      var transitionVideo = document.getElementById('transition-video');
-      transitionVideo.src = 'Videos/OH Transition.mp4'; // Ensure the correct video is played
-      transitionContainer.style.display = 'block';
-      transitionVideo.play();
-      transitionVideo.onended = function() {
-        transitionContainer.style.display = 'none';
+      document.getElementById('search-container').style.display = 'none';
+      document.getElementById('transition-video-container').style.display = 'block';
+      var video = document.getElementById('transition-video');
+      video.src = 'Videos/OH Transition.mp4';
+      video.play();
+      video.onended = function() {
+        document.getElementById('transition-video-container').style.display = 'none';
         document.getElementById('results').style.display = 'block';
-        document.querySelector('.sidebar').classList.add('visible');
-        document.getElementById('new-search').classList.add('visible');
         document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
       };
     });
