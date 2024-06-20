@@ -3,6 +3,7 @@ body {
   background-color: #f8f9fa;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 .hero {
@@ -348,24 +349,6 @@ nav a:hover {
   display: block;
 }
 
-.video-container {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 80px); /* Adjust height to be full-screen below header */
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 1000;
-}
-
-video {
-  max-width: 100%;
-  max-height: 100%;
-}
-
 @media (max-width: 600px) {
   .header-content {
     flex-direction: column;
@@ -393,4 +376,21 @@ video {
   .service-banner {
     width: 100%;
   }
+}
+
+.transition-video {
+  display: none;
+  position: absolute;
+  top: 80px; /* Adjust to place below header */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 80px); /* Adjust to place below header */
+  background-color: #000;
+  z-index: 1000;
+}
+
+.transition-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
