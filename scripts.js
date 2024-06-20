@@ -56,31 +56,28 @@ function searchAddress() {
       document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
-      hideSearch(); // Hide search bar and map
-      showTransition('search-transition', showServices); // Show transition video and then show services
+      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
+      playSearchTransition();
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
   });
 }
 
-function hideSearch() {
+function playSearchTransition() {
+  var searchTransition = document.getElementById('search-transition');
+  searchTransition.classList.remove('hidden');
   document.getElementById('search-container').classList.add('hidden');
-}
+  document.getElementById('map').classList.add('hidden');
 
-function showTransition(id, callback) {
-  var transitionElement = document.getElementById(id);
-  transitionElement.classList.remove('hidden');
-  var video = transitionElement.querySelector('video');
+  var video = document.getElementById('search-transition-video');
   video.play();
-  video.onended = function () {
-    transitionElement.classList.add('hidden');
-    callback();
-  };
-}
 
-function showServices() {
-  document.getElementById('service-sidebar').classList.add('visible');
+  video.onended = function () {
+    searchTransition.classList.add('hidden');
+    document.getElementById('service-sidebar').classList.add('visible');
+    document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' });
+  };
 }
 
 function filterPlaces(type, callback) {
@@ -171,7 +168,7 @@ function selectServices() {
           calculateDistance(userLocation, details.geometry.location).then(function (distance) {
             var rating = details.rating ? `${details.rating} stars` : 'No rating';
             var userRatingsTotal = details.user_ratings_total ? `(${details.user_ratings_total})` : '';
-            var photo = details.photos ? details.photos[0].getUrl({ maxWidth: 300, maxHeight: 200 }) : 'Images/no-image-available.png';
+            var photo = details.photos ? details.photos[0].getUrl({maxWidth: 300, maxHeight: 200}) : 'Images/no-image-available.png';
             var website = details.website ? `<a href="${details.website}" target="_blank">${details.website}</a><br>` : 'No website available<br>';
             var placeDetails = `
               <div class="result-banner">
@@ -304,19 +301,26 @@ window.onload = function () {
   var userInfoModal = document.getElementById('userInfoModal');
   userInfoModal.style.display = 'none';
 
-  selectCompaniesButton.addEventListener('click', function () {
+  selectCompaniesButton.addEventListener('click', function() {
     userInfoModal.style.display = 'flex';
   });
 
-  window.addEventListener('click', function (event) {
+  window.addEventListener('click', function(event) {
     if (event.target === userInfoModal) {
       userInfoModal.style.display = 'none';
     }
   });
 
-  document.getElementById('get-started-button').addEventListener('click', function () {
-    document.querySelector('.hero').classList.add('hidden');
-    showTransition('get-started-transition', scrollToSearch);
+  document.getElementById('get-started-button').addEventListener('click', function() {
+    document.getElementById('hero').classList.add('hidden');
+    var getStartedTransition = document.getElementById('get-started-transition');
+    getStartedTransition.classList.remove('hidden');
+    var video = document.getElementById('get-started-transition-video');
+    video.play();
+    video.onended = function () {
+      getStartedTransition.classList.add('hidden');
+      document.getElementById('search-container').classList.remove('hidden');
+    };
   });
 
   document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
