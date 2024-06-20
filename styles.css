@@ -348,15 +348,23 @@ nav a:hover {
   display: block;
 }
 
-.transition-video {
+.transition {
   position: fixed;
-  top: 60px; /* Adjusting for the header height */
+  top: 0;
   left: 0;
   width: 100%;
-  height: calc(100vh - 60px); /* Adjusting for the header height */
+  height: calc(100vh - 70px);
+  background: #000;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.transition video {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  z-index: 999;
-  background-color: black; /* Fallback background */
 }
 
 @media (max-width: 600px) {
