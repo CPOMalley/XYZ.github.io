@@ -3,6 +3,7 @@ body {
   background-color: #f8f9fa;
   margin: 0;
   padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .hero {
@@ -348,13 +349,22 @@ nav a:hover {
   display: block;
 }
 
-.transition-video {
-  position: absolute;
+.video-transition {
+  display: none;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100% - 80px); /* Adjust height based on header */
-  object-fit: cover;
+  height: 100%;
+  background-color: #000;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#transition-video {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 @media (max-width: 600px) {
