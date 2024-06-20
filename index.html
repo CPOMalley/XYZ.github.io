@@ -38,15 +38,15 @@
       <button id="get-started-button">Get Started</button>
     </div>
   </div>
-  <div class="transition hidden" id="get-started-transition">
-    <video id="get-started-transition-video">
+  <div id="getStartedTransitionContainer" style="display:none; justify-content: center; align-items: center; height: 100vh;">
+    <video id="getStartedTransitionVideo" width="100%">
       <source src="Videos/Get Started Transition.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
   </div>
   <div class="container" id="search-container" style="display: none;">
     <div class="search-container">
-      <p>To begin looking for local professionals, please enter the address for the home you are listing below:</p>
+      <p id="search-text">To begin looking for local professionals, please enter the address for the home you are listing below:</p>
       <input type="text" id="address" placeholder="Enter your address" aria-label="Enter your address">
       <select id="radius" aria-label="Select radius">
         <option value="5000">&lt;5 miles</option>
@@ -55,12 +55,18 @@
         <option value="100000">50-100 miles</option>
         <option value="1000000">100+ miles</option>
       </select>
-      <button id="search-button">Search</button>
+      <button id="search-button" onclick="searchAddress()">Search</button>
     </div>
     <div class="map-container">
       <div id="map"></div>
     </div>
-    <div class="sidebar hidden" id="service-sidebar">
+    <div id="ohTransitionContainer" style="display:none; justify-content: center; align-items: center; height: 100vh;">
+      <video id="ohTransitionVideo" width="100%">
+        <source src="Videos/OH Transition.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="sidebar" id="service-sidebar">
       <h3>Which types of companies are you looking for?</h3>
       <div class="service-banners">
         <div class="service-banner">
@@ -93,21 +99,15 @@
       </div>
     </div>
     <div id="results" class="results-container"></div>
-    <div class="center hidden" id="select-companies-button-container">
+    <div class="center">
       <button id="select-companies-button" onclick="generateSelectedCompanies()" style="display: none;">Select Companies</button>
     </div>
     <div id="selected-companies" class="selected-companies">
       <h3>Selected Companies</h3>
       <div id="selected-companies-list"></div>
-      <button id="save-as-pdf-button">Save as PDF</button>
+      <button id="save-as-pdf-button" onclick="saveAsPDF()">Save as PDF</button>
       <div id="new-search" onclick="startNewSearch()" style="cursor:pointer; color:blue; text-decoration:underline; margin-top: 10px;">Start a New Search</div>
     </div>
-  </div>
-  <div class="transition hidden" id="search-transition">
-    <video id="search-transition-video">
-      <source src="Videos/OH Transition.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
   </div>
   <div id="userInfoModal" class="modal hidden">
     <div class="modal-content">
@@ -125,5 +125,45 @@
   <script src="scripts.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
     async defer></script>
+  <script>
+    document.getElementById('get-started-button').addEventListener('click', function() {
+      document.getElementById('hero').style.display = 'none';
+      const getStartedTransitionContainer = document.getElementById('getStartedTransitionContainer');
+      const getStartedTransitionVideo = document.getElementById('getStartedTransitionVideo');
+      getStartedTransitionContainer.style.display = 'flex';
+      getStartedTransitionVideo.play();
+      getStartedTransitionVideo.onended = function () {
+        getStartedTransitionContainer.style.display = 'none';
+        document.getElementById('search-container').style.display = 'block';
+        document.getElementById('search-container').scrollIntoView({ behavior: 'smooth' });
+      };
+    });
+
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting the default way
+
+      var formData = new FormData(this);
+      fetch('/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(function(response) {
+        if (response.ok) {
+          alert('Form submitted successfully!');
+          // You can call the function to generate the PDF here
+          saveAsPDF();
+        } else {
+          alert('Form submission failed.');
+        }
+      })
+      .catch(function(error) {
+        console.error('Form submission error:', error);
+        alert('Form submission error.');
+      });
+    });
+  </script>
 </body>
 </html>
