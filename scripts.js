@@ -52,12 +52,7 @@ function searchAddress() {
     if (status === 'OK') {
       map.setCenter(results[0].geometry.location);
       userLocation = results[0].geometry.location;
-      document.getElementById('service-sidebar').classList.add('visible'); // Show sidebar on successful search
-      document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
-      // Store the radius for later use
-      userLocation.radius = document.getElementById('radius').value;
-      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
-      hideSearchContainerAndPlayVideo();
+      playSearchTransition();
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -265,29 +260,33 @@ function scrollToSearch() {
   document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
 }
 
-function hideSearchContainerAndPlayVideo() {
-  document.getElementById('search-container').style.display = 'none';
-  var searchTransition = document.getElementById('search-transition');
-  searchTransition.classList.remove('hidden');
-  var video = document.getElementById('search-transition-video');
-  video.play();
-  video.onended = function () {
-    searchTransition.classList.add('hidden');
-    document.getElementById('service-sidebar').classList.remove('hidden');
-    document.getElementById('select-companies-button-container').classList.remove('hidden');
+function playGetStartedTransition() {
+  var getStartedTransition = document.getElementById('get-started-transition');
+  var getStartedTransitionVideo = document.getElementById('get-started-transition-video');
+
+  document.getElementById('hero').classList.add('hidden');
+  getStartedTransition.classList.remove('hidden');
+  getStartedTransitionVideo.play();
+
+  getStartedTransitionVideo.onended = function () {
+    getStartedTransition.classList.add('hidden');
+    document.getElementById('search-container').classList.remove('hidden');
   };
 }
 
-function hideHeroAndPlayVideo() {
-  var hero = document.getElementById('hero');
-  hero.classList.add('hidden');
-  var transition = document.getElementById('get-started-transition');
-  transition.classList.remove('hidden');
-  var video = document.getElementById('get-started-transition-video');
-  video.play();
-  video.onended = function () {
-    transition.classList.add('hidden');
-    document.getElementById('search-container').classList.remove('hidden');
+function playSearchTransition() {
+  var searchTransition = document.getElementById('search-transition');
+  var searchTransitionVideo = document.getElementById('search-transition-video');
+
+  document.getElementById('map').classList.add('hidden');
+  document.getElementById('search-container').classList.add('hidden');
+  searchTransition.classList.remove('hidden');
+  searchTransitionVideo.play();
+
+  searchTransitionVideo.onended = function () {
+    searchTransition.classList.add('hidden');
+    document.getElementById('service-sidebar').classList.remove('hidden');
+    document.getElementById('select-companies-button-container').classList.remove('hidden');
   };
 }
 
@@ -321,7 +320,7 @@ window.onload = function () {
     }
   });
 
-  document.getElementById('get-started-button').addEventListener('click', hideHeroAndPlayVideo);
+  document.getElementById('get-started-button').addEventListener('click', playGetStartedTransition);
 
   document.getElementById('search-button').addEventListener('click', searchAddress);
 
