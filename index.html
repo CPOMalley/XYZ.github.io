@@ -27,7 +27,7 @@
       </nav>
     </div>
   </header>
-  <div id="hero" class="hero">
+  <div class="hero">
     <video autoplay muted loop id="hero-video">
       <source src="Videos/OpenHouse.mp4" type="video/mp4">
       Your browser does not support the video tag.
@@ -37,12 +37,6 @@
       <p>Your one-stop solution for all home services.</p>
       <button id="get-started-button">Get Started</button>
     </div>
-  </div>
-  <div id="getStartedTransitionContainer" class="video-container hidden">
-    <video id="getStartedTransitionVideo" class="transition-video">
-      <source src="Videos/Get Started Transition.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
   </div>
   <div class="container" id="search-container" style="display: none;">
     <div class="search-container">
@@ -103,12 +97,7 @@
       <div id="new-search" onclick="startNewSearch()" style="cursor:pointer; color:blue; text-decoration:underline; margin-top: 10px;">Start a New Search</div>
     </div>
   </div>
-  <div id="searchTransitionContainer" class="video-container hidden">
-    <video id="searchTransitionVideo" class="transition-video">
-      <source src="Videos/OH Transition.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
+
   <div id="userInfoModal" class="modal hidden">
     <div class="modal-content">
       <p>To generate a list of the selected companies, please enter the following information:</p>
@@ -122,8 +111,69 @@
       </form>
     </div>
   </div>
+
+  <div id="transition-container" class="transition-container">
+    <video id="transition-video" class="transition-video" playsinline>
+      <source src="Videos/OH Transition.mp4" type="video/mp4">
+    </video>
+  </div>
+
   <script src="scripts.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
     async defer></script>
+  <script>
+    document.getElementById('get-started-button').addEventListener('click', function() {
+      document.querySelector('.hero').style.display = 'none';
+      document.getElementById('transition-container').style.display = 'flex';
+      var transitionVideo = document.getElementById('transition-video');
+      transitionVideo.play();
+      transitionVideo.onended = function() {
+        document.getElementById('transition-container').style.display = 'none';
+        document.getElementById('search-container').style.display = 'block';
+        document.getElementById('search-container').scrollIntoView({ behavior: 'smooth' });
+      };
+    });
+
+    document.getElementById('search-button').addEventListener('click', function() {
+      document.getElementById('map').style.display = 'none';
+      document.querySelector('.search-container').style.display = 'none';
+      document.getElementById('transition-container').style.display = 'flex';
+      var transitionVideo = document.getElementById('transition-video');
+      transitionVideo.play();
+      transitionVideo.onended = function() {
+        document.getElementById('transition-container').style.display = 'none';
+        document.getElementById('results').style.display = 'block';
+        document.querySelector('.sidebar').classList.add('visible');
+        document.getElementById('new-search').classList.add('visible');
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+      };
+    });
+
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting the default way
+
+      var formData = new FormData(this);
+      fetch('/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(function(response) {
+        if (response.ok) {
+          alert('Form submitted successfully!');
+          // You can call the function to generate the PDF here
+          saveAsPDF();
+        } else {
+          alert('Form submission failed.');
+        }
+      })
+      .catch(function(error) {
+        console.error('Form submission error:', error);
+        alert('Form submission error.');
+      });
+    });
+  </script>
 </body>
 </html>
