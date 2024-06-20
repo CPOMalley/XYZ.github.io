@@ -57,16 +57,6 @@ function searchAddress() {
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
       document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
-      document.getElementById('search-container').style.display = 'none';
-      const ohTransitionContainer = document.getElementById('ohTransitionContainer');
-      const ohTransitionVideo = document.getElementById('ohTransitionVideo');
-      ohTransitionContainer.style.display = 'flex';
-      ohTransitionVideo.play();
-      ohTransitionVideo.onended = function () {
-        ohTransitionContainer.style.display = 'none';
-        document.getElementById('service-sidebar').style.display = 'block';
-        document.getElementById('service-sidebar').scrollIntoView({ behavior: 'smooth' });
-      };
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -271,7 +261,28 @@ function startNewSearch() {
 }
 
 function scrollToSearch() {
-  document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('hero').style.display = 'none';
+  const getStartedTransitionContainer = document.getElementById('getStartedTransitionContainer');
+  const getStartedTransitionVideo = document.getElementById('getStartedTransitionVideo');
+  getStartedTransitionContainer.style.display = 'flex';
+  getStartedTransitionVideo.play();
+  getStartedTransitionVideo.onended = function () {
+    getStartedTransitionContainer.style.display = 'none';
+    document.getElementById('search-container').style.display = 'block';
+    document.getElementById('search-container').scrollIntoView({ behavior: 'smooth' });
+  };
+}
+
+function triggerSearchTransition() {
+  document.getElementById('search-container').style.display = 'none';
+  const searchTransitionContainer = document.getElementById('searchTransitionContainer');
+  const searchTransitionVideo = document.getElementById('searchTransitionVideo');
+  searchTransitionContainer.style.display = 'flex';
+  searchTransitionVideo.play();
+  searchTransitionVideo.onended = function () {
+    searchTransitionContainer.style.display = 'none';
+    searchAddress();
+  };
 }
 
 window.onload = function () {
@@ -304,22 +315,9 @@ window.onload = function () {
     }
   });
 
-  document.getElementById('get-started-button').addEventListener('click', function() {
-    document.getElementById('hero').style.display = 'none';
-    const getStartedTransitionContainer = document.getElementById('getStartedTransitionContainer');
-    const getStartedTransitionVideo = document.getElementById('getStartedTransitionVideo');
-    getStartedTransitionContainer.style.display = 'flex';
-    getStartedTransitionVideo.play();
-    getStartedTransitionVideo.onended = function () {
-      getStartedTransitionContainer.style.display = 'none';
-      document.getElementById('search-container').style.display = 'block';
-      document.getElementById('search-container').scrollIntoView({ behavior: 'smooth' });
-    };
-  });
+  document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
 
-  document.getElementById('search-button').addEventListener('click', function() {
-    searchAddress();
-  });
+  document.getElementById('search-button').addEventListener('click', triggerSearchTransition);
 
   document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
 };
