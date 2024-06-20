@@ -57,27 +57,10 @@ function searchAddress() {
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
       document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
-      playSearchTransition();
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
   });
-}
-
-function playSearchTransition() {
-  var searchTransition = document.getElementById('search-transition');
-  searchTransition.classList.remove('hidden');
-  document.getElementById('search-container').classList.add('hidden');
-  document.getElementById('map').classList.add('hidden');
-
-  var video = document.getElementById('search-transition-video');
-  video.play();
-
-  video.onended = function () {
-    searchTransition.classList.add('hidden');
-    document.getElementById('service-sidebar').classList.add('visible');
-    document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' });
-  };
 }
 
 function filterPlaces(type, callback) {
@@ -118,7 +101,7 @@ function calculateDistance(origin, destination) {
       if (status === 'OK') {
         var distanceText = response.rows[0].elements[0].distance.text;
         // Convert distance to miles if it is in km
-        if (distanceText.includes('km')) {
+        if (distanceText includes('km')) {
           var distanceKm = parseFloat(distanceText.replace(' km', ''));
           var distanceMiles = (distanceKm * 0.621371).toFixed(2);
           resolve(distanceMiles + ' miles');
@@ -320,6 +303,26 @@ window.onload = function () {
     video.onended = function () {
       getStartedTransition.classList.add('hidden');
       document.getElementById('search-container').classList.remove('hidden');
+    };
+  });
+
+  document.getElementById('search-button').addEventListener('click', function() {
+    var address = document.getElementById('address').value;
+    if (!address) {
+      alert('Please enter an address.');
+      return;
+    }
+    searchAddress();
+    document.getElementById('search-container').classList.add('hidden');
+    var searchTransition = document.getElementById('search-transition');
+    searchTransition.classList.remove('hidden');
+    var video = document.getElementById('search-transition-video');
+    video.play();
+    video.onended = function () {
+      searchTransition.classList.add('hidden');
+      document.getElementById('service-sidebar').classList.add('visible');
+      document.getElementById('results').classList.add('visible');
+      document.getElementById('select-companies-button').style.display = 'block';
     };
   });
 
