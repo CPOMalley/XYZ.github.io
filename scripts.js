@@ -56,20 +56,10 @@ function searchAddress() {
       document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
-      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
-
-      // Play transition video
-      var transitionContainer = document.getElementById('transition-container');
-      var transitionVideo = document.getElementById('transition-video');
-      transitionVideo.src = 'Videos/OH Transition.mp4'; // Ensure the correct video is played
-      transitionContainer.style.display = 'block';
-      transitionVideo.play();
-      transitionVideo.onended = function() {
-        transitionContainer.style.display = 'none';
-        document.getElementById('service-sidebar').style.display = 'block';
+      showTransitionVideo('OH Transition.mp4', function() {
         document.getElementById('results').style.display = 'block';
-      };
-
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+      });
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -277,6 +267,18 @@ function scrollToSearch() {
   document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
 }
 
+function showTransitionVideo(videoSrc, callback) {
+  var videoContainer = document.getElementById('transition-video-container');
+  var video = document.getElementById('transition-video');
+  video.src = 'Videos/' + videoSrc;
+  videoContainer.style.display = 'block';
+  video.play();
+  video.onended = function() {
+    videoContainer.style.display = 'none';
+    callback();
+  };
+}
+
 window.onload = function () {
   initMap();
 
@@ -307,8 +309,13 @@ window.onload = function () {
     }
   });
 
-  document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
+  document.getElementById('get-started-button').addEventListener('click', function() {
+    document.getElementById('hero-section').style.display = 'none';
+    showTransitionVideo('Get Started Transition.mp4', function() {
+      document.getElementById('search-container').style.display = 'block';
+      document.getElementById('search-container').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
 
   document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
 };
-
