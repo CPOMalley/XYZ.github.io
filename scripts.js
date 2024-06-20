@@ -57,6 +57,7 @@ function searchAddress() {
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
       document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
+      hideSearchContainerAndPlayVideo();
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -101,7 +102,7 @@ function calculateDistance(origin, destination) {
       if (status === 'OK') {
         var distanceText = response.rows[0].elements[0].distance.text;
         // Convert distance to miles if it is in km
-        if (distanceText includes('km')) {
+        if (distanceText.includes('km')) {
           var distanceKm = parseFloat(distanceText.replace(' km', ''));
           var distanceMiles = (distanceKm * 0.621371).toFixed(2);
           resolve(distanceMiles + ' miles');
@@ -264,6 +265,32 @@ function scrollToSearch() {
   document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
 }
 
+function hideSearchContainerAndPlayVideo() {
+  document.getElementById('search-container').style.display = 'none';
+  var searchTransition = document.getElementById('search-transition');
+  searchTransition.classList.remove('hidden');
+  var video = document.getElementById('search-transition-video');
+  video.play();
+  video.onended = function () {
+    searchTransition.classList.add('hidden');
+    document.getElementById('service-sidebar').classList.remove('hidden');
+    document.getElementById('select-companies-button-container').classList.remove('hidden');
+  };
+}
+
+function hideHeroAndPlayVideo() {
+  var hero = document.getElementById('hero');
+  hero.classList.add('hidden');
+  var transition = document.getElementById('get-started-transition');
+  transition.classList.remove('hidden');
+  var video = document.getElementById('get-started-transition-video');
+  video.play();
+  video.onended = function () {
+    transition.classList.add('hidden');
+    document.getElementById('search-container').classList.remove('hidden');
+  };
+}
+
 window.onload = function () {
   initMap();
 
@@ -294,37 +321,9 @@ window.onload = function () {
     }
   });
 
-  document.getElementById('get-started-button').addEventListener('click', function() {
-    document.getElementById('hero').classList.add('hidden');
-    var getStartedTransition = document.getElementById('get-started-transition');
-    getStartedTransition.classList.remove('hidden');
-    var video = document.getElementById('get-started-transition-video');
-    video.play();
-    video.onended = function () {
-      getStartedTransition.classList.add('hidden');
-      document.getElementById('search-container').classList.remove('hidden');
-    };
-  });
+  document.getElementById('get-started-button').addEventListener('click', hideHeroAndPlayVideo);
 
-  document.getElementById('search-button').addEventListener('click', function() {
-    var address = document.getElementById('address').value;
-    if (!address) {
-      alert('Please enter an address.');
-      return;
-    }
-    searchAddress();
-    document.getElementById('search-container').classList.add('hidden');
-    var searchTransition = document.getElementById('search-transition');
-    searchTransition.classList.remove('hidden');
-    var video = document.getElementById('search-transition-video');
-    video.play();
-    video.onended = function () {
-      searchTransition.classList.add('hidden');
-      document.getElementById('service-sidebar').classList.add('visible');
-      document.getElementById('results').classList.add('visible');
-      document.getElementById('select-companies-button').style.display = 'block';
-    };
-  });
+  document.getElementById('search-button').addEventListener('click', searchAddress);
 
   document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
 };
