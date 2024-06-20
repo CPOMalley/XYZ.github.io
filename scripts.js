@@ -52,7 +52,28 @@ function searchAddress() {
     if (status === 'OK') {
       map.setCenter(results[0].geometry.location);
       userLocation = results[0].geometry.location;
-      playSearchTransition();
+      document.getElementById('service-sidebar').classList.add('visible'); // Show sidebar on successful search
+      document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
+      // Store the radius for later use
+      userLocation.radius = document.getElementById('radius').value;
+      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
+
+      // Hide map and search bar
+      document.getElementById('search-container').style.display = 'none';
+      document.getElementById('map').style.display = 'none';
+      document.getElementById('search-text').style.display = 'none';
+
+      // Show OH Transition video
+      const ohTransitionContainer = document.getElementById('ohTransitionContainer');
+      const ohTransitionVideo = document.getElementById('ohTransitionVideo');
+      ohTransitionContainer.style.display = 'flex';
+      ohTransitionVideo.play();
+
+      ohTransitionVideo.onended = function () {
+        ohTransitionContainer.style.display = 'none';
+        document.querySelector('.sidebar').style.display = 'block';
+        document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' });
+      };
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -97,7 +118,7 @@ function calculateDistance(origin, destination) {
       if (status === 'OK') {
         var distanceText = response.rows[0].elements[0].distance.text;
         // Convert distance to miles if it is in km
-        if (distanceText.includes('km')) {
+        if (distanceText includes('km')) {
           var distanceKm = parseFloat(distanceText.replace(' km', ''));
           var distanceMiles = (distanceKm * 0.621371).toFixed(2);
           resolve(distanceMiles + ' miles');
@@ -260,36 +281,6 @@ function scrollToSearch() {
   document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
 }
 
-function playGetStartedTransition() {
-  var getStartedTransition = document.getElementById('get-started-transition');
-  var getStartedTransitionVideo = document.getElementById('get-started-transition-video');
-
-  document.getElementById('hero').classList.add('hidden');
-  getStartedTransition.classList.remove('hidden');
-  getStartedTransitionVideo.play();
-
-  getStartedTransitionVideo.onended = function () {
-    getStartedTransition.classList.add('hidden');
-    document.getElementById('search-container').classList.remove('hidden');
-  };
-}
-
-function playSearchTransition() {
-  var searchTransition = document.getElementById('search-transition');
-  var searchTransitionVideo = document.getElementById('search-transition-video');
-
-  document.getElementById('map').classList.add('hidden');
-  document.getElementById('search-container').classList.add('hidden');
-  searchTransition.classList.remove('hidden');
-  searchTransitionVideo.play();
-
-  searchTransitionVideo.onended = function () {
-    searchTransition.classList.add('hidden');
-    document.getElementById('service-sidebar').classList.remove('hidden');
-    document.getElementById('select-companies-button-container').classList.remove('hidden');
-  };
-}
-
 window.onload = function () {
   initMap();
 
@@ -320,9 +311,20 @@ window.onload = function () {
     }
   });
 
-  document.getElementById('get-started-button').addEventListener('click', playGetStartedTransition);
-
-  document.getElementById('search-button').addEventListener('click', searchAddress);
+  document.getElementById('get-started-button').addEventListener('click', function() {
+    document.getElementById('hero').style.display = 'none';
+    const getStartedTransitionContainer = document.getElementById('getStartedTransitionContainer');
+    const getStartedTransitionVideo = document.getElementById('getStartedTransitionVideo');
+    getStartedTransitionContainer.style.display = 'flex';
+    getStartedTransitionVideo.play();
+    getStartedTransitionVideo.onended = function () {
+      getStartedTransitionContainer.style.display = 'none';
+      document.getElementById('search-container').style.display = 'block';
+      document.getElementById('search-container').scrollIntoView({ behavior: 'smooth' });
+    };
+  });
 
   document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
+
+  document.getElementById('search-button').addEventListener('click', searchAddress);
 };
