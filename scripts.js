@@ -57,22 +57,15 @@ function searchAddress() {
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
       document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
-
-      // Hide map and search bar
       document.getElementById('search-container').style.display = 'none';
-      document.getElementById('map').style.display = 'none';
-      document.getElementById('search-text').style.display = 'none';
-
-      // Show OH Transition video
       const ohTransitionContainer = document.getElementById('ohTransitionContainer');
       const ohTransitionVideo = document.getElementById('ohTransitionVideo');
       ohTransitionContainer.style.display = 'flex';
       ohTransitionVideo.play();
-
       ohTransitionVideo.onended = function () {
         ohTransitionContainer.style.display = 'none';
-        document.querySelector('.sidebar').style.display = 'block';
-        document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('service-sidebar').style.display = 'block';
+        document.getElementById('service-sidebar').scrollIntoView({ behavior: 'smooth' });
       };
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
@@ -118,7 +111,7 @@ function calculateDistance(origin, destination) {
       if (status === 'OK') {
         var distanceText = response.rows[0].elements[0].distance.text;
         // Convert distance to miles if it is in km
-        if (distanceText includes('km')) {
+        if (distanceText.includes('km')) {
           var distanceKm = parseFloat(distanceText.replace(' km', ''));
           var distanceMiles = (distanceKm * 0.621371).toFixed(2);
           resolve(distanceMiles + ' miles');
@@ -324,7 +317,9 @@ window.onload = function () {
     };
   });
 
-  document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
+  document.getElementById('search-button').addEventListener('click', function() {
+    searchAddress();
+  });
 
-  document.getElementById('search-button').addEventListener('click', searchAddress);
+  document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
 };
