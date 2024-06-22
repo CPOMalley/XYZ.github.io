@@ -6,6 +6,8 @@
   <title>Open House</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="Images/open house logo.png" type="image/x-icon">
+  <meta name="description" content="Find local home services for your open house. Cleaning, moving, photography, staging, landscaping, and storage services all in one place.">
+  <meta name="keywords" content="open house, home services, cleaning, moving, photography, staging, landscaping, storage">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 </head>
 <body>
@@ -17,16 +19,16 @@
         <p>Find the best home services for your open house.</p>
       </div>
       <nav>
-        <a href="#">About Us</a>
-        <a href="#">Services</a>
-        <a href="#">Companies</a>
-        <a href="#">Testimonials</a>
-        <a href="#">Contact</a>
+        <a href="index.html">About Us</a>
+        <a href="index.html">Services</a>
+        <a href="index.html">Companies</a>
+        <a href="index.html">Testimonials</a>
+        <a href="index.html">Contact</a>
       </nav>
     </div>
   </header>
   <div class="container">
-    <div id="service-sidebar">
+    <div class="sidebar" id="service-sidebar">
       <h3>Which types of companies are you looking for?</h3>
       <div class="service-banners">
         <div class="service-banner">
@@ -69,7 +71,6 @@
       <div id="new-search" onclick="startNewSearch()" style="cursor:pointer; color:blue; text-decoration:underline; margin-top: 10px;">Start a New Search</div>
     </div>
   </div>
- 
   <div id="userInfoModal" class="modal hidden">
     <div class="modal-content">
       <p>To generate a list of the selected companies, please enter the following information:</p>
@@ -83,8 +84,6 @@
       </form>
     </div>
   </div>
-
   <script src="scripts.js"></script>
 </body>
 </html>
-
