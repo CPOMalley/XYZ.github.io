@@ -101,7 +101,7 @@ function calculateDistance(origin, destination) {
       if (status === 'OK') {
         var distanceText = response.rows[0].elements[0].distance.text;
         // Convert distance to miles if it is in km
-        if (distanceText includes 'km') {
+        if (distanceText.includes('km')) {
           var distanceKm = parseFloat(distanceText.replace(' km', ''));
           var distanceMiles = (distanceKm * 0.621371).toFixed(2);
           resolve(distanceMiles + ' miles');
@@ -257,24 +257,28 @@ function saveAsPDF() {
 }
 
 function startNewSearch() {
-  location.reload();
+  location.href = 'index.html';
 }
 
-function scrollToSearch() {
-  document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
+function navigateTo(url) {
+  window.location.href = url;
 }
 
 window.onload = function () {
-  initMap();
-
   var selectServicesButton = document.getElementById('select-services-button');
-  selectServicesButton.style.display = 'none';
+  if (selectServicesButton) {
+    selectServicesButton.style.display = 'none';
+  }
 
   var selectCompaniesButton = document.getElementById('select-companies-button');
-  selectCompaniesButton.style.display = 'none';
+  if (selectCompaniesButton) {
+    selectCompaniesButton.style.display = 'none';
+  }
 
   var newSearchText = document.getElementById('new-search');
-  newSearchText.style.display = 'none';
+  if (newSearchText) {
+    newSearchText.style.display = 'none';
+  }
 
   var serviceCheckboxes = document.querySelectorAll('.sidebar input[type="checkbox"]');
   serviceCheckboxes.forEach(function (checkbox) {
@@ -282,19 +286,42 @@ window.onload = function () {
   });
 
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.style.display = 'none';
+  if (userInfoModal) {
+    userInfoModal.style.display = 'none';
 
-  selectCompaniesButton.addEventListener('click', function() {
-    userInfoModal.style.display = 'flex';
-  });
+    window.addEventListener('click', function(event) {
+      if (event.target === userInfoModal) {
+        userInfoModal.style.display = 'none';
+      }
+    });
+  }
 
-  window.addEventListener('click', function(event) {
-    if (event.target === userInfoModal) {
-      userInfoModal.style.display = 'none';
-    }
-  });
+  var contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting the default way
 
-  document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
-
-  document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
+      var formData = new FormData(this);
+      fetch('/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(function(response) {
+        if (response.ok) {
+          alert('Form submitted successfully!');
+          // You can call the function to generate the PDF here
+          saveAsPDF();
+        } else {
+          alert('Form submission failed.');
+        }
+      })
+      .catch(function(error) {
+        console.error('Form submission error:', error);
+        alert('Form submission error.');
+      });
+    });
+  }
 };
