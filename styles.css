@@ -3,7 +3,6 @@ body {
   background-color: #f8f9fa;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
 }
 
 .hero {
@@ -347,16 +346,6 @@ nav a:hover {
 
 .visible {
   display: block;
-}
-
-.transition-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 100px); /* Adjust height to exclude header */
-  object-fit: cover;
-  z-index: 1000;
 }
 
 @media (max-width: 600px) {
