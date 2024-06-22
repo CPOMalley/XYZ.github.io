@@ -3,15 +3,16 @@ body {
   background-color: #f8f9fa;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
-.hero, .video-container {
+.hero {
   position: relative;
   height: 100vh;
   overflow: hidden;
 }
 
-#hero-video, #transition-video {
+#hero-video {
   position: absolute;
   top: 0;
   left: 0;
@@ -21,7 +22,7 @@ body {
   z-index: -1;
 }
 
-.hero-content, .video-content {
+.hero-content {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -31,17 +32,17 @@ body {
   padding: 20px;
 }
 
-.hero-content h1, .video-content h1 {
+.hero-content h1 {
   font-size: 3em;
   margin: 0;
 }
 
-.hero-content p, .video-content p {
+.hero-content p {
   font-size: 1.5em;
   margin: 10px 0;
 }
 
-.hero-content button, .video-content button {
+.hero-content button {
   padding: 10px 20px;
   font-size: 1em;
   border: none;
@@ -51,7 +52,7 @@ body {
   cursor: pointer;
 }
 
-.hero-content button:hover, .video-content button:hover {
+.hero-content button:hover {
   background-color: #0056b3;
 }
 
@@ -346,6 +347,16 @@ nav a:hover {
 
 .visible {
   display: block;
+}
+
+.transition-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 100px); /* Adjust height to exclude header */
+  object-fit: cover;
+  z-index: 1000;
 }
 
 @media (max-width: 600px) {
