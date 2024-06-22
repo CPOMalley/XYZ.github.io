@@ -5,8 +5,8 @@ var userLocation = null;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 37.0902, lng: -95.7129 },
-    zoom: 4
+    center: { lat: 37.0902, lng: -95.7129 }, // Centered on the United States
+    zoom: 4 // Appropriate zoom level for a broad view of the United States
   });
 
   var input = document.getElementById('address');
@@ -52,10 +52,10 @@ function searchAddress() {
     if (status === 'OK') {
       map.setCenter(results[0].geometry.location);
       userLocation = results[0].geometry.location;
-      document.getElementById('service-sidebar').classList.add('visible');
-      document.getElementById('new-search').classList.add('visible');
+      document.getElementById('service-sidebar').classList.add('visible'); // Show sidebar on successful search
+      document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
+      // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
-      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' });
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -65,7 +65,7 @@ function searchAddress() {
 function filterPlaces(type, callback) {
   var request = {
     location: userLocation,
-    radius: userLocation.radius || '5000',
+    radius: userLocation.radius || '5000', // Use the stored radius or default to 5km
     keyword: type
   };
 
@@ -99,6 +99,7 @@ function calculateDistance(origin, destination) {
     }, function (response, status) {
       if (status === 'OK') {
         var distanceText = response.rows[0].elements[0].distance.text;
+        // Convert distance to miles if it is in km
         if (distanceText.includes('km')) {
           var distanceKm = parseFloat(distanceText.replace(' km', ''));
           var distanceMiles = (distanceKm * 0.621371).toFixed(2);
@@ -131,7 +132,7 @@ function selectServices() {
   }
 
   var resultsContainer = document.getElementById('results');
-  resultsContainer.innerHTML = '';
+  resultsContainer.innerHTML = ''; // Clear the container
   resultsContainer.classList.add('visible');
 
   selectedServices.forEach(function (service) {
@@ -175,7 +176,7 @@ function selectServices() {
 
   var selectCompaniesButton = document.getElementById('select-companies-button');
   selectCompaniesButton.style.display = 'block';
-  resultsContainer.scrollIntoView({ behavior: 'smooth' });
+  resultsContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the results container
 }
 
 function toggleSelectServicesButton() {
@@ -195,9 +196,10 @@ function generateSelectedCompanies() {
     return;
   }
 
+  // Show user info modal before displaying results
   var userInfoModal = document.getElementById('userInfoModal');
-  userInfoModal.style.display = 'flex';
-  userInfoModal.scrollIntoView({ behavior: 'smooth' });
+  userInfoModal.style.display = 'flex'; // Use 'flex' to display the modal centered
+  userInfoModal.scrollIntoView({ behavior: 'smooth' }); // Scroll to the user info modal
 }
 
 function submitUserInfo() {
@@ -223,8 +225,8 @@ function submitUserInfo() {
     });
 
     selectedCompaniesContainer.classList.add('visible');
-    userInfoModal.style.display = 'none';
-    selectedCompaniesContainer.scrollIntoView({ behavior: 'smooth' });
+    userInfoModal.style.display = 'none'; // Hide the modal
+    selectedCompaniesContainer.scrollIntoView({ behavior: 'smooth' }); // Scroll to the selected companies container
   } else {
     alert('Please fill out all fields.');
   }
@@ -254,7 +256,7 @@ function saveAsPDF() {
 }
 
 function startNewSearch() {
-  window.location.href = "index.html";
+  location.href = "index.html";
 }
 
 window.onload = function () {
@@ -288,14 +290,7 @@ window.onload = function () {
   });
 
   document.getElementById('get-started-button').addEventListener('click', function() {
-    document.querySelector('.hero').style.display = 'none';
-    var transitionVideo = document.getElementById('get-started-transition');
-    transitionVideo.classList.remove('hidden');
-    transitionVideo.play();
-    transitionVideo.onended = function() {
-      transitionVideo.classList.add('hidden');
-      window.location.href = "search.html";
-    };
+    location.href = "search.html";
   });
 
   document.getElementById('search-button').addEventListener('click', function() {
@@ -307,12 +302,12 @@ window.onload = function () {
     transitionVideo.play();
     transitionVideo.onended = function() {
       transitionVideo.classList.add('hidden');
-      window.location.href = "results.html";
+      document.getElementById('service-sidebar').scrollIntoView({ behavior: 'smooth' });
     };
   });
 
   document.getElementById('contact-form').addEventListener('submit', function(event) {
-    event.preventDefault();
+    event.preventDefault(); // Prevent the form from submitting the default way
 
     var formData = new FormData(this);
     fetch('/', {
@@ -325,6 +320,7 @@ window.onload = function () {
     .then(function(response) {
       if (response.ok) {
         alert('Form submitted successfully!');
+        // You can call the function to generate the PDF here
         saveAsPDF();
       } else {
         alert('Form submission failed.');
@@ -336,3 +332,4 @@ window.onload = function () {
     });
   });
 };
+
