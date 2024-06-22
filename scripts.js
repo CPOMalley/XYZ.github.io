@@ -149,7 +149,7 @@ function selectServices() {
           calculateDistance(userLocation, details.geometry.location).then(function (distance) {
             var rating = details.rating ? `${details.rating} stars` : 'No rating';
             var userRatingsTotal = details.user_ratings_total ? `(${details.user_ratings_total})` : '';
-            var photo = details.photos ? details.photos[0].getUrl({ maxWidth: 300, maxHeight: 200 }) : 'Images/no-image-available.png';
+            var photo = details.photos ? details.photos[0].getUrl({maxWidth: 300, maxHeight: 200}) : 'Images/no-image-available.png';
             var website = details.website ? `<a href="${details.website}" target="_blank">${details.website}</a><br>` : 'No website available<br>';
             var placeDetails = `
               <div class="result-banner">
@@ -254,11 +254,7 @@ function saveAsPDF() {
 }
 
 function startNewSearch() {
-  location.href = 'index.html';
-}
-
-function scrollToSearch() {
-  location.href = 'search.html';
+  window.location.href = "index.html";
 }
 
 window.onload = function () {
@@ -281,17 +277,62 @@ window.onload = function () {
   var userInfoModal = document.getElementById('userInfoModal');
   userInfoModal.style.display = 'none';
 
-  selectCompaniesButton.addEventListener('click', function () {
+  selectCompaniesButton.addEventListener('click', function() {
     userInfoModal.style.display = 'flex';
   });
 
-  window.addEventListener('click', function (event) {
+  window.addEventListener('click', function(event) {
     if (event.target === userInfoModal) {
       userInfoModal.style.display = 'none';
     }
   });
 
-  document.getElementById('get-started-button').addEventListener('click', scrollToSearch);
+  document.getElementById('get-started-button').addEventListener('click', function() {
+    document.querySelector('.hero').style.display = 'none';
+    var transitionVideo = document.getElementById('get-started-transition');
+    transitionVideo.classList.remove('hidden');
+    transitionVideo.play();
+    transitionVideo.onended = function() {
+      transitionVideo.classList.add('hidden');
+      window.location.href = "search.html";
+    };
+  });
 
-  document.getElementById('save-as-pdf-button').addEventListener('click', saveAsPDF);
+  document.getElementById('search-button').addEventListener('click', function() {
+    searchAddress();
+    document.querySelector('.search-container').style.display = 'none';
+    document.querySelector('.map-container').style.display = 'none';
+    var transitionVideo = document.getElementById('search-transition');
+    transitionVideo.classList.remove('hidden');
+    transitionVideo.play();
+    transitionVideo.onended = function() {
+      transitionVideo.classList.add('hidden');
+      window.location.href = "results.html";
+    };
+  });
+
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var formData = new FormData(this);
+    fetch('/', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/x-www-form-urlencoded'
+      }
+    })
+    .then(function(response) {
+      if (response.ok) {
+        alert('Form submitted successfully!');
+        saveAsPDF();
+      } else {
+        alert('Form submission failed.');
+      }
+    })
+    .catch(function(error) {
+      console.error('Form submission error:', error);
+      alert('Form submission error.');
+    });
+  });
 };
