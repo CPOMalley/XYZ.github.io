@@ -6,6 +6,8 @@
   <title>Open House</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="Images/open house logo.png" type="image/x-icon">
+  <meta name="description" content="Find local home services for your open house. Cleaning, moving, photography, staging, landscaping, and storage services all in one place.">
+  <meta name="keywords" content="open house, home services, cleaning, moving, photography, staging, landscaping, storage">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 </head>
 <body>
@@ -17,15 +19,15 @@
         <p>Find the best home services for your open house.</p>
       </div>
       <nav>
-        <a href="#">About Us</a>
-        <a href="#">Services</a>
-        <a href="#">Companies</a>
-        <a href="#">Testimonials</a>
-        <a href="#">Contact</a>
+        <a href="index.html">About Us</a>
+        <a href="index.html">Services</a>
+        <a href="index.html">Companies</a>
+        <a href="index.html">Testimonials</a>
+        <a href="index.html">Contact</a>
       </nav>
     </div>
   </header>
-  <div class="container">
+  <div class="container" id="search-container">
     <div class="search-container">
       <p>To begin looking for local professionals, please enter the address for the home you are listing below:</p>
       <input type="text" id="address" placeholder="Enter your address" aria-label="Enter your address">
@@ -41,13 +43,11 @@
     <div class="map-container">
       <div id="map"></div>
     </div>
+    <video id="search-transition" class="transition-video hidden">
+      <source src="Videos/OH Transition.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
-
-  <video id="search-transition" class="transition-video hidden">
-    <source src="Videos/OH Transition.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-
   <script src="scripts.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
     async defer></script>
