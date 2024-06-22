@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open House - Results</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="Images/open house logo.png" type="image/x-icon">
+  <meta name="description" content="Find local home services for your open house. Cleaning, moving, photography, staging, landscaping, and storage services all in one place.">
+  <meta name="keywords" content="open house, home services, cleaning, moving, photography, staging, landscaping, storage">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <img src="Images/open house logo.png" alt="Open House Logo" class="logo">
+      <div class="header-text">
+        <h1>Open House</h1>
+        <p>Find the best home services for your open house.</p>
+      </div>
+      <nav>
+        <a href="#">About Us</a>
+        <a href="#">Services</a>
+        <a href="#">Companies</a>
+        <a href="#">Testimonials</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <div id="transition-video-container">
+    <video autoplay id="transition-video">
+      <source src="Videos/OH Transition.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div class="container" id="results-container" style="display: none;">
+    <div id="results" class="results-container"></div>
+    <div class="center">
+      <button id="select-companies-button" onclick="generateSelectedCompanies()" style="display: none;">Select Companies</button>
+    </div>
+    <div id="selected-companies" class="selected-companies">
+      <h3>Selected Companies</h3>
+      <div id="selected-companies-list"></div>
+      <button id="save-as-pdf-button" onclick="saveAsPDF()">Save as PDF</button>
+      <div id="new-search" onclick="startNewSearch()" style="cursor:pointer; color:blue; text-decoration:underline; margin-top: 10px;">Start a New Search</div>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+  <script>
+    // Video handling and transition
+    document.getElementById('transition-video').addEventListener('ended', function() {
+      document.getElementById('transition-video-container').style.display = 'none';
+      document.getElementById('results-container').style.display = 'block';
+    });
+
+    document.getElementById('search-button').addEventListener('click', function() {
+      window.location.href = 'results.html';
+    });
+  </script>
+</body>
+</html>
