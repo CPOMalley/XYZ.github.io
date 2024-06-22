@@ -56,7 +56,10 @@ function searchAddress() {
       document.getElementById('new-search').classList.add('visible'); // Show "Start a New Search" after successful search
       // Store the radius for later use
       userLocation.radius = document.getElementById('radius').value;
-      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' }); // Scroll to the service sidebar
+      playTransitionVideo('Videos/OH Transition.mp4', function() {
+        document.getElementById('search-container').style.display = 'none';
+        document.getElementById('service-sidebar').style.display = 'block';
+      });
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -264,59 +267,22 @@ function scrollToSearch() {
   document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
 }
 
-function playTransitionVideo(src, callback) {
-  var videoTransition = document.getElementById('video-transition');
-  var videoElement = document.getElementById('transition-video');
-  videoElement.src = src;
+function playTransitionVideo(videoSrc, callback) {
+  const transitionVideoContainer = document.getElementById('video-transition');
+  const transitionVideo = document.getElementById('transition-video');
 
-  videoElement.onended = function() {
-    videoTransition.style.display = 'none';
+  transitionVideo.src = videoSrc;
+  transitionVideoContainer.classList.remove('hidden');
+  transitionVideoContainer.classList.add('visible');
+
+  transitionVideo.onended = function() {
+    transitionVideoContainer.classList.remove('visible');
+    transitionVideoContainer.classList.add('hidden');
     callback();
   };
 
-  videoTransition.style.display = 'flex';
-  videoElement.play();
+  transitionVideo.play();
 }
-
-document.getElementById('get-started-button').addEventListener('click', function() {
-  playTransitionVideo('Videos/Get Started Transition.mp4', function() {
-    document.querySelector('.hero').style.display = 'none';
-    document.getElementById('search-container').style.display = 'block';
-  });
-});
-
-document.getElementById('search-button').addEventListener('click', function() {
-  playTransitionVideo('Videos/OH Transition.mp4', function() {
-    document.getElementById('map-container').style.display = 'none';
-    document.getElementById('service-sidebar').style.display = 'block';
-  });
-});
-
-document.getElementById('contact-form').addEventListener('submit', function(event) {
-  event.preventDefault(); // Prevent the form from submitting the default way
-
-  var formData = new FormData(this);
-  fetch('/', {
-    method: 'POST',
-    body: formData,
-    headers: {
-      'Accept': 'application/x-www-form-urlencoded'
-    }
-  })
-  .then(function(response) {
-    if (response.ok) {
-      alert('Form submitted successfully!');
-      // You can call the function to generate the PDF here
-      saveAsPDF();
-    } else {
-      alert('Form submission failed.');
-    }
-  })
-  .catch(function(error) {
-    console.error('Form submission error:', error);
-    alert('Form submission error.');
-  });
-});
 
 window.onload = function () {
   initMap();
