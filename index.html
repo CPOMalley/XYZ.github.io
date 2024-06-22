@@ -38,9 +38,6 @@
       <button id="get-started-button">Get Started</button>
     </div>
   </div>
-  <div id="video-transition" class="hidden">
-    <video id="transition-video" class="transition-video" autoplay></video>
-  </div>
   <div class="container" id="search-container" style="display: none;">
     <div class="search-container">
       <p>To begin looking for local professionals, please enter the address for the home you are listing below:</p>
@@ -54,7 +51,7 @@
       </select>
       <button id="search-button" onclick="searchAddress()">Search</button>
     </div>
-    <div class="map-container" id="map-container">
+    <div class="map-container">
       <div id="map"></div>
     </div>
     <div class="sidebar" id="service-sidebar">
@@ -115,22 +112,20 @@
     </div>
   </div>
 
+  <div id="video-transition" class="hidden">
+    <video id="transition-video" class="transition-video" playsinline>
+      <source id="transition-video-source" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
   <script src="scripts.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
     async defer></script>
   <script>
     document.getElementById('get-started-button').addEventListener('click', function() {
-      playTransitionVideo('Videos/Get Started Transition.mp4', function() {
-        document.querySelector('.hero').style.display = 'none';
-        document.getElementById('search-container').style.display = 'block';
-      });
-    });
-
-    document.getElementById('search-button').addEventListener('click', function() {
-      playTransitionVideo('Videos/OH Transition.mp4', function() {
-        document.getElementById('map-container').style.display = 'none';
-        document.getElementById('service-sidebar').style.display = 'block';
-      });
+      document.getElementById('search-container').style.display = 'block';
+      document.getElementById('search-container').scrollIntoView({ behavior: 'smooth' });
     });
 
     document.getElementById('contact-form').addEventListener('submit', function(event) {
@@ -161,3 +156,4 @@
   </script>
 </body>
 </html>
+
