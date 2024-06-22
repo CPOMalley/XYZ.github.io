@@ -35,13 +35,15 @@
     <div class="hero-content">
       <h1>Welcome to OpenHouse</h1>
       <p>Your one-stop solution for all home services.</p>
-      <button id="get-started-button">Get Started</button>
+      <button id="get-started-button" onclick="navigateTo('search.html')">Get Started</button>
     </div>
   </div>
-  <script>
-    document.getElementById('get-started-button').addEventListener('click', function() {
-      window.location.href = 'search.html';
-    });
-  </script>
+
+  <video id="get-started-transition" class="transition-video hidden">
+    <source src="Videos/Get Started Transition.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <script src="scripts.js"></script>
 </body>
 </html>
