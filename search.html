@@ -6,9 +6,9 @@
   <title>Open House</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="Images/open house logo.png" type="image/x-icon">
-  <meta name="description" content="Find local home services for your open house. Cleaning, moving, photography, staging, landscaping, and storage services all in one place.">
-  <meta name="keywords" content="open house, home services, cleaning, moving, photography, staging, landscaping, storage">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <script src="scripts.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
+    async defer></script>
 </head>
 <body>
   <header class="header">
@@ -19,11 +19,11 @@
         <p>Find the best home services for your open house.</p>
       </div>
       <nav>
-        <a href="index.html">About Us</a>
-        <a href="index.html">Services</a>
-        <a href="index.html">Companies</a>
-        <a href="index.html">Testimonials</a>
-        <a href="index.html">Contact</a>
+        <a href="#">About Us</a>
+        <a href="#">Services</a>
+        <a href="#">Companies</a>
+        <a href="#">Testimonials</a>
+        <a href="#">Contact</a>
       </nav>
     </div>
   </header>
@@ -48,8 +48,39 @@
       Your browser does not support the video tag.
     </video>
   </div>
+  <div class="sidebar" id="service-sidebar">
+    <h3>Which types of companies are you looking for?</h3>
+    <div class="service-banners">
+      <div class="service-banner">
+        <img src="Images/cleaning logo.jpg" alt="Cleaning Logo" class="service-logo">
+        <label><input type="checkbox" value="cleaning" aria-label="Select Cleaning" onchange="toggleSelectServicesButton()"> Cleaning</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/moving logo.jpg" alt="Moving Logo" class="service-logo">
+        <label><input type="checkbox" value="moving" aria-label="Select Moving" onchange="toggleSelectServicesButton()"> Moving</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/photography logo.jpg" alt="Photography Logo" class="service-logo">
+        <label><input type="checkbox" value="photography" aria-label="Select Photography" onchange="toggleSelectServicesButton()"> Photography</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/Staging Company Logo.png" alt="Staging Logo" class="service-logo">
+        <label><input type="checkbox" value="staging" aria-label="Select Staging" onchange="toggleSelectServicesButton()"> Staging</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/Landscaper Logo.png" alt="Landscaping Logo" class="service-logo">
+        <label><input type="checkbox" value="landscaping" aria-label="Select Landscaping" onchange="toggleSelectServicesButton()"> Landscaping</label>
+      </div>
+      <div class="service-banner">
+        <img src="Images/Storage.png" alt="Storage Logo" class="service-logo">
+        <label><input type="checkbox" value="storage" aria-label="Select Storage" onchange="toggleSelectServicesButton()"> Storage</label>
+      </div>
+    </div>
+    <div class="center">
+      <button id="select-services-button" onclick="selectServices()" style="display: none;">Select Services</button>
+    </div>
+  </div>
   <script src="scripts.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjvhwXqY-7SRYOxRIJqvMnyki9Aq6vaVs&libraries=places&callback=initMap"
-    async defer></script>
 </body>
 </html>
+
